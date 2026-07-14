@@ -1,0 +1,272 @@
+.groupheader {
+  width: 100%;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  height: 45px;  
+  background-color: white;
+  overflow: hidden;  
+}
+
+.hgh {
+
+}
+
+.hgh:hover {
+  opacity: var(--rowhoverbackgroundopacity);
+  background: var(--rowhoverbackcolor) !important;
+  color: var(--rowhoverforecolor) !important;
+}
+
+.hgh:hover > td {
+  opacity: var(--rowhoverbackgroundopacity);
+  background: var(--rowhoverbackcolor) !important;
+  color: var(--rowhoverforecolor) !important;
+}
+
+.grpheaderItem{
+  margin-left: 5px;
+  margin-right:5px;
+  height: 15px;
+  font-size: var(--fontsize);
+  text-align: center;
+  vertical-align: middle;  
+  align-content: center;
+  padding:3px 5px 8px 5px;
+  margin-bottom: 5px;
+  margin-top:8px;
+  cursor: pointer;
+}
+
+.rbtn{
+  width: 20px;
+  height: 20px;  
+  position: relative;
+  top: 0px;
+  right: -2px;
+  cursor: pointer;
+  float: right;
+}
+
+.preview {
+  width: fit-content;
+  padding: 8px;
+  text-align: center;
+}
+
+.defaultEditview {
+  border: none;
+  outline: none;
+  margin-left:-4px; 
+  border-bottom: 2px solid blue;
+}
+
+.defaultEditview:hover, .defaultEditview:focus {
+  border: none;
+  outline: none;
+  border-bottom: 2px solid blue;
+}
+
+.srt {
+  padding-left: 15px;
+  padding-right: 2px;
+  float: inline-start;
+}
+
+/* 
+.headerbox {
+  box-sizing:content-box;
+} */
+
+.header {    
+    cursor: pointer;
+    font-size: var(--fontsize);
+    font-weight: 700;  
+/* 
+    padding-top: 10px;    
+    padding-bottom: 10px; 
+    padding-left: 8px;
+    padding-right: 8px;     */
+}
+
+.headerpadding {
+  /* padding-top: 2px;
+  padding-bottom: 2px; */
+}
+
+.symbol {
+  cursor: pointer;
+ -webkit-user-select: none; 
+ -moz-user-select: none; 
+ -ms-user-select: none; 
+ user-select: none;
+}
+
+.symbol::before {
+ content: "\25B6";
+ color: var(--groupbyiconcolor);
+ display: inline-block;
+ margin-right: 8px;
+}
+
+.symbol-down::before {
+ -ms-transform: rotate(90deg); 
+ -webkit-transform: rotate(90deg); 
+ transform: rotate(90deg);  
+}
+
+
+.tblheader {
+  table-layout: fixed;
+  border-collapse: collapse;
+  border-spacing: 0;
+  white-space: nowrap;
+  height: 40px;
+}
+
+.tbl{     
+    table-layout:fixed;  
+    border-collapse: collapse;      
+    border-spacing: 0;
+    white-space: nowrap;
+    height: 100%;    
+}
+
+.root{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; 
+}
+
+.rootNormal {
+    border: 1px solid lightgray;
+}
+
+thead tr {
+     display: block;      
+}
+
+tbody {
+     display: block;         
+    background: white;
+}
+
+tfoot {
+  background: white;
+}
+
+thead {
+  position: sticky;
+  top:0;
+  z-index: 2;
+}
+
+table td, table th {
+  overflow-wrap: anywhere;
+}
+
+th {
+    position: sticky;
+    top: 0;  
+    z-index: 2;  
+    text-wrap: auto;
+}
+
+tbody tr{
+    background-color: white;
+    color: rgb(175, 169, 169);
+    font-size: var(--fontsize);    
+    text-align: left;
+    display: block;  
+}
+
+
+tbody tr td{
+    padding-left: 0px;
+    padding-right: 0px;
+    text-wrap: auto;
+}
+
+th, td {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.hgh {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+:host{
+    display: inline-block;
+    vertical-align: top;
+    width: fit-content;
+    margin-top: 3px; 
+    margin-bottom: 3px;      
+}
+
+::-webkit-scrollbar {
+    width: 0.4em;;
+    height: 0.4em;;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #bdbbbb;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #5e5e5e;
+    border-radius: 10px;
+  } 
+
+  .atagedit{
+    cursor: pointer;
+  }
+
+  .page {
+    width: 100%;
+    background-color: white;
+    height: 30px;    
+    padding-bottom: 16px;   
+  }
+
+  .pageItem {
+    padding:10px;
+    float: left;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-top: 1px;
+    font-size: large;
+  }
+
+  
+  .pageItemSmallFont {
+    padding:10px;
+    float: left;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+
+  .pageItemDropdown {
+    padding:10px;
+    float: left;
+    vertical-align: middle;
+    cursor: pointer;    
+  }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f5f9;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #94a3b8;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #64748b;
+}

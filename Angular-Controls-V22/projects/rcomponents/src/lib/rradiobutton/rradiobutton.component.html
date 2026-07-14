@@ -1,0 +1,23 @@
+<div style="display: flex;cursor: pointer; align-items: center;"
+  [ngStyle]="{ 'font': Font, 'pointer-events':(IsDisabled || IsReadOnly) ? 'none': '', 'user-select': IsDisabled ? 'none' : 'auto' }"
+
+  [style.font-family]="FontFamily" [id]="Id" (click)="check($event)">
+
+  @if (!DisplayTextRightAlign) {
+    <div class="label" [ngStyle]="{ 'color': LabelColor, 'font-size': FontSize }">
+      {{DisplayText}}
+    </div>
+  }
+  <div class="checkroot" [ngStyle]="{ 'width': OuterCircle, 'height': OuterCircle }">
+    <span [ngClass]="{'round': IsChecked}"
+      [ngStyle]="{'background-color': Color, '--width': InnerCircle, '--height': InnerCircle }">
+
+    </span>
+  </div>
+
+  @if (DisplayTextRightAlign) {
+    <div class="label" [ngStyle]="{ 'color': LabelColor, 'font-size': FontSize }">
+      {{DisplayText}}
+    </div>
+  }
+</div>

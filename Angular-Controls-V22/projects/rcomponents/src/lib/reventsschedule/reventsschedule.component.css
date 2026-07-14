@@ -1,0 +1,152 @@
+
+.times{    
+    text-align: center;
+    align-items: center;    
+    text-wrap: nowrap;
+    overflow: hidden;
+}
+
+.Hcontainer{    
+    overflow: scroll;    
+}
+
+.pageItem {
+    padding: 5px; 
+    padding-left: 15px;
+    padding-right: 25px;
+    cursor: pointer;        
+    position: relative;
+    top: 5px;
+    text-align: center;
+    align-self: center;
+    font-size: large;    
+  }
+
+  
+.pageItem1 {
+    padding:5px; 
+    padding-right: 15px;
+    cursor: pointer;        
+    left: 10px;    
+    position: relative;
+    top: 5px;
+    text-align: center;
+    align-self: center;
+    font-size: large;
+  }
+
+.dts {
+    padding:5px;
+    padding-left:15px;
+    padding-right: 15px;
+    padding-top:8px;
+    cursor: pointer;        
+    position: relative;
+    top: 7px;
+    text-align: center;
+    align-self: center;
+    font-size: var(--fontsize);
+}
+
+.marker{
+    width: 2px;    
+    position: relative;    
+    z-index: 1;
+    top:0px;
+    overscroll-behavior: contain;
+    
+}
+
+.Vcontainer{
+    height: 250px;
+    width: 500px;
+    overflow: scroll;
+}
+
+.row {
+    height: 50px;           
+}
+
+.verticalitems {
+    display: flex;
+    flex-direction:row;
+    width: max-content;   
+    position: relative;
+    left: -2px; 
+    height: 100%;
+}
+
+.verticalheader {
+    position: sticky;
+    left: 0px; 
+    flex-grow: 0;
+    flex-shrink: 0;    
+    z-index: 1;
+    font-size: var(--fontsize);
+}
+
+.rowheader{
+    height: 50px;
+    display: flex;    
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    font-size: var(--fontsize);
+}
+
+.rowheaderlistname {    
+    height: 50px;
+    width: 50px;
+    color: white;
+    flex-shrink: 0;
+    flex-grow: 0;
+    text-align: center;
+    align-content: center;
+    font-size: small;
+    border-right: 1p solid #10C4C8;
+}
+
+.rowheaderitem{
+    height: 50px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-align: center;
+    align-content: center;        
+    font-size: var(--fontsize);       
+}
+
+.ritem {
+    height: 50px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-align: center;
+    align-content: center;            
+    font-size: var(--fontsize);    
+}
+
+:host{
+  display: inline-block;
+  vertical-align: top;
+}
+
+.ritemHeader {    
+    flex-shrink: 0;
+    flex-grow: 0;
+    text-align: center;
+    align-content: center;   
+    font-size: var(--fontsize);       
+}
+
+  .scl ::-webkit-scrollbar {
+    width: 0.3px;
+    height: 0.3px;
+  }
+  
+  .scl ::-webkit-scrollbar-track {
+    background-color: unset;
+  }
+  
+  .scl ::-webkit-scrollbar-thumb {
+    background-color: unset;
+    border-radius: unset;
+  }   

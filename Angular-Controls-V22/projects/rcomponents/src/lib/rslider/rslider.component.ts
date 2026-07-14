@@ -1,0 +1,341 @@
+import { CdkDrag, CdkDragMove, CdkDragRelease, CdkDragStart } from '@angular/cdk/drag-drop';
+import { NgStyle } from '@angular/common';
+import { Component, ElementRef, EventEmitter, forwardRef, Host, HostBinding, Input, OnInit, Output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { RWindowHelper } from '../rwindowObject';
+import { CssUnit, RCssUnitsService, RelativeUnitType } from '../rcss-units.service';
+import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
+
+@Component({
+    selector: 'rslider',
+    imports: [CdkDrag, NgStyle],
+    templateUrl: './rslider.component.html',
+    styleUrl: './rslider.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => RSliderComponent),
+            multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useFactory: (instance: RSliderComponent) => {
+                return {
+                    validate: (control: AbstractControl) => {
+                        return instance.getSyncErrors(control);
+                    }
+                };
+            },
+            multi: true,
+            deps: [forwardRef(() => RSliderComponent)]
+        },
+        {
+            provide: NG_ASYNC_VALIDATORS,
+            useExisting: forwardRef(() => RSliderComponent),
+            multi: true
+        }
+    ]
+})
+export class RSliderComponent extends RBaseComponent<number> implements ControlValueAccessor, OnInit {
+
+  public currentDistance: number = 0;
+  private resize: number = 0;
+
+  public RangeValue: number = 0;
+
+  @ViewChild('slider', { read: ElementRef }) sliderElement!: ElementRef;
+
+  @Input()
+  public ShowDecimalValues: boolean = false;
+
+  @Input()
+  public MinValue: number = 0;
+
+  @Input()
+  public MaxValue: number = 100;
+
+  @Input()
+  IsDisplayValue: boolean = true;
+
+  @Input()
+  EnablePathColor: boolean = true;
+
+  @Input()
+  TrackColor: string = "darkblue";
+
+  @Input()
+  SliderColor: string = "darkblue";
+
+  _sliderBarWidth: string = "200px";
+  _sliderBarWidthVM: string = "200px";
+  _sliderBarWidthValue: number = 200;
+  _totalWidth: string = "240px";
+
+  @Input()
+  set SliderBarWidth(val: string) {
+
+    if(this.ele.nativeElement) {
+      let sh = this.cssunit.ToPxValue(val, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+      this._sliderBarWidthVM = sh + CssUnit.Px.toString();
+      this._totalWidth =  (sh + 40) + CssUnit.Px.toString(); 
+      this._sliderBarWidthValue = sh;
+    }
+
+    this._sliderBarWidth = val;
+  }
+  get SliderBarWidth(): string {
+    return this._sliderBarWidth;
+  }
+
+  _sliderBarHeight: string = "6px";
+  
+  _sliderBarHeightVM: string ="6px";
+
+  @Input()
+  set SliderBarHeight(val: string) {
+    if (this.ele.nativeElement) {
+      let sh = this.cssunit.ToPxValue(val, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
+      if (sh < 2) {
+        sh = 2;
+      }
+      
+      this._sliderBarHeightVM = sh + CssUnit.Px.toString();
+      this._sliderBarHeight = val;
+    }
+  }
+  get SliderBarHeight(): string {
+    return this._sliderBarHeight;
+  }
+
+  _sliderMarkerSize: string = "20px";
+  _sliderMarkerSizeVM: string = "20px";
+  
+  @Input()
+  set SliderMarkerSize(val: string) {
+    if (this.ele.nativeElement) {
+      let sh = this.cssunit.ToPxValue(val, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
+      if (sh < 12) {
+        sh = 12;
+      }
+
+      this._sliderMarkerSizeVM = sh + CssUnit.Px.toString();
+      this._sliderMarkerSize = val;
+    }
+  }
+  get SliderMarkerSize(): string {
+    return this._sliderMarkerSize;
+  }
+
+  
+  @Input()
+  DisplayLabelFontSize: string = "12px";
+
+  @Input()  
+  DisplayLabelColor: string = "#999";
+
+  @Input()
+  DisplayLabelFontFamily: string = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+
+  @Input()
+  DisplayValueForeColor: string = "#000";
+  
+  @Input()
+  IsDisplayLabel: boolean = true;
+
+  @Input()
+  EmptyTrackColor: string = "lightblue";
+
+  private sliderFromStart: boolean = false;
+  private clickonInitHaveValues: boolean = true;
+
+  public SliderValue: number = 0;
+
+  private onChange: Function = (value: number) => { };
+
+  private onTouch: Function = (value: number) => { };
+
+
+  constructor(@Host() private ele: ElementRef, winObj: RWindowHelper, private cssunit: RCssUnitsService) {
+    super(winObj);
+    this.Id = this.winObj.GenerateUniqueId();
+  }
+
+  ngOnInit(): void {
+    if (this.SliderValue == 0) {
+      this.RangeValue = this.MinValue;
+    }
+  }
+
+  writeValue(obj: any): void {
+    if (obj == null)
+      return;
+
+    if (obj < this.MinValue || obj > this.MaxValue) {
+      this.SliderValue = 0;
+      this.RangeValue = 0;
+      throw Error("Invalid Value between slider range");
+      return;
+    }
+
+    let number = Number.parseFloat(obj);
+
+    this.SliderValue = number;
+    let marker = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+
+    let total = this._sliderBarWidthValue - marker + 3;
+
+    let percentage = (this.SliderValue - this.MinValue) / (this.MaxValue - this.MinValue);
+
+    let width = total * percentage;
+
+    this.currentDistance = Number.parseInt(width.toString());
+
+    if (this.sliderElement) {
+      (this.sliderElement.nativeElement as HTMLElement).style.transform = `translateX(${this.currentDistance}px)`;
+    }
+
+    if (this.ShowDecimalValues) {
+      this.RangeValue = parseFloat(parseFloat(this.SliderValue.toString()).toFixed(2));
+    } else {
+      this.RangeValue = parseInt(this.SliderValue.toString());
+    }
+
+    this.valueChanged.emit(this.RangeValue);
+  }
+
+  
+  protected override IsValidatorSupported(): boolean {
+    return true;
+  }
+  
+  protected override GetValidatorValueType(): ValidatorValueType {
+    return ValidatorValueType.Range;
+  }
+
+  protected override getValue() {
+    this.min = this.MinValue;
+    this.max = this.MaxValue;
+    return this.RangeValue;
+  }
+
+  getMarkerTop(): string {
+    if (this.ele.nativeElement) {
+      let markerHeight = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
+      let halfSize = markerHeight / 2;
+      let sliderHeight = this.cssunit.ToPxValue(this.SliderBarHeight, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
+      let top = halfSize - (sliderHeight / 2);
+      return "-" + (top + CssUnit.Px.toString());
+    }
+
+    return "0px";
+  }
+
+  getDisplayValueTop(): string {
+    if (this.ele.nativeElement) {
+      let sliderHeight = this.cssunit.ToPxValue(this.SliderBarHeight, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
+      let top = (sliderHeight / 2);
+      top = 8 - top;
+      return "-" + (top + CssUnit.Px.toString());
+    }
+
+    return "0px";
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this._formDisabled = isDisabled ? true : null;
+  }
+
+  dragStarted($event: CdkDragStart) {
+    this.sliderFromStart = true;
+  }
+
+  clickOnBar($event: MouseEvent) {
+
+    $event.preventDefault();
+    $event.stopPropagation();
+
+    if(this.IsReadOnly || this.IsDisabled)
+      return;
+
+    let marker = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+
+    let total = this._sliderBarWidthValue - marker + 3;
+    this.currentDistance = ($event as MouseEvent).offsetX;
+
+    this.AdjustSlideBasedOnCurrentDistance(total);
+
+    (this.sliderElement.nativeElement as HTMLElement).style.transform = "0px";
+    (this.sliderElement.nativeElement as HTMLElement).style.transform = "translateX(" + this.currentDistance + "px)"; //this.currentDistance+"px";
+  }
+
+  dragMove($event: CdkDragMove) {
+
+    $event.event.preventDefault();
+    $event.event.stopPropagation();
+
+    if(this.IsReadOnly || this.IsDisabled) {
+      this.TranslateX();
+      return;
+    }
+    
+    let marker = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+
+    let total = this._sliderBarWidthValue - marker + 3;
+
+    if (this.sliderFromStart) {
+      this.resize = this.currentDistance;
+      this.sliderFromStart = false;
+    }    
+
+    this.currentDistance = this.resize + $event.distance.x;
+    this.AdjustSlideBasedOnCurrentDistance(total);
+    this.TranslateX();  
+  }
+
+  private TranslateX() {
+    (this.sliderElement.nativeElement as HTMLElement).style.transform = "0px";
+    (this.sliderElement.nativeElement as HTMLElement).style.transform = "translateX(" + this.currentDistance + "px)";
+  }
+
+  private AdjustSlideBasedOnCurrentDistance(total: number) {
+
+    if (this.currentDistance > total) {
+      this.currentDistance = total;
+    }
+
+    if (this.currentDistance < 0) {
+      this.currentDistance = 0;
+    }
+
+    this.SliderValue = Number.parseInt(((this.currentDistance * 100) / total).toString());
+
+    let percentageValue = (((this.MaxValue - this.MinValue) * this.SliderValue) / 100) + this.MinValue;
+
+    if (this.ShowDecimalValues) {
+      this.RangeValue = parseFloat(parseFloat(percentageValue.toString()).toFixed(2));
+    } else {
+      this.RangeValue = parseInt(percentageValue.toString());
+    }
+
+    this.notifyToModel();
+  }
+
+  notifyToModel() {
+    this.onChange(this.RangeValue);
+    this.onTouch(this.RangeValue);
+    this.valueChanged.emit(this.RangeValue);
+  }
+
+  dragEnded($event: CdkDragRelease) {
+    
+  }
+}

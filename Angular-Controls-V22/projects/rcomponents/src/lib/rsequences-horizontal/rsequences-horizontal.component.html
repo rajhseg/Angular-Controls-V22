@@ -1,0 +1,20 @@
+
+
+<div  [style.font-family]="FontFamily" [id]="Id" style="width: fit-content;"
+  [ngStyle]="{ 'pointer-events': (IsDisabled || IsReadOnly) ? 'none' : '', 'user-select' : IsDisabled ? 'none' : 'auto' }">
+  @for (item of Items; track item) {
+    <rsequence-horizontal style="float: left;" [Item]="item"
+      [ActiveForeColor]="ActiveForeColor"
+      [CompletedForeColor]="CompletedForeColor"
+      [FontSize]="FontSize"
+      [NumberFontSize]="NumberFontSize"
+      [PendingForeColor]="PendingForeColor"
+      [EnableEmptyItemOnTopSide]="!_allItemsAreInBottom"
+      [StripLineColor]="StripLineColor" [StepNo]= "item.StepNo"
+      [IsDisplayStepNo]="IsDisplayStepNo"
+     [StepNoForeColor]="ApplyItemForeColorToStepNo ? item.IsCompleted ? CompletedForeColor : 
+                            item.IsActive ? ActiveForeColor : PendingForeColor : 
+                        StepNoForeColor"     
+    [ContentWidth]="ContentWidth +'px'"></rsequence-horizontal>
+  }
+</div>

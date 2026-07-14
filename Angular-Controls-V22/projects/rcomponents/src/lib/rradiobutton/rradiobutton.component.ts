@@ -1,0 +1,200 @@
+import { NgClass, NgStyle } from '@angular/common';
+import { Component, DestroyRef, ElementRef, EventEmitter, forwardRef, HostBinding, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { RadioButtonService, RadioEventArgs } from './rradiobutton.service';
+import { RWindowHelper } from '../rwindowObject';
+import { CssUnit, RCssUnitsService, RelativeUnitType } from '../rcss-units.service';
+import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
+
+@Component({
+    selector: 'rradiobutton',
+    imports: [NgClass, NgStyle],
+    templateUrl: './rradiobutton.component.html',
+    styleUrl: './rradiobutton.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => RRadiobuttonComponent),
+            multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useFactory: (instance: RRadiobuttonComponent) => {
+                return {
+                    validate: (control: AbstractControl) => {
+                        return instance.getSyncErrors(control);
+                    }
+                };
+            },
+            multi: true,
+            deps: [forwardRef(() => RRadiobuttonComponent)]
+        },
+        {
+            provide: NG_ASYNC_VALIDATORS,
+            useExisting: forwardRef(() => RRadiobuttonComponent),
+            multi: true
+        }]
+})
+export class RRadiobuttonComponent extends RBaseComponent<RadioEventArgs> implements ControlValueAccessor{
+
+  @Input()
+  IsChecked: boolean = false;
+
+  @Input()
+  DisplayText: string = "";
+
+  @Input()
+  DisplayTextRightAlign: boolean = true;
+
+  @Input()
+  Font: string = '';
+
+  @Input()
+  GroupName: string = "";
+
+  @Output()
+  OnCheckChanged = new EventEmitter<RadioEventArgs>();
+
+
+  @Input()
+  DesignWidth: string = '16px';
+
+  get OuterCircle(): string {
+    let val = this.cssUnitSer.ToPxValue(this.DesignWidth, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+    return val+CssUnit.Px.toString();
+  }
+
+  get InnerCircle(): string {
+    let val = this.cssUnitSer.ToPxValue(this.DesignWidth, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+    return (val - 4) +CssUnit.Px.toString();
+  }
+
+  @Input()
+  Color: string = "#00c7ba";
+
+  @Output()
+  OnRadioButtonClick = new EventEmitter<RadioEventArgs>();
+
+  private onChange: Function = () => { };
+
+  private onTouch: Function = () => { };
+
+  @Input()
+  LabelColor: string = "black";
+
+  constructor(private service: RadioButtonService, private windowHelper: RWindowHelper,
+    private cssUnitSer: RCssUnitsService, private ele: ElementRef, private destroyRef: DestroyRef
+  ) {
+    super(windowHelper);
+    this.service.AddInstance(this);
+    this.Id = this.windowHelper.GenerateUniqueId();
+
+    this.destroyRef.onDestroy(this.OnDestroy.bind(this));
+  }
+
+  OnDestroy() {
+    this.service.RemoveInstance(this);
+  }
+
+  resetValueForGroupedCheckbox($event: Event | undefined, groupname: string) {
+    this.service.ResetRadioButtonsForGroup($event, groupname, this);
+  }
+
+  check(event: Event) {
+    if(!this.IsReadOnly && !this.IsDisabled) {
+      this.toggleCheck(event);
+    } 
+  }
+
+  private toggleCheck($event: Event) {
+    if(!this.IsReadOnly) {
+      let checkValue = !this.IsChecked;
+
+      if (checkValue && this.GroupName != "" && this.GroupName != null && this.GroupName != undefined) {
+        this.resetValueForGroupedCheckbox($event, this.GroupName);
+      }
+
+      this.IsChecked = checkValue;
+      let args=new RadioEventArgs($event, this.IsChecked);
+      this.onChange(this.IsChecked);
+      this.onTouch(this.IsChecked);
+      this.OnCheckChanged.emit(args);
+      this.OnRadioButtonClick.emit(args);
+      this.valueChanged.emit(args);
+    }
+  }
+
+  protected override IsValidatorSupported(): boolean {
+    return true;
+  }
+  
+  protected override GetValidatorValueType(): ValidatorValueType {
+   return ValidatorValueType.OnlyRequired; 
+  }
+
+  protected override getValue() {
+    return this.IsChecked;
+  }
+
+  emitValueToModel($event: Event | undefined){
+    let args=new RadioEventArgs($event, this.IsChecked);
+    this.onChange(this.IsChecked);
+    this.onTouch(this.IsChecked);
+    this.OnCheckChanged.emit(args);
+    this.valueChanged.emit(args);
+  }
+
+  writeValue(obj: any): void {
+    if (obj == null)
+      return;
+
+    let checkValue: boolean = false;
+
+    if(obj instanceof RadioEventArgs){
+      checkValue = obj.isChecked;
+    }
+    else if (typeof obj === 'boolean') {
+      checkValue = obj;
+    }
+    else if (typeof obj === 'string') {
+      if (obj.toLowerCase() == 'true') {
+        checkValue = true;
+      } else {
+        checkValue = false;
+      }
+    }
+
+    
+    let sameValue = false;
+
+    if(this.IsChecked==checkValue)
+      sameValue = true;
+    
+    if(!sameValue) {
+      
+      if (checkValue && this.GroupName != "" && this.GroupName != null && this.GroupName != undefined) {
+        this.resetValueForGroupedCheckbox(undefined, this.GroupName);
+      }
+
+      this.IsChecked = checkValue;
+      let args=new RadioEventArgs(undefined, this.IsChecked);
+    
+      this.OnCheckChanged.emit(args);
+      this.valueChanged.emit(args);
+    }
+
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouch = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this._formDisabled = isDisabled ? true : null;
+  }
+  
+}

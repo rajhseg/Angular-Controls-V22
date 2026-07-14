@@ -1,0 +1,45 @@
+
+<div style="display: flex;" [ngStyle]="{'font-size': FontSize, '--fontsize': FontSize, '--nfontsize': NumberFontSize }">
+  @if (Item?.IsLeftAlign) {
+    <div class="leftContent"
+        [ngStyle]="{'color': Item?.IsActive ? ActiveForeColor : (Item?.IsCompleted ? 
+                            CompletedForeColor : PendingForeColor),
+            'width': ContentWidth,
+            'box-shadow': EnableShadow ? 'rgba(0, 0, 0, 0.24) 0px 3px 8px' : '', 
+            'background-color': Item?.IsActive ? ActiveBackgroundColor : Item?.IsCompleted ?  CompletedBackgroundColor : PendingBackgroundColor}">
+      {{Item?.DisplayText}}
+    </div>
+  }
+  @if (EnableEmptyItemOnLeftSide && !Item?.IsLeftAlign) {
+    <div class="leftemptyContent" [ngStyle]="{'width': ContentWidth}">
+    </div>
+  }
+  <div>
+    <div class="tline" [style.backgroundColor]="StripLineColor"></div>
+        <div class="circle" [ngStyle]="{ 
+            'width':  IsDisplayStepNo ? '20px': '15px',
+            'height': IsDisplayStepNo ? '20px': '15px',
+            'left': IsDisplayStepNo ? '-2px' : '',            
+            'background-color': Item?.IsActive ? ActiveBackgroundColor : Item?.IsCompleted ? CompletedBackgroundColor : PendingBackgroundColor}">
+
+      @if (IsDisplayStepNo) {
+        <span [ngStyle]="{'color': StepNoForeColor}"
+        class="number">{{Item?.StepNo}}</span>
+      }
+
+    </div>
+    @if (!Item?.IsLastItem) {
+      <div class="bline" [style.backgroundColor]="StripLineColor"></div>
+    }
+  </div>
+  @if (!Item?.IsLeftAlign) {
+    <div class="content"
+        [ngStyle]="{'color': Item?.IsActive ? ActiveForeColor : (Item?.IsCompleted ? 
+                            CompletedForeColor : PendingForeColor),
+            'box-shadow': EnableShadow ? 'rgba(0, 0, 0, 0.24) 0px 3px 8px' : '', 
+            'width': ContentWidth,
+            'background-color': Item?.IsActive ? ActiveBackgroundColor : Item?.IsCompleted ?  CompletedBackgroundColor : PendingBackgroundColor}">
+      {{Item?.DisplayText}}
+    </div>
+  }
+</div>

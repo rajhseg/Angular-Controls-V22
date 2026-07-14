@@ -1,0 +1,664 @@
+import { NgStyle } from '@angular/common';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { RBarChartItem, RPopupChartItem, RSpaceBetweenBars } from '../rmodels/RBarChartItem';
+import { RWindowHelper } from '../rwindowObject';
+import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseComponent';
+
+@Component({
+    selector: 'rbarchart-horizontal',
+    imports: [NgStyle],
+    templateUrl: './rbarchart-horizontal.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrl: './rbarchart-horizontal.component.css'
+})
+export class RBarChartHorizontalComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
+
+  private _width: number = 300;
+  private _height: number = 300;
+
+  private _xAxisTitle: string = "";
+  private _yAxisTitle: string = "";
+
+  private _textColor: string = "gray";
+
+  @Input()
+  EnableBorder: boolean = false;
+
+  @Input()
+  BorderColor: string = 'lightgray';
+
+  @Input()
+  MarginLeft: number = 20;
+
+  @Input()
+  MarginRight: number = 20;
+
+  @Input()
+  MarginTop: number = 20;
+
+  @Input()
+  MarginBottom: number = 10;
+
+  @Input()
+  public set TextColor(val: string) {
+    this._textColor = val
+  }
+  public get TextColor(): string {
+    return this._textColor;
+  }
+
+  @Input()
+  public set XAxisTitle(val: string) {
+    this._xAxisTitle = val;
+  }
+  public get XAxisTitle(): string {
+    return this._xAxisTitle;
+  }
+
+  @Input()
+  public set YAxisTitle(val: string) {
+    this._yAxisTitle = val;
+  }
+  public get YAxisTitle(): string {
+    return this._yAxisTitle;
+  }
+
+  private _noOfSplitInValueAxis: number = 4;
+
+  @Input()
+  public set NoOfSplitInValueAxis(val: number) {
+
+    if (val < 3) {
+      val = 3;
+    }
+
+    this._noOfSplitInValueAxis = val;
+  }
+  public get NoOfSplitInValueAxis(): number {
+    return this._noOfSplitInValueAxis;
+  }
+
+  @Input()
+  public set Width(val: number) {
+    this._width = val;
+  }
+  public get Width(): number {
+    return this._width;
+  }
+
+  private _gapBetweenBars: RSpaceBetweenBars = RSpaceBetweenBars.OneBar;
+
+  @Input()
+  public set GapBetweenBars(val: RSpaceBetweenBars) {
+    this._gapBetweenBars = val;
+  }
+  public get GapBetweenBars(): number {
+    return this._gapBetweenBars;
+  }
+
+
+  private _marginX: number = 50;
+
+  @Input()
+  public set MarginX(val: number) {
+    this._marginX = val;
+  }
+  public get MarginX(): number {
+    return this._marginX;
+  }
+
+
+  private _marginY: number = 50;
+
+  @Input()
+  public set MarginY(val: number) {
+    this._marginY = val;
+  }
+  public get MarginY(): number {
+    return this._marginY;
+  }
+
+
+  @Input()
+  public set Height(val: number) {
+    this._height = val;
+  }
+  public get Height(): number {
+    return this._height;
+  }
+
+  private _yAxisItemNames: string[] = [];
+
+  @Input()
+  public set yAxisItemNames(val: string[]) {
+    if (val == undefined || val == null || val.toString() != this._yAxisItemNames.toString()) {
+      this._yAxisItemNames = val;
+    }
+  }
+  public get yAxisItemNames(): string[] {
+    return this._yAxisItemNames;
+  }
+
+  private _dataListHeight: number = 30;
+
+  @Input()
+  public set DataListHeight(val: number) {
+    this._dataListHeight = val;
+  }
+  public get DataListHeight(): number {
+    return this._dataListHeight;
+  }
+
+  private _columns: RBarChartItem[] = [];
+
+  @Input()
+  public set Columns(val: RBarChartItem[]) {
+    if (!this.IsBarItemListEqual(val, this._columns)) {
+      this._columns = val;
+    }
+  }
+  public get Columns(): RBarChartItem[] {
+    return this._columns;
+  }
+
+  private PopupItems: RPopupChartItem[] = [];
+
+  @ViewChild('rbar', { read: ElementRef<HTMLCanvasElement>, static: false })
+  private bar: ElementRef<HTMLCanvasElement> | undefined = undefined;
+
+  private context: CanvasRenderingContext2D | null = null;
+
+  public IsRendered: boolean = false;
+
+  constructor(winObj: RWindowHelper, private cdr: ChangeDetectorRef) {
+    super(winObj);
+    this.Id = this.winObj.GenerateUniqueId();
+    this.HostElementId = this.winObj.GenerateUniqueId();
+  }
+
+  
+  trackById(index: number, item: RBarChartItem){
+    return item.Id;
+  }
+  
+  ngAfterViewInit(): void {
+    if (this.winObj.isExecuteInBrowser()) {
+      if (this.bar != undefined) {
+        this.IsInitialized = true;
+        this.context = this.bar.nativeElement.getContext('2d');
+        this.bar.nativeElement.onmousemove = this.MouseMove.bind(this);
+        this.RenderBarChart();
+      }
+    }
+  }
+
+
+  private MouseMove(event: MouseEvent) {
+
+    let totalWidth = this.Width + this.MarginLeft + this.MarginRight;
+    let totalHeight = this.Height + this.MarginTop + this.MarginBottom;
+
+    if (this.context && this.bar) {
+       
+      this.ResetCanvasContext(this.context);
+      
+      this.context?.beginPath();
+      this.context.clearRect(0, 0, totalWidth, totalHeight);
+      this.context.closePath();
+
+      this.RenderBarChart();
+
+      let item = this.MouseOnTopOfItem(event.offsetX, event.offsetY);
+
+      if (item) {
+        let lineItem = item.Item as RBarChartItem;
+        let x = event.offsetX + 10;
+        let y = event.offsetY;
+        let met1 = this.context.measureText(this.yAxisItemNames[item.ValueIndex].toString());
+        let met = this.context.measureText(lineItem.Values[item.ValueIndex].toString());
+
+        let xtitle = this.context.measureText(this.XAxisTitle);
+        let ytitle = this.context.measureText(this.YAxisTitle);
+
+        let w1 = met.width + xtitle.width;
+        let w2 = met1.width + ytitle.width;
+
+        let width = Math.max(w1, w2);
+
+        let textWidth = 25 + width;
+
+        if (x + textWidth > this.Width) {
+          x = x - textWidth - 20;
+        }
+
+        let height = 40;
+        if (y + height > this.Height) {
+          y = y - height;
+        }
+
+        this.context.beginPath();
+        this.context.save();
+        this.context.globalAlpha = this.PopupBackgroundOpacity;
+        this.context.fillStyle = this.PopupBackColor;
+             
+        if(this.EnableBorderForPopup) {
+          this.context.strokeStyle = this.PopupBorderColor;
+        }
+
+        this.context.roundRect(x, y, textWidth, 40, 4);
+        this.context.fill();
+        this.context.stroke();
+        this.context.restore();
+        this.context.closePath();
+
+        this.context.beginPath();
+        this.context.save();
+
+        this.context.strokeStyle = this.PopupForeColor ?? item.ItemColor;
+        this.context.fillStyle = this.PopupForeColor ?? item.ItemColor;
+        this.context.fillText(" " + this.XAxisTitle + " : " + lineItem.Values[item.ValueIndex], x + 5, y + 15);
+        this.context.fillText(" " + this.YAxisTitle + " : " + this.yAxisItemNames[item.ValueIndex], x + 5, y + 35);
+
+        this.context.stroke();
+        this.context.restore();
+        this.context?.closePath();
+      }
+    }
+  }
+
+  private MouseOnTopOfItem(x: number, y: number): RPopupChartItem | undefined {
+
+    let boundaryRange = 0;
+
+    for (let index = 0; index < this.PopupItems.length; index++) {
+      const element = this.PopupItems[index];
+      if (x >= element.x1 - boundaryRange && x <= element.x2 + boundaryRange
+        && y >= element.y1 - boundaryRange && y <= element.y2 + boundaryRange) {
+        return element;
+      }
+    }
+
+    return undefined;
+  }
+
+
+  private getWidthFromString(value: string): number {
+    if (this.context) {
+      let metrics = this.context.measureText(value);
+      return metrics.width;
+    }
+
+    return 50;
+  }
+
+  private getTextHeight(met: TextMetrics) {
+    return met.actualBoundingBoxAscent + met.actualBoundingBoxDescent;
+  }
+
+  private getNameIndicator(itm: RBarChartItem) {
+    return typeof itm.barItemsBackColor === 'string' ? itm.barItemsBackColor : itm.barItemsBackColor.length > 0 ?
+      itm.barItemsBackColor[0] : "orangered";
+  }
+
+  isPropString(prop: any) {
+    return typeof prop === 'string';
+  }
+
+  private EnableGlassyEffectOnTopOfChart() {
+    if (this.context && this.bar && this.GlassyEffect) {
+
+      let x = 0, y = 0, gwidth = this.Width + this.MarginLeft + this.MarginRight,
+        gheight = this.Height + this.MarginTop + this.MarginBottom;
+
+      this.context.beginPath();
+      this.context.save();
+      this.context.globalAlpha = 0.2;
+      this.context.filter = "blur(10px)";
+      this.context.fillStyle = this.GlassyEffectColor;
+      this.context.roundRect(x, y, gwidth, gheight, 7);
+      this.context.fill();
+      this.context.restore();
+      this.context.closePath();
+
+      // Light border
+      this.context.strokeStyle = "rgba(255, 255, 255, 0.6)";
+      this.context.lineWidth = 1.5;
+      this.context.strokeRect(x, y, gwidth, gheight);
+
+      // Soft inner highlight
+      this.context.fillStyle = "rgba(255, 255, 255, 0.1)";
+      this.context.fillRect(x, y, gwidth, gheight);
+    }
+  }
+
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    if(Object.keys(changes).length > 0 && this.IsInitialized) {
+      this.Render();
+    }
+  }
+  
+  public Render() {
+   this.RenderBarChart();
+  }
+
+  private RenderBarChart() {
+    this.IsRendered = false;
+
+    const totalWidth = this.Width + this.MarginLeft + this.MarginRight;
+    const totalHeight = this.Height + this.MarginTop + this.MarginBottom;
+
+    if (this.bar && this.context && this.Columns.length > 0 && this.yAxisItemNames.length > 0) {
+      let min: number | undefined = undefined;
+      let max: number | undefined = undefined;
+
+      this.PopupItems = [];
+       
+      this.ResetCanvasContext(this.context);
+      this.context.clearRect(0, 0, totalWidth, totalHeight);
+      this.EnableGlassyEffectOnTopOfChart();
+
+      let spaceFromRightXAxis = 25;
+
+      for (let index = 0; index < this.Columns.length; index++) {
+        const element = this.Columns[index];
+        if (element) {
+
+          let list: number[] = element.Values;
+          if (min != undefined && max != undefined) {
+            min = this.MinArray([this.MinArray(list), min]);
+            max = this.MaxArray([this.MaxArray(list), max]);
+          } else {
+            min = this.MinArray(list);
+            max = this.MaxArray(list);
+          }
+        }
+      }
+
+      var distance: number = 0;
+      var itemCount = this.yAxisItemNames.length;
+
+      if (min != undefined && max != undefined) {
+        distance = (max) / this.NoOfSplitInValueAxis
+      }
+
+      distance = this.GetRoundToTenDigit(distance);
+
+      var MinLimit = 0;
+      var MaxLimit = distance * this.NoOfSplitInValueAxis;
+
+      var StartX: number = this._marginX + this.MarginLeft;
+      var StartY: number = this.Height + this.MarginTop - this._marginY;
+
+      /* Draw Vertical Line */
+      this.context.beginPath();
+      this.context.moveTo(StartX, StartY);
+      this.context.lineTo(StartX, this.MarginTop);
+      this.context.strokeStyle = this.TextColor;
+      this.context.stroke();
+
+      /* Draw Horizontal Line */
+      this.context.moveTo(StartX, StartY);
+      this.context.lineTo(this.MarginLeft + this.Width, StartY);
+      this.context.strokeStyle = this.TextColor;
+      this.context.stroke();
+      this.context.closePath();
+
+      /* Draw Title on x-axis */
+      this.context.beginPath();
+
+      let met = this.context.measureText(this.XAxisTitle);
+      let xTextPoint = (this.Width - this.MarginX) / 2 + (this.MarginX/1.5) + this.MarginLeft;
+      xTextPoint = xTextPoint - (met.width / 2);
+      let yTextPoint = this.Height + this.MarginTop - 5;
+
+      this.context.save();
+      this.context.fillStyle = this.TextColor;
+      this.context.fillText(this.XAxisTitle, xTextPoint, yTextPoint);
+      this.context.restore();
+
+      this.context.closePath();
+
+      /* Draw Title On Y axis */
+      this.context.beginPath();
+      this.context.save();
+
+      met = this.context.measureText(this.XAxisTitle);
+      yTextPoint = (this.Height - this.MarginY) / 2  - this.MarginBottom;
+      yTextPoint = yTextPoint + this.MarginTop + this.MarginBottom + (met.width / 2);
+      xTextPoint = this.MarginLeft + 15;
+      this.context.fillStyle = this.TextColor;
+      this.context.translate(xTextPoint, yTextPoint);
+      this.context.rotate((Math.PI / 180) * 270);
+      this.context.fillText(this.YAxisTitle, 0, 0);
+
+      this.context.restore();
+      this.context.closePath();
+
+
+      /* Draw X axis line */
+      let hDistance = (this.Width - this.MarginX - spaceFromRightXAxis) / this.NoOfSplitInValueAxis;
+
+      /* Draw X Axis */
+      for (let index = 0; index <= this.NoOfSplitInValueAxis; index++) {
+        let xDisplayValue = Math.round(distance * index);
+        let xPoint = Math.round((hDistance * index) + this.MarginX + this.MarginLeft);
+
+        this.VerticalLineInXAxis(xPoint, StartY);
+        this.DrawVerticalLine(xPoint, 0);
+        this.VerticalLineDisplayValueInXAxis(xDisplayValue.toString(), xPoint, StartY);
+      }
+
+
+      /* Draw the x Axis */
+      var eachBarGroupLength = (this.Height - this.MarginY) / itemCount;
+      var eachBarLength = eachBarGroupLength / (this.Columns.length + this.GapBetweenBars);
+      let yPoint = StartY;
+
+      for (let index = 0; index < itemCount; index++) {
+
+        let yAxisName = this.yAxisItemNames[index];
+
+        yPoint -= this.GetGapBetweenBars(this.GapBetweenBars, eachBarLength);
+
+        let nameHeight = 6;
+        let nameWidth = this.context.measureText(yAxisName);
+        let remWidth = eachBarGroupLength - nameHeight - (eachBarLength * this.GapBetweenBars);
+
+        let halfYPoint = remWidth / 2;
+
+        /* Draw name on YAxis */
+        this.DrawYAxisName(yAxisName, this.MarginLeft + this._marginX - nameWidth.width - 10, yPoint - halfYPoint);
+
+        for (let x = 0; x < this.Columns.length; x++) {
+          const element = this.Columns[x];
+          let value = element.Values[index];
+
+          if (value) {
+            let xEndPoint = this.GetXEndPoint(value, distance, itemCount, hDistance);
+
+            let color = typeof element.barItemsBackColor === 'string' ?
+              element.barItemsBackColor : element.barItemsBackColor.length > 0 && element.barItemsBackColor[index] ?
+                element.barItemsBackColor[index] : "purple";
+
+            /* Draw Bar */
+            this.DrawBar(this.MarginX + this.MarginLeft, yPoint - eachBarLength, xEndPoint, eachBarLength, color);
+
+            this.PopupItems.push(new RPopupChartItem(this.MarginX + this.MarginLeft, yPoint - eachBarLength, this.MarginX + this.MarginLeft + xEndPoint,
+              yPoint, element, index, index, color));
+
+            /* Draw Text on top of Bar */
+            let foreColor = typeof element.barItemsForeColor === 'string' ?
+              element.barItemsForeColor : element.barItemsForeColor.length > 0 && element.barItemsForeColor[index] ?
+                element.barItemsForeColor[index] : this.TextColor;
+
+            let metrics = this.context.measureText(value.toString());
+            let xTextPoint = xEndPoint + this.MarginX - metrics.width - 15;
+            let yTextPoint = yPoint - (eachBarLength / 3);
+
+            let xTextOnBar = 0;
+            if (xTextPoint <= (this.MarginX + this.MarginLeft)) {
+              xTextOnBar = this.MarginX + this.MarginLeft + xEndPoint + 5;
+              foreColor = this.TextColor;
+            } else {
+              xTextOnBar = xTextPoint;
+            }
+
+            this.DrawText(value.toString(), xTextOnBar, yTextPoint, foreColor);
+          }
+
+          yPoint -= eachBarLength;
+        }
+
+        yPoint -= this.GetGapBetweenBars(this.GapBetweenBars, eachBarLength);
+
+      }
+
+      this.IsRendered = true;
+      this.cdr.detectChanges();
+    }
+  }
+
+  private GetRoundToTenDigit(distance: number) {
+    let j = distance / 10;
+    let roundedJ = Math.ceil(j);
+    distance = roundedJ * 10;
+
+    return distance;
+  }
+
+  private GetXEndPoint(displayValue: number, distance: number, itemcount: number, hDistance: number) {
+    let index = (displayValue / distance);
+    let xPoint = Math.round((hDistance * index));
+    return xPoint;
+  }
+
+  private DrawYAxisName(name: string, xPoint: number, yPoint: number) {
+    if (this.context) {
+      let startY = yPoint;
+      this.context.beginPath
+      this.context.moveTo(xPoint, startY);
+      this.context.fillStyle = this.TextColor;
+      this.context.fillText(name, xPoint, startY);
+      this.context.fill();
+      this.context.strokeStyle = this.TextColor;
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private DrawBar(startX: number, startY: number, xdistance: number, yDistance: number, color: string) {
+    if (this.context) {
+      this.context.beginPath();
+      this.context.fillStyle = color;
+      this.context.fillRect(startX, startY, xdistance, yDistance);
+      this.context.fill();
+      this.context.closePath();
+    }
+  }
+
+  private VerticalLineDisplayValueInXAxis(value: string, x: number, ypoint: number) {
+    if (this.context) {
+      this.context.beginPath();
+      let metrics = this.context.measureText(value);
+
+      let StartY = ypoint + 15;
+      let StartX = x - (metrics.width / 2);
+
+      this.context.fillStyle = this.TextColor;
+      this.context.moveTo(StartX, StartY);
+      this.context.fillText(value, StartX, StartY);
+      this.context.fill();
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private DrawVerticalLine(x: number, ypoint: number) {
+    if (this.context) {
+      this.context.beginPath();
+      let startY = ypoint + this.MarginTop;
+      let endY = this.Height + this.MarginTop - this._marginY;
+      this.context.lineWidth = 0.4;
+      this.context.strokeStyle = this.TextColor;
+      this.context.moveTo(x, startY);
+      this.context.lineTo(x, endY);
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private VerticalLineInXAxis(x: number, ypoint: number) {
+    if (this.context) {
+      this.context.beginPath();
+      let StartY = ypoint - 5;
+      let StartX = x;
+      let EndY = ypoint + 5;
+      let EndX = x;
+
+      this.context.strokeStyle = this.TextColor;
+      this.context.moveTo(StartX, StartY);
+      this.context.lineTo(EndX, EndY);
+
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private DrawText(text: string, x: number, y: number, forecolor: string, rotate: number | undefined = undefined) {
+    if (this.context) {
+      this.context.beginPath();
+
+      this.context.strokeStyle = forecolor;
+      this.context.fillStyle = forecolor;
+      this.context.fillText(text, x, y);
+
+      if (rotate != undefined)
+        this.context.rotate(rotate);
+
+      this.context.fill();
+      this.context.stroke();
+
+      this.context.closePath();
+    }
+  }
+
+  private MinArray(array: number[]): number {
+    return array.reduce((x, y) => {
+      return x < y ? x : y;
+    });
+  }
+
+  private MaxArray(array: number[]): number {
+    return array.reduce((x, y) => {
+      return x > y ? x : y;
+    })
+  }
+
+  private IsBarItemListEqual(a: RBarChartItem[], b: RBarChartItem[]) {
+
+    if ((a == null || a == undefined) && (b == null || b == undefined))
+      return true;
+
+    if (a == null || b == null || a == undefined || b == undefined)
+      return false;
+
+    if (a.length != b.length)
+      return false;
+
+    for (let index = 0; index < a.length; index++) {
+      let element1 = a[index];
+      let element2 = b[index];
+
+      if (element1.DisplayName != element2.DisplayName ||
+        element1.barItemsBackColor.toString() != element2.barItemsBackColor.toString() ||
+        element1.barItemsForeColor.toString() != element2.barItemsForeColor.toString() ||
+        element1.Values.toString() != element2.Values.toString()) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+}

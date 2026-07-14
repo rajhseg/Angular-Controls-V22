@@ -1,0 +1,85 @@
+
+@if (IsWindowsOs || IsLinuxOs) {
+  <div #startElement style="position: relative;"  [style.font-family]="FontFamily" [id]="Id"
+    [ngStyle]="{'pointer-events': (IsReadOnly || IsDisabled) ? 'none': '', 'user-select': IsDisabled ? 'none': 'auto'}"
+    class="rcal dropdown rcalenderWindowsClose"
+    >
+    <div class="rcalinputdiv" style="display: flex;flex-direction: row;" [ngStyle]="{'user-select': IsDisabled ? 'none': ''}">
+        <input id="{{'inp_'+Id}}" [ngStyle]="{'height': Height, 'width': Width, 'font': Font, 'font-size': FontSize,
+                            '--pleft': PaddingLeft, '--pright': PaddingRight,
+                            'pointer-events':(IsDisabled || IsReadOnly) ? 'none': '',
+                            'user-select': (IsDisabled) ? 'none' : 'auto' }"
+        [readonly]="IsReadOnly" [attr.disabled]="IsDisabled || null"
+        class="calendarinput"  type="text"
+        (click)="openCalenderFromInput($event)"
+        (blur)="OnBlur($event)"
+        [(ngModel)]="Value" />
+        <div class="calIconContainer" #openbtn (click)="openCalender($event)"
+          [ngClass]="{'dis': (IsDisabled || IsReadOnly) }">
+          @if (IsWindowsOs || IsLinuxOs) {
+            <b [ngStyle]="{ 'font-size': IconSize, 'top': TopPx }"
+            [ngClass]="{ 'calIcon': IsWindowsOs, 'calIconLinux': IsLinuxOs}">&#9782;</b>
+          }
+        </div>
+      </div>
+      <div class="calender" #calmodal [hidden]="!IsCalenderOpen"
+            [ngStyle]="{
+                        'width': DDEWidth, 'height': DDEHeight, 
+                        'top':DDETop, 'bottom': DDEBottom,
+                        'left': DDELeft, 'right': DDERight,
+                        'font-size': '12px'
+                        }">
+        <div class="week">
+          <div>
+            <a (click)="previousMonth($event)" class="atag previous around">&#8249;</a>
+          </div>
+          <div class="mnyr">
+            <rdropdown #monthdropdown [IsDropDownOpen]="IsMonthDropdownOpen" [ParentComponent]="this"
+              [EnableFilterOption]="EnableFilterOptionForMonth"
+              (Closed)="isMonthDropdownClosed($event)" (Opened)="isMonthDropdownOpened($event)"
+              [IsChildOfAnotherControl]="isDropdownChild" [IsMulti]="false" (valueChanged)="changeMonth($event)"
+              [(ngModel)]="month" [Items]="monthNames"
+              [Width]="'52px'" [DropDownContentWidth]="'77px'"
+              [ParentDropDownId]="Id"
+              [DropDownContentHeight]="'150px'">
+            </rdropdown>
+          </div>
+          <div class="mnyr">
+            <rdropdown #yeardropdown [IsDropDownOpen]="IsYearDropdownOpen" [ParentComponent]="this"
+              [EnableFilterOption]="EnableFilterOptionForYear"
+              [IsChildOfAnotherControl]="isDropdownChild" (valueChanged)="changeYear($event)" [IsMulti]="false"
+              [(ngModel)]="year" [Items]="totalYears"
+              [Width]="'52px'" [DropDownContentWidth]="'77px'"
+              [ParentDropDownId]="Id"
+              [DropDownContentHeight]="'150px'">
+            </rdropdown>
+          </div>
+          <div>
+            <a (click)="nextMonth($event)" class="atag next around">&#8250;</a>
+          </div>
+        </div>
+        <div class="week">
+          <div class="day dayheader">Sun</div>
+          <div class="day dayheader">Mon</div>
+          <div class="day dayheader">Tue</div>
+          <div class="day dayheader">Wed</div>
+          <div class="day dayheader">Thu</div>
+          <div class="day dayheader">Fri</div>
+          <div class="day dayheader">Sat</div>
+        </div>
+        @for (week of currentMonth?.weeks; track week) {
+          <div class="week">
+            @for (day of week.days; track day) {
+              <div (click)="selectDate($event, day)" class="day"
+                [ngClass]="{ 'notCurrentMonth': !day.isActiveMonth}">
+                <div [ngClass]="{'selday':day.isSelected, 'notactive': !day.isActiveMonth}"
+                  [ngStyle]="{'backgroundColor': day.isSelected ? SelectedItemBackGroundColor : ''}">
+                  {{day.num}}
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }

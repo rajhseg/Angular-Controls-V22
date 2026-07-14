@@ -1,0 +1,148 @@
+.progressbar_infinite {
+    border: 10px solid red;
+    border-radius: 50%;
+    animation: progress 3s linear infinite;
+    background: transparent;
+    z-index: 999999999;
+}
+
+.progress_container{
+    position: absolute;
+    top:30%;
+    left: 45%;
+}
+
+.progress_flat_container{
+    position: absolute;
+    top:30%;
+}
+
+@keyframes progress {
+ 100% {
+    transform: rotate(360deg);
+    }
+}
+
+.progress_flattrack{
+    width: 100%;
+    height: 12px;
+    border: 1px solid #a6abaa;
+    padding: 1px;
+    z-index: 999999999;
+}
+
+
+.progress_flattrack_finite {
+  width: 100%;
+  border: 1px solid #a6abaa;
+  padding: 1px;
+  z-index: 999999999;
+  position: absolute;
+}
+
+.progress_flatitem {
+    width: 20%;
+    height: 100%;
+    background-color: rgba(27, 81, 199, 0.692);
+    position: relative;
+    animation: moveleft 2s linear infinite;
+}
+
+@keyframes moveleft {
+    50%{ transform: translateX(400%);}
+    100% { transform: translateX(0%);}
+}
+
+
+.progressbar_backdrop {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: gray;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4
+}
+
+.progress_flatitem_Progress {
+    height: 100%;
+    background-color: rgba(27, 81, 199, 0.692);
+    width: 0%;
+}
+
+.hide {
+    display: none;
+}
+
+.disperc {
+    vertical-align: middle;
+    width: 40px;
+    left: 37px;
+    position: relative;
+    font-size: 12px;
+    font-weight: 700;
+    z-index: 999999999999999;
+}
+
+.outercircle {
+  border: 1px solid lightgray;
+  border-radius: 50%;
+  height: 200px;
+  width: 200px;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.middlecircle {
+  border: 1px solid white;
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: orange;
+  background-image: linear-gradient(90deg, white 50%, transparent 50%), linear-gradient(45deg, transparent 50%, white 50%);
+  transform: rotate(180deg);
+}
+
+.innercircle {
+  border: 1px solid lightgray;
+  border-radius: 50%;
+  height: 80%;
+  width: 80%;
+  vertical-align: middle;
+  background-color: white;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.canvasCenter {
+  position: absolute;
+}
+
+:host{
+    width: fit-content;
+    margin-top: 3px; 
+    margin-bottom: 3px;       
+    display: inline-block;
+    vertical-align: top;
+}
+
+::-webkit-scrollbar {
+    width: 0.4em;;
+    height: 0.4em;;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #bdbbbb;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #5e5e5e;
+    border-radius: 10px;
+  } 

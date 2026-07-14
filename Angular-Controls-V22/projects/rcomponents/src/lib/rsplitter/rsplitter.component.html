@@ -1,0 +1,29 @@
+
+<div [id]="HostElementId">
+
+  <div  [style.font-family]="FontFamily" [id]="Id" class="container"
+          [ngStyle]="{ 'width': TotalWidth, 'height': TotalHeight,    
+                     'border': EnableBorder ? '0.8px solid '+ BorderColor : '',
+                     'border-radius': '8px',
+                     'pointer-events':(IsDisabled || IsReadOnly) ? 'none': '',
+                     'user-select': IsDisabled ? 'none': 'auto',
+                     'flex-direction': SplitterType == RSType.Horizontal ? 'column' : '' }">
+
+    @for (item of RenderItems; track trackById($index, item)) {
+      @if (item.IsSplitObj) {
+                <div [id]="item.Id" class="divider" [ngStyle]="{'background': SplitterBackgroundColor, 
+                                    'height': item.InitialHeight, 'width': item.InitialWidth,
+                                    'cursor': SplitterType == RSType.Vertical ? 'col-resize' : 'row-resize'}">
+        </div>
+      }
+      @if (!item.IsSplitObj) {
+        <div [id]="item.Id" class="panel" [ngStyle]="getPanelStyle(item.Id)">
+          <ng-content>
+          </ng-content>
+          <ng-container *ngTemplateOutlet="item.TemplateRef">
+          </ng-container>
+        </div>
+      }
+    }
+  </div>
+</div>

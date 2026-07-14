@@ -1,0 +1,305 @@
+import { ChangeDetectorRef, Component, EventEmitter, forwardRef, HostBinding, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { RSequenceHorizontalItem } from './rsequence-horizontal/sequenceitemhorizontal';
+import { NgStyle } from '@angular/common';
+import { RSequenceHorizontalComponent } from './rsequence-horizontal/rsequence-horizontal.component';
+import { RWindowHelper } from '../rwindowObject';
+import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
+
+@Component({
+    selector: 'rstate-horizontal',
+    imports: [RSequenceHorizontalComponent, NgStyle],
+    templateUrl: './rsequences-horizontal.component.html',
+    styleUrl: './rsequences-horizontal.component.css',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => RStateHorizontalComponent),
+            multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useFactory: (instance: RStateHorizontalComponent) => {
+                return {
+                    validate: (control: AbstractControl) => {
+                        return instance.getSyncErrors(control);
+                    }
+                };
+            },
+            multi: true,
+            deps: [forwardRef(() => RStateHorizontalComponent)]
+        },
+        {
+            provide: NG_ASYNC_VALIDATORS,
+            useExisting: forwardRef(() => RStateHorizontalComponent),
+            multi: true
+        }
+    ]
+})
+export class RStateHorizontalComponent  extends RBaseComponent<RSequenceHorizontalItem> implements ControlValueAccessor {
+
+  private _currentActiveIndex: number = -1;
+
+  private _currentActiveItem: RSequenceHorizontalItem | undefined = undefined;
+
+  private _items: RSequenceHorizontalItem[] = [];
+
+  public _allItemsAreInBottom: boolean = false;
+  
+  @Input()
+  NumberFontSize: string = "11px";
+  
+  @Input()
+  public ApplyItemForeColorToStepNo: boolean = false;
+
+  @Input()
+  public IsDisplayStepNo: boolean = true;
+
+  @Input()
+  public StepNoForeColor: string = 'white';
+  
+
+  @Input()
+  public ContentWidth: number = 100;
+
+  @Input()
+  public CompletedForeColor: string = "orange";
+
+  @Input()
+  public StripLineColor: string = "purple";
+
+  @Input()
+  public PendingForeColor: string = "purple";
+
+  @Input()
+  public ActiveForeColor: string = "green";
+  
+  @Input()
+  public set Items(value: RSequenceHorizontalItem[]) {
+    this._items = value;
+
+    for (let index = 0; index < this._items.length; index++) {
+      this._items[index].StepNo = index + 1;      
+    }
+
+    let activeIndex = this._items.findIndex(x => x.IsActive);
+
+    let anyInTopAlign = this._items.some(x => x.IsTopAlign);
+
+    if (!anyInTopAlign) {
+      this._allItemsAreInBottom = true;
+    }
+
+    if(this._items.length > 0 && this._items[this._items.length -1].IsLastItem == undefined)
+      this._items[this._items.length - 1].IsLastItem = true;
+    
+    if (activeIndex == -1 && this._currentActiveIndex == -1)
+      this.setPendingFirstItem();
+    else
+      this.ResetValue(this._currentActiveIndex);
+
+    this.notifyToModel();
+  }
+  public get Items(): RSequenceHorizontalItem[] {
+    return this._items;
+  }
+
+  @Input()
+  public set SelectedActiveIndex(value: number) {
+    if (value < 0) {
+      if (this._items.length > 0) {
+        this._items[0].IsPending = true;
+      }
+
+      this._currentActiveIndex = -1;
+      return;
+    }
+
+    this._currentActiveIndex = value;
+    this.ResetValue(value);
+
+    if (this._currentActiveIndex > -1 && this._currentActiveIndex < this._items.length)
+      this.notifyToModel();
+  }
+  public get SelectedActiveIndex(): number {
+    return this._currentActiveIndex;
+  }
+
+  @Input()
+  public set SelectedActiveItem(value: RSequenceHorizontalItem) {
+    if (value) {
+      let activeIndex = this._items.findIndex(x => x.Value == value.Value);
+      if (activeIndex > -1) {
+        this._currentActiveIndex = activeIndex;
+        this.ResetValue(activeIndex);
+      }
+
+      this.notifyToModel();
+    }
+  }
+  public get SelectedActiveItem(): RSequenceHorizontalItem | undefined {
+    return this._currentActiveItem;
+  }
+
+  @Output()
+  OnActiveValueChanged = new EventEmitter<RSequenceHorizontalItem>();
+
+  private OnChanged: Function = (item: RSequenceHorizontalItem) => { };
+  private OnTouched: Function = (item: RSequenceHorizontalItem) => { };
+
+  constructor(private cdr: ChangeDetectorRef, winObj: RWindowHelper) {
+    super(winObj);
+    this.Id = this.winObj.GenerateUniqueId();
+    this.HostElementId = this.winObj.GenerateUniqueId();
+  }
+
+  notifyToModel() {
+    this.OnChanged(this._currentActiveItem);
+    this.OnTouched(this._currentActiveItem);
+    this.OnActiveValueChanged.emit(this._currentActiveItem);
+  }
+
+  protected override IsValidatorSupported(): boolean {
+    return true;
+  }
+  
+  protected override GetValidatorValueType(): ValidatorValueType {
+    return ValidatorValueType.OnlyRequired;
+  }
+
+  protected override getValue() {
+    return this._currentActiveItem;
+  }
+
+  private ResetValue(selindex: number) {
+
+    if (this.Items.length > 0 && selindex >= this.Items.length) {
+      this._items[this._items.length - 1].IsCompleted = true;
+    }
+
+    if (this._items.length > 0 && selindex > -1 && selindex < this._items.length) {
+      for (let index = selindex - 1; index > -1; index--) {
+        const element = this._items[index];
+        element.IsCompleted = true;
+      }
+
+      this._items[selindex].IsActive = true;
+
+      this._currentActiveItem = this._items[selindex];
+
+      for (let index = selindex + 1; index < this._items.length; index++) {
+        const element = this._items[index];
+        element.IsPending = true;
+      }
+    }
+  }
+
+  writeValue(obj: any): void {
+
+    if (obj) {
+      let activeIndex = this._items.findIndex(x => x.Value == obj.Value);
+      if (activeIndex > -1) {
+        this._currentActiveIndex = activeIndex;
+        this.ResetValue(activeIndex);
+      }
+
+      this.OnActiveValueChanged.emit(this._currentActiveItem);
+    }
+
+  }
+
+  registerOnChange(fn: any): void {
+    this.OnChanged = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.OnTouched = fn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+   this._formDisabled = isDisabled ?  true : null;
+  }
+
+  public moveToNext() {
+    let currentIndex = this._items.findIndex(x => x.IsActive);
+    let lastCompletedIndex = this.Items.findIndex(x => x.IsCompleted);
+
+    if (currentIndex == -1 && lastCompletedIndex > -1) {
+      return;
+    }
+
+    let nextIndex = currentIndex + 1;
+
+    if (nextIndex >= this._items.length) {
+      if(currentIndex > -1 && currentIndex < this._items.length)
+        this._items[currentIndex].IsCompleted = true;
+      return;
+    }
+
+    this._items[nextIndex].IsActive = true;
+    this._currentActiveIndex = nextIndex;
+    this._currentActiveItem = this._items[nextIndex];
+
+    if(currentIndex > -1 && currentIndex < this._items.length)
+      this._items[currentIndex].IsCompleted = true;
+
+    if (this._currentActiveIndex > -1 && this._currentActiveIndex < this._items.length)
+      this.notifyToModel();
+
+    this.cdr.detectChanges();
+
+  }
+
+
+  public moveToPrevious() {
+    let currentIndex = this._items.findIndex(x => x.IsActive);
+    let previousIndex = currentIndex - 1;
+    let lastCompletedIndex = this.Items.findIndex(x => x.IsCompleted);
+
+    if (currentIndex < 0 && lastCompletedIndex > -1) {
+      this._items[this.Items.length - 1].IsActive = true;
+      this._currentActiveIndex = this.Items.length - 1;
+      this._currentActiveItem = this._items[this.Items.length - 1];
+      this.notifyToModel()
+      return;
+    }
+
+    if (previousIndex < 0) {
+
+      if (currentIndex > -1) {
+        if (this._items[currentIndex].IsActive) {
+          this._items[currentIndex].IsActive = false;
+          this._items[currentIndex].IsPending = true;
+        } else {
+          this._items[currentIndex].IsActive = true;
+          this._currentActiveIndex = currentIndex;
+          this._currentActiveItem = this._items[currentIndex];
+          this.notifyToModel()
+        }
+      }
+      return;
+    }
+
+    this._items[previousIndex].IsActive = true;
+    this._currentActiveIndex = previousIndex;
+    this._currentActiveItem = this._items[previousIndex];
+    this._items[currentIndex].IsPending = true;
+    this.notifyToModel();
+    this.cdr.detectChanges();
+  }
+
+  private setPendingFirstItem() {
+
+    for (let index = 0; index < this._items.length; index++) {
+      const element = this._items[index];
+      element.IsPending = true;
+    }
+
+    this._currentActiveIndex = -1;
+    this._currentActiveItem = undefined;
+
+    this.notifyToModel();
+    this.cdr.detectChanges();
+  }
+}

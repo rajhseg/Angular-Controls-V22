@@ -1,0 +1,23 @@
+
+<div  [style.font-family]="FontFamily" [id]="Id" [ngStyle]="{'pointer-events': IsDisabled ? 'none': '',  'user-select': IsDisabled ? 'none': 'auto' }">
+  <canvas #rbar width="{{Width + MarginRight + MarginLeft}}" height="{{Height + MarginTop + MarginBottom}}"
+    [ngStyle]="{ 'border-radius': EnableBorder ? '5px' : '', 'border': EnableBorder ? '0.5px solid '+BorderColor : '' }">
+
+  </canvas>
+  @if (IsRendered) {
+    <div  style="position: relative; align-content: center;display: flex;flex-direction: row;"
+      [ngStyle]="{'bottom':  '10px', 'height': DataListHeight+'px'}">
+      <div [ngStyle]="{'width': (MarginX + MarginLeft) + 'px'}"></div>
+      <div class="dataContainer" [ngStyle]="{ '--fontsize': FontSize, 'width': (Width - MarginX) +'px'}">
+        @for (itm of this.Items; track trackById($index, itm)) {
+          <div class="data">
+            <div class="indicator" [ngStyle]="{'backgroundColor': itm.ItemColor}">
+            </div>
+            <span class="title" style="width: fit-content;">{{itm.ItemName}}</span>
+          </div>
+        }
+      </div>
+      <div [ngStyle]="{'width': MarginRight + 'px'}"></div>
+    </div>
+  }
+</div>

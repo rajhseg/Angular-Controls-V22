@@ -1,0 +1,31 @@
+
+<ul  [style.font-family]="FontFamily" [id]="Id"
+  [ngStyle]="{ 'pointer-events': IsDisabled ? 'none' : '', 'user-select': IsDisabled ? 'none': 'auto'}">
+  @for (Item of Items; track Item) {
+    <li style="font-size: small; padding: 3px;"
+      [ngClass]="{'moveleftforchild': Item.IsHaveChild}">
+      @if (Item.IsHaveChild) {
+        <span class="symbol" (click)="expandTree($event, Item)"
+          [ngStyle]="{'--expandcolor': ExpandIconColor}">
+        </span>
+      }
+      @if (Item.IsHaveItemImage) {
+        <span [ngStyle]="{ 'pointer-events' : IsReadOnly ? 'none' : ''}" style="vertical-align: middle; padding-right: 5px;">
+          <img width="22px" height="22px" [src]="Item.ImageSrc" />
+        </span>
+      }
+      <span style="cursor: pointer;" (click)="onSelected($event, Item)"
+        [ngStyle]="{ 'font-size': FontSize }">
+        {{Item.DisplayText}}
+      </span>
+      @if (Item.IsHaveChild) {
+        <rtree class="childrens" [Items]="Item.Childrens"
+          [IsReadOnly]="IsReadOnly" [IsDisabled]="IsDisabled"
+          [ExpandIconColor]="ExpandIconColor"
+          (onItemSelected)="onChildSelected($event)"
+          (onExpandClicked)="OnChildExpandClicked($event)">
+        </rtree>
+      }
+    </li>
+  }
+</ul>

@@ -1,0 +1,197 @@
+
+
+
+<div class="calender" #calmodal [id]="Id"  [style.font-family]="FontFamily"
+            [ngStyle]="{
+                        'font-size': FontSize,
+                        'width': DDEWidth, 'height': DDEHeight,
+                        'box-shadow': EnableShadowEffect ? 'rgba(0, 0, 0, 0.24) 0px 3px 8px':'' 
+                        }">
+  <div #modal class="modal" [ngStyle]="{ 'display' : isModalOpen ? 'block' : 'none' }">
+    <div class="modalContent">
+      <div>
+        <div class="closeBtn">
+          <span style="font-weight: 100; float:left;font-size: 13px;"
+            [ngStyle]="{ 'color' : EventGroupLabelColor }">
+            {{SelectedEventDate | date:DateFormat }}
+          </span>
+          <span (click)="closeModal($event)" class="spanbtn">&times;</span>
+        </div>
+      </div>
+      <div style="margin:15px">
+        <rgroup-panel [FontSize]="FontSize" style="position: relative; top:-20px;width:100%" [EnableShadowEffect]="false"  [groupname]="'Event'"
+          [IsItemsArrangeHorizontal]="true">
+          <div style="display: flex; flex-direction: row;justify-content: space-between;width: 100%;">
+
+            <rtextbox class="evtAdd" [LabelText]="'Event Name'" [(ngModel)]="NewEvent.Name"
+              [BottomLineColor]="EventGroupBottomLineColor" [FontSize]="FontSize"
+              [IsReadOnly]="IsReadOnly || IsPopupModalReadOnly" [IsDisabled]="IsDisabled"
+              [LabelForeColor]="EventGroupLabelColor">
+            </rtextbox>
+
+            <rtimeselector style="top:-3px" class="evtAdd" [(ngModel)]="NewEvent.FromTime"
+              [LabelText]="'From Time'"
+              [IsReadOnly]="IsReadOnly || IsPopupModalReadOnly" [IsDisabled]="IsDisabled"
+              [TextBottomLineColor]="EventGroupBottomLineColor"
+              [ButtonBackgroundColor]="EventGroupButtonBackColor"
+              [ButtonForeColor]="EventGroupButtonForeColor">
+            </rtimeselector>
+
+            <rtimeselector style="top:-3px"class="evtAdd" [(ngModel)]="NewEvent.ToTime"
+              [LabelText]="'To Time'"
+              [IsReadOnly]="IsReadOnly || IsPopupModalReadOnly" [IsDisabled]="IsDisabled"
+              [TextBottomLineColor]="EventGroupBottomLineColor"
+              [ButtonBackgroundColor]="EventGroupButtonBackColor"
+              [ButtonForeColor]="EventGroupButtonForeColor">
+            </rtimeselector>
+
+            <rcolorpicker style="top:12px" class="evtAdd" [(ngModel)]="NewEvent.Indicator"
+              [LabelTextForeColor]="EventGroupLabelColor"
+              [IsReadOnly]="IsReadOnly || IsPopupModalReadOnly" [IsDisabled]="IsDisabled"
+              [IsDisplayColorCode]="false" [IsDisplayLabelText]="true"
+              [LabelText]="'Indicator'">
+            </rcolorpicker>
+
+          </div>
+        </rgroup-panel>
+
+        <div style="clear: left;text-align: center;margin:10px;top: -20px;position: relative;">
+
+          <rbutton (ButtonClick)="addEvent($event)" [BackgroundColor]="EventGroupButtonBackColor"
+            [ForeColor]="EventGroupButtonForeColor">
+            Add
+          </rbutton>
+
+        </div>
+        <div style="clear: left;text-align: center;top: -20px;position: relative;">
+
+          @if (SelectedEventModel) {
+            <rgrid  [ShowGroupHeader]="false"
+              [PageItems]="ditems"
+              [IsReadOnly]="IsReadOnly || IsPopupModalReadOnly"
+              [IsDisabled]="IsDisabled"
+              [Items]="SelectedEventModel.Events"
+              [FontSize]="PopupGridFontSize"
+              [ItemsPerPage]="ItemsPerPage"
+              [ShowEditUpdate]="false"
+              [HeaderBackgroundColor]="PopupGridHeaderBackColor"
+              [HeaderForeColor]="PopupGridHeaderForeColor"
+              [RowHoverBackColor]="PopupGridRowHoverBackColor"
+              [RowHoverForeColor]="PopupGridRowHoverForeColor"
+              [RowHoverBackgroundOpacity]="PopupGridRowHoverBackgroundOpacity"
+              [EvenRowBackColor]="PopupGridEvenRowBackColor"
+              [OddRowBackColor]="PopupGridOddRowBackColor"
+              [TableHeight]="GridHeight"
+              [TableWidth]="'100%'">
+              <rcolumn [Name]="'Name'" [PropToBindToCellInfo]="'Name'" [HeaderText]="'Name'"
+                [Width]="'26.2%'" [Height]="'20px'">
+                <ng-template readviewtemplate let-Item let-cell="CellInfo">
+                  <span>{{cell.Value}}</span>
+                </ng-template>
+              </rcolumn>
+              <rcolumn [Name]="'FromTime'" [PropToBindToCellInfo]="'FromTime'" [HeaderText]="'From Time'"
+                [Width]="'23%'" [Height]="'20px'">
+                <ng-template readviewtemplate let-Item let-cell="CellInfo">
+                  <span>{{cell.Value}}</span>
+                </ng-template>
+              </rcolumn>
+              <rcolumn [Name]="'ToTime'" [PropToBindToCellInfo]="'ToTime'" [HeaderText]="'To Time'"
+                [Width]="'23%'" [Height]="'20px'">
+                <ng-template readviewtemplate let-Item let-cell="CellInfo">
+                  <span>{{cell.Value}}</span>
+                </ng-template>
+              </rcolumn>
+              <rcolumn [Name]="'Indicator'" [PropToBindToCellInfo]="'Indicator'" [HeaderText]="'Indicator'"
+                [Width]="'20%'" [Height]="'20px'">
+                <ng-template readviewtemplate let-Item let-cell="CellInfo">
+                  <div style="height: 10px; width: 10px;"
+                    [ngStyle]="{ 'backgroundColor': cell.Value}">
+                  </div>
+                </ng-template>
+              </rcolumn>
+              <rcolumn [IsComputationalColumn]="true"
+                [Name]="'Id'" [PropToBindToCellInfo]="'Id'" [HeaderText]="'Delete'"
+                [Width]="'7.8%'" [Height]="'20px'">
+                <ng-template readviewtemplate let-Item let-cell="CellInfo">
+                  <span class="delBtn" (click)="DeleteEvent($event, cell.Value)">&times;</span>
+                </ng-template>
+              </rcolumn>
+            </rgrid>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+        <div class="week" [ngStyle]="{'pointer-events': (IsReadOnly || IsDisabled) ? 'none': '', 
+                                      'user-select': IsDisabled ? 'none': 'auto' }">
+    <div>
+      <a (click)="previousMonth($event)" class="atag previous around">&#8249;</a>
+    </div>
+
+    <div class="mnyr">
+
+      <rdropdown #monthdropdown [IsDropDownOpen]="IsMonthDropdownOpen" [ParentComponent]="this"
+        [EnableFilterOption]="EnableFilterOptionForMonth" [IsReadOnly]="IsReadOnly" [IsDisabled]="IsDisabled"
+        (Closed)="isMonthDropdownClosed($event)" (Opened)="isMonthDropdownOpened($event)"
+        [IsChildOfAnotherControl]="isDropdownChild" [IsMulti]="false" (valueChanged)="changeMonth($event)"
+        [(ngModel)]="month" [Items]="monthNames"
+        [Width]="'52px'" [DropDownContentWidth]="'77px'"
+        [ParentDropDownId]="Id"
+        [DropDownContentHeight]="'150px'">
+      </rdropdown>
+
+    </div>
+    <div class="mnyr">
+
+      <rdropdown #yeardropdown [IsDropDownOpen]="IsYearDropdownOpen" [ParentComponent]="this"
+        [EnableFilterOption]="EnableFilterOptionForYear"  [IsReadOnly]="IsReadOnly" [IsDisabled]="IsDisabled"
+        [IsChildOfAnotherControl]="isDropdownChild" (valueChanged)="changeYear($event)" [IsMulti]="false"
+        [(ngModel)]="year" [Items]="totalYears"
+        [Width]="'52px'" [DropDownContentWidth]="'77px'"
+        [ParentDropDownId]="Id"
+        [DropDownContentHeight]="'150px'">
+      </rdropdown>
+
+    </div>
+
+    <div>
+      <a (click)="nextMonth($event)" class="atag next around">&#8250;</a>
+    </div>
+  </div>
+  <div  [ngStyle]="{ '--wheight': weekHeight}" class="week">
+    <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"  class="day dayheader">Sun</div>
+    <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"  class="day dayheader">Mon</div>
+    <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"  class="day dayheader">Tue</div>
+    <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"  class="day dayheader">Wed</div>
+    <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"  class="day dayheader">Thu</div>
+    <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"  class="day dayheader">Fri</div>
+    <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"  class="day dayheader">Sat</div>
+  </div>
+  @for (week of currentMonth?.weeks; track week) {
+    <div [ngStyle]="{ '--wheight': weekHeight}" class="week">
+      @for (day of week.days; track day) {
+        <div
+                    [ngStyle]="{ '--dwidth': dayWidth,
+                                '--wheight': weekHeight}" 
+          class="eachday" (dblclick)="openEvents($event, day)">
+          <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"
+            (click)="selectDate($event, day)" class="day"
+            [ngClass]="{ 'notCurrentMonth': !day.isActiveMonth}">
+            <div [ngClass]="{'selday':day.isSelected, 'notactive': !day.isActiveMonth}"
+              [ngStyle]="{ '--sdayLeftpx': SelectedDayLeftPx, '--sdaytoppx': SelectedDayTopPx }">
+              {{day.num}}
+            </div>
+          </div>
+          <div style="position: relative;height: 25%;">
+            <div style="display: flex; flex-direction: row; gap: 2px;position: absolute; bottom: 0px;">
+              @for (item of getEvents(day); track item) {
+                <div style="width: 10px;height: 10px;"
+                [ngStyle]="{'backgroundColor': item.Indicator}"></div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

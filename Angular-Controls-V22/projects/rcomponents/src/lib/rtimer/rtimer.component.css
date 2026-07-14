@@ -1,0 +1,48 @@
+
+
+.lbl
+{
+    align-self: center;
+    position: relative;
+    top:-5px;
+    font-size: var(--fontsize);    
+}
+
+:host{    
+  display: inline-block;
+  vertical-align: top;
+    width: fit-content;
+    margin-top:8px;
+    margin-bottom: 8px;   
+    
+}
+
+.simpleTimer{
+    padding: 6px;    
+}
+
+
+
+.lbl1
+{
+    align-self: center;
+    position: relative;
+    top: 0px;
+    padding-left: 7px;
+    font-size: var(--fontsize);
+}
+
+
+::-webkit-scrollbar {
+    width: 0.4em;;
+    height: 0.4em;;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #bdbbbb;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #5e5e5e;
+    border-radius: 10px;
+  } 

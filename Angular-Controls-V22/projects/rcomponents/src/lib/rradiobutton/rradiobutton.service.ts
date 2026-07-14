@@ -1,0 +1,31 @@
+import { Injectable } from "@angular/core";
+import { RRadiobuttonComponent } from "./rradiobutton.component";
+
+@Injectable({
+    providedIn:'root'
+})
+export class RadioButtonService {
+    private radiobtns: RRadiobuttonComponent[] = [];
+
+    public AddInstance(obj: RRadiobuttonComponent){
+        this.radiobtns.push(obj);
+    }
+
+    public RemoveInstance(obj: RRadiobuttonComponent){
+        this.radiobtns = this.radiobtns.filter(x=>x != obj);
+    }
+    
+    public ResetRadioButtonsForGroup($event: Event | undefined, groupname: string, instance: RRadiobuttonComponent) {
+        let filtered = this.radiobtns.filter(x=>x.GroupName.toLowerCase()==groupname.toLowerCase() && x != instance);
+        filtered.forEach(x=>{
+            x.IsChecked = false;
+            x.emitValueToModel($event);
+        });
+    }
+}
+
+export class RadioEventArgs {
+    constructor(public event: Event | undefined, public isChecked:boolean) {
+
+    }
+}

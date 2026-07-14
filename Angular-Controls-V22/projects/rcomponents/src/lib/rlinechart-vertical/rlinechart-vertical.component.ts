@@ -1,0 +1,695 @@
+import { NgClass, NgStyle } from '@angular/common';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { RLineChartItem, RPopupChartItem } from '../rmodels/RBarChartItem';
+import { RWindowHelper } from '../rwindowObject';
+import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseComponent';
+
+@Component({
+    selector: 'rlinechart-vertical',
+    imports: [NgStyle, NgClass],
+    templateUrl: './rlinechart-vertical.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
+    styleUrl: './rlinechart-vertical.component.css'
+})
+export class RLineChartVerticalComponent  extends RChartPopupBaseComponent  implements AfterViewInit, OnChanges {
+
+  
+  private _width: number = 300;
+  private _height: number = 300;
+
+  private _xAxisTitle: string = "";
+  private _yAxisTitle: string = "";
+
+  private _textColor: string = "gray";
+
+  @Input()
+  EnableBorder: boolean = false;
+
+  @Input()
+  BorderColor: string = 'lightgray';
+
+  @Input()
+  MarginLeft: number = 20;
+
+  @Input()
+  MarginRight: number = 20;
+
+  @Input()
+  MarginTop: number = 20;
+
+  @Input()
+  MarginBottom: number = 10;
+
+  @Input()
+  PlotItemSize: number = 3;
+
+  @Input()
+  public set TextColor(val: string) {
+    this._textColor = val;
+  }
+  public get TextColor(): string {
+    return this._textColor;
+  }
+
+  @Input()
+  public set XAxisTitle(val: string) {
+    this._xAxisTitle = val;
+  }
+  public get XAxisTitle(): string {
+    return this._xAxisTitle;
+  }
+
+  @Input()
+  public set YAxisTitle(val: string) {
+    this._yAxisTitle = val;
+  }
+  public get YAxisTitle(): string {
+    return this._yAxisTitle;
+  }
+
+  private _xAxisItemNames: string[] = [];
+
+  @Input()
+  public set xAxisItemNames(val: string[]){
+    if (val == undefined || val == null || val.toString() != this._xAxisItemNames.toString()) {
+      this._xAxisItemNames = val;
+    }    
+  }
+  public get xAxisItemNames(): string[] {
+    return this._xAxisItemNames;
+  }
+
+  public get NoOfSplitInXAxis(): number {
+    return this._xAxisItemNames.length;
+  }
+
+  private _noOfSplitInYAxis: number = 4;
+
+  @Input()
+  public set NoOfSplitInYAxis(val: number) {
+    this._noOfSplitInYAxis = val;
+  }
+  public get NoOfSplitInYAxis(): number {
+    return this._noOfSplitInYAxis;
+  }
+
+  @Input()
+  public set Width(val: number) {
+    this._width = val;
+  }
+  public get Width(): number {
+    return this._width;
+  }
+
+  private _marginX: number = 50;
+
+  @Input()
+  public set MarginX(val: number) {
+    this._marginX = val;
+  }
+  public get MarginX(): number {
+    return this._marginX;
+  }
+
+
+  private _marginY: number = 50;
+
+  @Input()
+  public set MarginY(val: number) {
+    this._marginY = val;
+  }
+  public get MarginY(): number {
+    return this._marginY;
+  }
+
+  @Input()
+  public set Height(val: number) {
+    this._height = val;
+  }
+  public get Height(): number {
+    return this._height;
+  }
+
+  PopupItems: RPopupChartItem[] = [];
+
+  @Input()
+  DataListHeight: number = 50;
+
+  @Input()
+  IsRenderFromInit: boolean = true;
+
+  private _items: RLineChartItem[] = [];
+
+  @Input()
+  public set Items(val: RLineChartItem[]) {
+    if (!this.IsLineItemListEqual(val, this._items)) {
+      this._items = val;
+    }
+  }
+  
+  public get Items(): RLineChartItem[] {
+    return this._items;
+  }
+
+  @ViewChild('rbar', { read: ElementRef<HTMLCanvasElement>, static: false })
+  bar: ElementRef<HTMLCanvasElement> | undefined = undefined;
+
+  context: CanvasRenderingContext2D | null = null;
+
+  public IsRendered: boolean = false;
+
+  constructor(winObj: RWindowHelper, private cdr: ChangeDetectorRef) {
+    super(winObj);
+    this.Id = this.winObj.GenerateUniqueId();
+    this.HostElementId = this.winObj.GenerateUniqueId();
+  }
+
+  
+  trackById(index: number, item: RLineChartItem){
+    return item.Id;
+  }
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    if(Object.keys(changes).length > 0 && this.IsInitialized) {
+      this.Render();
+    }
+  }
+  
+  ngAfterViewInit(): void {
+    if (this.winObj.isExecuteInBrowser()) {
+      if (this.bar != undefined) {
+        this.IsInitialized = true;
+        this.context = this.bar.nativeElement.getContext('2d');   
+        this.bar.nativeElement.onmousemove = this.MouseMove.bind(this);     
+        this.RenderLineChart();
+      }
+    }
+  }
+
+  private MouseMove(event: MouseEvent) {
+    if(this.context && this.bar){  
+
+      let totalWidth = this.Width + this.MarginLeft + this.MarginRight;    
+      let totalHeight = this.Height + this.MarginTop + this.MarginBottom;
+ 
+      this.ResetCanvasContext(this.context);
+
+      this.context?.beginPath();      
+      this.context.clearRect(0, 0, totalWidth, totalHeight);
+      this.context.closePath();
+
+      this.RenderLineChart();
+
+      let item = this.MouseOnTopOfItem(event.offsetX, event.offsetY);
+
+      if(item) {
+        
+        let lineItem = item.Item as RLineChartItem;
+        let x = event.offsetX + 10;
+        let y = event.offsetY;
+        let met = this.context.measureText(lineItem.Values[item.ValueIndex].toString());
+        let met1 = this.context.measureText(this.xAxisItemNames[item.ValueIndex]);
+
+        let xtitle = this.context.measureText(this.XAxisTitle);
+        let ytitle = this.context.measureText(this.YAxisTitle);
+
+        let w1 = met.width + xtitle.width;
+        let w2 = met1.width + ytitle.width;
+
+        let width = Math.max(w1, w2);
+
+        let textWidth =  25 + width;
+
+        if(x + textWidth > this.Width) {          
+          x = x - textWidth - 20;
+        }
+          
+        let height = 40;
+        if(y + height > this.Height) {
+          y = y - height;
+        }
+
+        this.context.beginPath();
+        this.context.save();
+        this.context.globalAlpha = this.PopupBackgroundOpacity;
+        this.context.fillStyle = this.PopupBackColor;
+             
+        if(this.EnableBorderForPopup) {
+          this.context.strokeStyle = this.PopupBorderColor;
+        }
+
+        this.context.roundRect(x, y, textWidth, 40, 4); 
+        this.context.fill();
+        this.context.stroke();
+        this.context.restore();
+        this.context.closePath();
+
+        this.context.beginPath();            
+        this.context.save();
+        
+        this.context.strokeStyle = this.PopupForeColor ?? item.ItemColor;
+        this.context.fillStyle = this.PopupForeColor ?? item.ItemColor;
+        this.context.fillText(" "+this.XAxisTitle+" : "+ this.xAxisItemNames[item.ValueIndex], x + 5, y + 15);
+        this.context.fillText(" "+this.YAxisTitle+" : "+ lineItem.Values[item.ValueIndex], x + 5, y + 35);           
+        this.context.stroke();
+        
+        this.context.restore();
+        this.context?.closePath();            
+      }
+    }
+  }
+
+  private MouseOnTopOfItem(x: number, y: number): RPopupChartItem | undefined {
+
+    let boundaryRange = this.PlotItemSize;
+
+    for (let index = 0; index < this.PopupItems.length; index++) {
+      const element = this.PopupItems[index];
+      if(x>= element.x1 - boundaryRange && x<= element.x2 + boundaryRange 
+        && y>= element.y1 - boundaryRange && y <= element.y2 + boundaryRange){
+        return element;
+      }
+    }
+
+    return undefined;
+  }
+
+  private getWidthFromString(value: string): number {
+    if (this.context) {
+      let metrics = this.context.measureText(value);
+      return metrics.width;
+    }
+
+    return 50;
+  }
+
+  private getTextHeight(met: TextMetrics) {
+    return met.actualBoundingBoxAscent + met.actualBoundingBoxDescent;
+  }
+
+  isPropString(prop: any) {
+    return typeof prop === 'string';
+  }
+
+  
+  private EnableGlassyEffectOnTopOfChart() {
+    if(this.context && this.bar && this.GlassyEffect) {
+
+      let x = 0, y = 0, gwidth = this.Width + this.MarginLeft + this.MarginRight, 
+          gheight = this.Height + this.MarginTop + this.MarginBottom;
+
+      this.context.beginPath();
+      this.context.save();
+      this.context.globalAlpha = 0.2;
+      this.context.filter = "blur(10px)";
+      this.context.fillStyle = this.GlassyEffectColor;
+      this.context.roundRect(x, y, gwidth, gheight, 7);
+      this.context.fill();
+      this.context.restore();
+      this.context.closePath();
+
+       // Light border
+       this.context.strokeStyle = "rgba(255, 255, 255, 0.6)";
+       this.context.lineWidth = 1.5;
+       this.context.strokeRect(x, y, gwidth, gheight);
+
+      // Soft inner highlight
+      this.context.fillStyle = "rgba(255, 255, 255, 0.1)";
+      this.context.fillRect(x, y, gwidth, gheight);
+    }
+  }
+
+  public Render() {
+    this.RenderLineChart();
+  }
+
+  private RenderLineChart() {
+    this.IsRendered = false;
+    this.PopupItems = [];
+    
+    const totalWidth = this.Width + this.MarginLeft + this.MarginRight;
+    const totalHeight = this.Height + this.MarginTop + this.MarginBottom;
+
+    if (this.bar && this.context && this.Items && this.Items.length > 0) {
+      let min: number | undefined = undefined;
+      let max: number | undefined = undefined;
+       
+      this.ResetCanvasContext(this.context);
+
+      this.context.clearRect(0, 0, totalWidth, totalHeight);
+      
+      this.EnableGlassyEffectOnTopOfChart();
+
+      let spaceFromTopYAxis = 25;
+      let spaceFromRightXAxis = 25;
+      
+      let yValues: number[] = [];
+
+      for (let index = 0; index < this.Items.length; index++) {
+        const element = this.Items[index];        
+        let _y = element.Values.map(y => y);        
+        yValues = [...yValues, ..._y];
+      }
+
+      if (yValues) {
+
+        min = this.MinArray(yValues);
+        max = this.MaxArray(yValues);
+
+        let ydistance = 0;
+        if (min != undefined && max != undefined) {
+          ydistance = (max) / this.NoOfSplitInYAxis;
+        }
+
+        ydistance = this.GetRoundToTenDigit(ydistance);
+
+        var MinLimit = 0;
+        var MaxLimit = ydistance * (this.NoOfSplitInYAxis);
+
+        var StartX: number = this._marginX + this.MarginLeft;
+        var StartY: number = this.Height + this.MarginTop - this._marginY;
+
+        /* Draw Vertical Line */
+        this.context.beginPath();
+        this.context.moveTo(StartX, StartY);
+        this.context.lineTo(StartX, this.MarginTop);
+        this.context.strokeStyle = this.TextColor;
+        this.context.stroke();
+
+        /* Draw Horizontal Line */
+        this.context.moveTo(StartX, StartY);
+        this.context.lineTo(this.MarginLeft + this.Width, StartY);
+        this.context.strokeStyle = this.TextColor;
+        this.context.stroke();
+        this.context.closePath();
+
+
+        /* Draw Title on x-axis */
+        this.context.beginPath();
+
+        let met = this.context.measureText(this.XAxisTitle);
+        let xTextPoint = (this.Width - this.MarginX) / 2 + (this.MarginX/1.5) + this.MarginLeft;
+        xTextPoint = xTextPoint - (met.width / 2);
+        let yTextPoint = this.Height + this.MarginTop - 5;
+
+        this.context.save();
+        this.context.fillStyle = this.TextColor;
+        this.context.fillText(this.XAxisTitle, xTextPoint, yTextPoint);
+        this.context.restore();
+
+        this.context.closePath();
+
+        /* Draw Title On Y axis */
+        this.context.beginPath();
+        this.context.save();
+
+        met = this.context.measureText(this.XAxisTitle);
+        yTextPoint = (this.Height - this.MarginY) / 2 - this.MarginBottom;
+        yTextPoint = yTextPoint + this.MarginTop + this.MarginBottom + (met.width / 2);
+        xTextPoint = this.MarginLeft + 15;
+        this.context.fillStyle = this.TextColor;
+        this.context.translate(xTextPoint, yTextPoint);
+        this.context.rotate((Math.PI / 180) * 270);
+        this.context.fillText(this.YAxisTitle, 0, 0);
+
+        this.context.restore();
+        this.context.closePath();
+
+
+        /* Draw y axis line */
+        let yvDistance = (StartY - this.MarginTop - spaceFromTopYAxis) / this.NoOfSplitInYAxis;
+
+        /* Draw Y Axis */
+        for (let index = 0; index <= this.NoOfSplitInYAxis; index++) {
+          let yDisplayValue = Math.round(ydistance * (this.NoOfSplitInYAxis - index));
+          let yPoint = Math.round((yvDistance * index) + spaceFromTopYAxis + this.MarginTop);
+
+          this.HorizontalLineInYAxis(StartX, yPoint);
+          this.DrawHorizontalLine(StartX, yPoint);
+          this.HorizontalLineDisplayValueInYAxis(yDisplayValue.toString(), StartX, yPoint);
+        }
+
+        /* Draw X Axis Line */        
+        let xdistance = 0;        
+        xdistance = (this.Width - this.MarginX - spaceFromRightXAxis) / this.NoOfSplitInXAxis;
+        
+        xdistance = this.GetRoundToTenDigit(xdistance);
+        let xvDistance = (this.Width - this.MarginX - spaceFromRightXAxis) / this.NoOfSplitInXAxis;
+
+        for (let index = 0; index < this.NoOfSplitInXAxis; index++) {
+          let xDisplayValue = this.xAxisItemNames[index];
+          let xPoint = ( xvDistance * (index +1) ) + StartX;
+          let yPoint = this.Height + this.MarginTop - this.MarginY;
+
+          this.DrawVerticalLine(xPoint, yPoint);
+          this.DrawVerticalLineInXAxis(xPoint, yPoint);
+          this.DrawVerticalLineDisplayValueInXAxis(xDisplayValue.toString(), xPoint, yPoint);
+        }
+
+
+        for (let index = 0; index < this.Items.length; index++) {
+          const element = this.Items[index];
+
+          let prevX = undefined;
+          let prevY = undefined;
+
+
+          if (this.IsRenderFromInit) {
+            prevX = this.MarginX + this.MarginLeft;
+            prevY = this.Height + this.MarginTop - this.MarginY;
+          }
+
+          for (let v = 0; v < element.Values.length; v++) {
+            const item = element.Values[v];
+
+            let xPoint = xvDistance * (v + 1) + this.MarginX + this.MarginLeft;
+
+            let yindx = -(item / ydistance) + this.NoOfSplitInYAxis;
+            let yPoint = Math.round((yvDistance * yindx) + spaceFromTopYAxis + this.MarginTop);
+
+            /* Plot Circle */
+            this.Plot(xPoint, yPoint, element.ItemColor);
+
+            this.PopupItems.push(new RPopupChartItem(xPoint, yPoint, xPoint + this.PlotItemSize, 
+                  yPoint + this.PlotItemSize, element, v, index, element.ItemColor));
+
+            /* Plot Line */
+            if(prevX != undefined && prevY != undefined)
+            {
+              this.PlotLine(xPoint, yPoint, prevX, prevY, element.ItemColor);
+            }
+
+            prevX = xPoint;
+            prevY = yPoint;
+          }
+
+        }
+
+      }
+
+      this.IsRendered = true;
+      this.cdr.detectChanges();
+    }
+  }
+
+  private PlotLine(xPoint: number, yPoint: number, prevX: number, prevY: number, color: string){
+    if(this.context){
+      this.context.beginPath();
+      this.context.strokeStyle = color;
+      this.context.moveTo(prevX, prevY);
+      this.context.lineTo(xPoint, yPoint);
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private Plot(x: number, y: number, color: string) {
+    if (this.context) {
+      this.context.beginPath();
+      this.context.strokeStyle = color;
+      this.context.fillStyle = color;
+      this.context.ellipse(x, y, this.PlotItemSize, this.PlotItemSize, 0, 0, 2 * Math.PI);
+      this.context.stroke();
+      this.context.fill();
+      this.context.closePath();      
+    }
+  }
+
+  private DrawVerticalLine(xPoint: number, yPoint: number) {
+    if (this.context) {
+      this.context.beginPath();
+      this.context.lineWidth = 0.2;
+      this.context.strokeStyle = this.TextColor;
+      this.context.moveTo(xPoint, yPoint);
+      this.context.lineTo(xPoint, this.MarginTop);
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private DrawVerticalLineDisplayValueInXAxis(value: string, xPoint: number, yPoint: number) {
+    if (this.context) {
+      this.context.beginPath();
+
+      let met = this.context.measureText(value);
+      let endY: number = yPoint + 15;
+
+      this.context.fillStyle = this.TextColor;
+      this.context.fillText(value, (xPoint - (met.width / 2)), endY);
+      this.context.fill();
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private DrawVerticalLineInXAxis(xPoint: number, yPoint: number) {
+    if (this.context) {
+      this.context.beginPath();
+      let startY: number = yPoint - 5;
+      let endY: number = yPoint + 5;
+      this.context.lineWidth = 1;
+      this.context.strokeStyle = this.TextColor;
+      this.context.moveTo(xPoint, startY);
+      this.context.lineTo(xPoint, endY);
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private GetRoundToTenDigit(distance: number) {
+    let j = distance / 10;
+    let roundedJ = Math.ceil(j);
+    distance = roundedJ * 10;
+
+    return distance;
+  }
+
+  private GetYStartPoint(displayValue: number, distance: number, itemcount: number, vDistance: number, spaceFromTopYAxis: number) {
+    let index = -(displayValue / distance) + this.NoOfSplitInXAxis;
+    let yPoint = Math.round((vDistance * index) + spaceFromTopYAxis);
+    return yPoint;
+  }
+
+  private DrawXAxisName(name: string, xPoint: number, yPoint: number) {
+    if (this.context) {
+      let startY = yPoint;
+      this.context.beginPath
+      this.context.moveTo(xPoint, startY);
+      this.context.fillStyle = this.TextColor;
+      this.context.fillText(name, xPoint, startY);
+      this.context.fill();
+      this.context.strokeStyle = this.TextColor;
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private DrawBar(startX: number, startY: number, xdistance: number, yDistance: number, color: string) {
+    if (this.context) {
+      this.context.beginPath();
+      this.context.fillStyle = color;
+      this.context.fillRect(startX, startY, xdistance, yDistance);
+      this.context.fill();
+      this.context.closePath();
+    }
+  }
+
+  private HorizontalLineDisplayValueInYAxis(value: string, x: number, ypoint: number) {
+    if (this.context) {
+      this.context.beginPath();
+      let metrics = this.context.measureText(value);
+
+      let StartX = x - 7 - metrics.width;
+      let StartY = ypoint + 3;
+      let EndX = x - 7;
+      let EndY = ypoint;
+
+      this.context.fillStyle = this.TextColor;
+      this.context.moveTo(StartX, StartY);
+      this.context.fillText(value, StartX, StartY);
+      this.context.fill();
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private DrawHorizontalLine(x: number, ypoint: number) {
+    if (this.context) {
+      this.context.beginPath();
+      let startX = x;
+      let endX = x + this.Width - this._marginX;
+      this.context.lineWidth = 0.2;
+      this.context.strokeStyle = this.TextColor;
+      this.context.moveTo(startX, ypoint);
+      this.context.lineTo(endX, ypoint);
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private HorizontalLineInYAxis(x: number, ypoint: number) {
+    if (this.context) {
+      this.context.beginPath();
+      let StartX = x - 5;
+      let StartY = ypoint;
+      let EndX = x + 5;
+      let EndY = ypoint;
+
+      this.context.strokeStyle = this.TextColor;
+      this.context.moveTo(StartX, StartY);
+      this.context.lineTo(EndX, EndY);
+
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private DrawText(text: string, x: number, y: number, forecolor: string, rotate: number | undefined = undefined) {
+    if (this.context) {
+      this.context.beginPath();
+      this.context.strokeStyle = forecolor;
+      this.context.fillStyle = forecolor;
+      this.context.fillText(text, x, y);
+      this.context.fill();
+      this.context.stroke();
+      this.context.closePath();
+    }
+  }
+
+  private MinArray(array: number[]): number {
+    return array.reduce((x, y) => {
+      return x < y ? x : y;
+    });
+  }
+
+  private MaxArray(array: number[]): number {
+    return array.reduce((x, y) => {
+      return x > y ? x : y;
+    })
+  }
+
+  private IsLineItemListEqual(a: RLineChartItem[] | null | undefined, b: RLineChartItem[] | null | undefined) {
+
+    if ((a == null || a == undefined) && (b == null || b == undefined))
+      return true;
+
+    if (a == null || b == null || a == undefined || b == undefined)
+      return false;
+
+    if (a.length != b.length)
+      return false;
+
+    for (let index = 0; index < a.length; index++) {
+      let element1 = a[index];
+      let element2 = b[index];
+
+      if (element1.ItemName != element2.ItemName || element1.ItemColor != element2.ItemColor ||
+        element1.Values.map(x => x).toString() != element2.Values.map(x => x).toString()) {
+          return false;
+      }
+    }
+
+    return true;
+  }
+
+}

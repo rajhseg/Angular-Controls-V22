@@ -1,0 +1,112 @@
+
+
+.tline {
+    width: 4px;
+    height: 30px;    
+    border-radius: 10%;    
+    display: block;      
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; 
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;   
+    position: relative;
+    margin-left: 6px;
+}
+
+.circle {      
+    border-radius: 50%;
+    display: flex;      
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 3px 8px; 
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;   
+    position: relative;
+    text-align: center;
+    align-items: center;   
+    z-index: 4;    
+}
+
+.bline {
+    width: 4px;
+    height: 20px;    
+    border-radius: 10%;    
+    display: block;      
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; 
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;   
+    position: relative;
+    margin-left: 6px;
+}
+
+.content {        
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-wrap: break-word;
+    left: 8px;
+    position: relative;
+    height: 40px;
+    top: 16px;
+    text-wrap: wrap;
+    border-radius: 4%;
+    align-content: center;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;   
+}
+
+.leftContent {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-wrap: break-word;
+    left: 11px;
+    position: relative;
+    height: 40px;
+    top: 16px;
+    text-wrap: wrap;
+    border-radius: 4%;
+    align-content: center;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;   
+    margin-right: 20px;
+    text-align: end;
+}
+
+
+.number {
+    text-align: center;
+    font-size: var(--nfontsize);    
+    vertical-align: middle;
+    align-content: center;
+    margin: auto;
+    font-weight: bold;
+}
+
+.leftemptyContent{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-wrap: break-word;
+    left: 11px;
+    position: relative;
+    height: 40px;
+    top: 16px;
+    text-wrap: wrap;   
+    align-content: center;     
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;   
+    margin-right: 20px;
+}

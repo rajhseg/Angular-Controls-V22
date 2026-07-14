@@ -1,0 +1,64 @@
+
+
+  ul {
+    list-style-type: none;    
+  }
+
+  :host{
+    
+  display: inline-block;
+  vertical-align: top;
+
+    width: fit-content;
+    margin: 0;
+    padding: 0;    
+    
+  }
+  
+  .symbol {
+     cursor: pointer;
+    -webkit-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none;
+  }
+  
+  .symbol::before {
+    content: "\25B6"; 
+    color: var(--expandcolor);
+    display: inline-block;
+    margin-right: 8px;
+  }
+  
+  .symbol-down::before {
+    -ms-transform: rotate(90deg); 
+    -webkit-transform: rotate(90deg); 
+    transform: rotate(90deg);  
+  }
+  
+  .childrens {
+    display: none;
+  }
+  
+  .show {
+    display: block;
+  }
+
+  .moveleftforchild {
+    position: relative;
+    left: -18px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.4em;;
+    height: 0.4em;;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #bdbbbb;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #5e5e5e;
+    border-radius: 10px;
+  } 

@@ -1,0 +1,27 @@
+<div  [style.font-family]="FontFamily" [id]="Id">
+  <div #starcontainer class="starcontainer">
+    <div #starcontrol class="starcontrol">
+      @for (item of Items; track item) {
+        <div #star
+          (click)="selected(item)"
+          [style.color]="starColor"
+          [style.width]="starWidth+'px'"
+          [style.fontSize]="starWidth+'px'"
+          class="starclass">
+        </div>
+      }
+    </div>
+  </div>
+  <div #staroutlinecontainer class="staroutlinecontainer" [style.width]="getMainContainerWidth()+'px'">
+    <div #staroutlinecontrol class="starcontrol">
+      @for (item of Items; track item) {
+        <div (click)="selected(item)"
+          [style.color]="starColor"
+          [style.width]="starWidth+'px'"
+          [style.fontSize]="starWidth+'px'"
+          #staroutline class="staroutline">
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="htl" [ngStyle]="{'--fontsize': FontSize, 'font-size': FontSize, '--nfontsize': NumberFontSize }">
+  <div>
+    @if (Item?.IsTopAlign) {
+<div class="topContent" [ngStyle]="{'color': Item?.IsActive ? ActiveForeColor : (Item?.IsCompleted ? 
+                            CompletedForeColor : PendingForeColor),            
+            'width': ContentWidth}">
+        {{Item?.DisplayText}}
+      </div>
+    }
+
+    @if (EnableEmptyItemOnTopSide && !Item?.IsTopAlign) {
+      <div class="topContent"
+        [ngStyle]="{'width': ContentWidth}">
+        &nbsp;
+      </div>
+    }
+
+  </div>
+
+  <div style="">
+    <div class="tline" [style.backgroundColor]="StripLineColor"></div>
+    @if (!Item?.IsLastItem) {
+      <div class="bline" [ngStyle]="{ 'left': IsDisplayStepNo ? '56px' : '52px'}"
+      [style.backgroundColor]="StripLineColor" [style.width]="blineWidth"></div>
+    }
+
+        <div class="circle" [ngStyle]="{ 
+            'width':  IsDisplayStepNo ? '20px': '15px',
+            'height': IsDisplayStepNo ? '20px': '15px',
+            'background-color': Item?.IsActive ? ActiveForeColor : (Item?.IsCompleted ? CompletedForeColor : PendingForeColor),
+            'top': IsDisplayStepNo ?  Item?.IsLastItem ? '-10px' : '-15px'  :  Item?.IsLastItem ? '-8px' : '-12px' }">
+      @if (IsDisplayStepNo) {
+        <span class="number" [ngStyle]="{ 'color': StepNoForeColor }">{{StepNo}}</span>
+      }
+    </div>
+
+  </div>
+
+  @if (!Item?.IsTopAlign) {
+<div class="content" [ngStyle]="{
+        'color': Item?.IsActive ? ActiveForeColor : (Item?.IsCompleted ? 
+                            CompletedForeColor : PendingForeColor),
+        'padding-top': Item?.IsLastItem ? '4px': '',        
+        'width': ContentWidth}">
+      {{Item?.DisplayText}}
+    </div>
+  }
+
+</div>

@@ -1,0 +1,55 @@
+
+
+:host {
+    width: fit-content;
+    margin-top: 6px; 
+    margin-bottom: 6px;      
+    display: inline-block;
+    vertical-align: top;
+}
+
+.checkroot{
+    border: 2px solid lightgray;
+    background-color: whitesmoke;    
+    cursor: pointer;
+}
+
+.check {
+
+}
+
+.tickmark {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: var(--color);
+    clip-path: polygon(
+      14% 52%,
+      0%  66%,
+      38% 100%,
+      100% 20%,
+      86%  6%,
+      38% 72%
+    );
+  }
+
+.label {
+    padding-right: 5px;
+    color: black;
+    padding-left: 5px;
+    align-content: center;
+}
+
+::-webkit-scrollbar {
+    width: 0.4em;;
+    height: 0.4em;;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #bdbbbb;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #5e5e5e;
+    border-radius: 10px;
+  } 

@@ -1,0 +1,23 @@
+
+<div  [style.font-family]="FontFamily" [id]="Id"
+  [ngStyle]="{ 'pointer-events': (IsDisabled || IsReadOnly) ? 'none' : '', 'user-select' : IsDisabled ? 'none' : 'auto' }">
+  @for (item of Items; track item) {
+    <rsequence-vertical [Item]="item"
+      [FontSize]="FontSize"
+      [ActiveBackgroundColor]="ActiveBackgroundColor"
+      [ActiveForeColor]="ActiveForeColor"
+      [CompletedBackgroundColor]="CompletedBackgroundColor"
+      [CompletedForeColor]="CompletedForeColor"
+      [PendingBackgroundColor]="PendingBackgroundColor"
+      [PendingForeColor]="PendingForeColor"
+      [EnableEmptyItemOnLeftSide]="!_allItemsAreInRight"
+      [StripLineColor]="StripLineColor"
+      [StepNo]="item.StepNo"
+      [IsDisplayStepNo]="IsDisplayStepNo"
+     [StepNoForeColor]="ApplyItemForeColorToStepNo ? item.IsCompleted ? CompletedForeColor : 
+                            item.IsActive ? ActiveForeColor : PendingForeColor : 
+                        StepNoForeColor"
+      [EnableShadow]="EnableShadowOnContent"
+    [ContentWidth]="ContentWidth + 'px'"></rsequence-vertical>
+  }
+</div>

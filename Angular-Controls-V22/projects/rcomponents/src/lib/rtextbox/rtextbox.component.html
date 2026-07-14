@@ -1,0 +1,41 @@
+
+
+
+<div  [style.font-family]="FontFamily" [id]="Id" class="txtroot" 
+    [ngStyle]="{'--pleft': PaddingLeft, 
+        '--pright': PaddingRight,
+        'pointer-events': (IsReadOnly || IsDisabled) ? 'none': '', 
+        'user-select': IsDisabled ? 'none': 'auto' }">
+
+    <span class="span" [ngStyle]="{ 'width': TextBoxWidth, 'color': LabelForeColor, 'font-size': FontSize }"> 
+        {{LabelText}} 
+    </span>
+    
+    
+    <!-- <p #para contenteditable="true" onkeypress="return event.keyCode != 13;"  
+        class="txtbox" 
+        (click)="txtboxClicked($event)"
+        [ngStyle]="{'width': TextBoxWidth+'px','border-bottom': '2px solid {{BottomLineColor}};'}">
+
+    </p> -->
+
+    <input type="text" [id]="InputId"
+            [attr.disabled]="IsDisabled || null" [readonly]="IsReadOnly"
+            [type]="IsPasswordBox ? 'password' : 'text'" 
+            [(ngModel)]="TextboxValue" class="txtbox" 
+        [required]="required" 
+        [ngClass]="{'brdr' : !EnableBoxShadow }"
+
+       [ngStyle]="{ 'height': TextBoxHeight, 
+                    'width': TextBoxWidth,
+                    'border-bottom-color': BottomLineColor,       
+                    'margin-bottom': EnableMarginTextBottom ? MarginTextBottom : '', 
+                    'font': Font, 
+                    'font-size': FontSize,
+                    'pointer-events':(IsDisabled || IsReadOnly) ? 'none': '' ,
+                    'box-shadow': EnableBoxShadow ? 'rgba(0, 0, 0, 0.24) 0px 3px 8px' : ''
+                }"
+
+       [placeholder]="PlaceholderText">     
+
+</div>

@@ -1,0 +1,130 @@
+
+.tabheader {
+  float: left;
+  margin-left: 2px;
+  margin-right: 1px;
+  margin-top: 2px;
+  display: flex;
+  width: fit-content;
+  border: none;
+  outline: none;
+  padding: 10px 7px;
+  cursor: pointer;
+  background-color: #f4eff5;
+}
+
+.tabheaderContainer {
+  border: 1px solid lightgray;
+  background-color: lightgray;
+  border-radius: 2px;
+  flex-wrap: wrap; 
+  display: flex;
+  min-height: 37px;
+}
+
+.tabheader:hover {
+  background-color: #e7e7e9;
+}
+
+.tabSelected{
+  background-color: #e7e7e9; 
+  background-image: linear-gradient(white, lightgray, #e7e7e9);
+}
+
+.tabcontent {
+  width: 100%;
+  height: 100%;
+  display: block;
+  top:-2px;
+  position: relative;
+  background-color: #e7e7e9;
+  overflow: auto;
+}
+
+.tab {
+  padding: 15px 20px;
+  height: auto;
+  visibility: collapse;
+  display: none;
+}
+
+.active {
+  visibility: visible;
+  background-color: #e7e7e9;
+  display: block;
+}
+
+
+.content {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+:host {  
+  margin-top: 2px; 
+  margin-bottom: 2px;
+  width: fit-content;
+  background: #e7e7e9;
+  border-radius: 30%;  
+  
+  display: inline-block;
+  vertical-align: top;
+}
+
+.rtabroot{
+  border: 1px solid lightgray;
+  background: #e5e5e7; 
+  border-radius: 1%;
+}
+
+.draggedbox {  
+  border: solid 1px #ccc;
+  background-color: #e7e7e9;
+  color: rgba(0, 0, 0, 0.87);
+  cursor: move;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 4px;
+  position: absolute;
+  z-index: 9999999998;  
+  transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+              0 2px 2px 0 rgba(0, 0, 0, 0.14),
+              0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.draggedbox:active {
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+
+.draghandle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ccc;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+}
+
+.cursorForDrag {
+  cursor: move;
+}
+
+::-webkit-scrollbar {
+  width: 0.4em;;
+  height: 0.4em;;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #bdbbbb;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #5e5e5e;
+  border-radius: 10px;
+} 
