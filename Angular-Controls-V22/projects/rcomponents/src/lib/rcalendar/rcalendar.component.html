@@ -67,9 +67,9 @@
           <div class="day dayheader">Fri</div>
           <div class="day dayheader">Sat</div>
         </div>
-        @for (week of currentMonth?.weeks; track week) {
+        @for (week of currentMonth?.weeks; track $index) {
           <div class="week">
-            @for (day of week.days; track day) {
+            @for (day of week.days; track $index) {
               <div (click)="selectDate($event, day)" class="day"
                 [ngClass]="{ 'notCurrentMonth': !day.isActiveMonth}">
                 <div [ngClass]="{'selday':day.isSelected, 'notactive': !day.isActiveMonth}"

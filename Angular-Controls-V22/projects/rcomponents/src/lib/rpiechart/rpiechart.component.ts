@@ -8,7 +8,7 @@ import { RChartBaseComponent } from '../rmodels/RBaseComponent';
     selector: 'rpiechart',
     imports: [NgStyle, NgClass],
     templateUrl: './rpiechart.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: './rpiechart.component.css'
 })
 export class RPieChartComponent  extends RChartBaseComponent implements AfterViewInit, OnChanges {

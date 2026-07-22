@@ -876,6 +876,29 @@ Displays every component in a card grid, grouped by category.
     ================================================================ -->
     @if (activeSection === 'navigation') {
       <section  class="section">
+        
+        <!-- rcarousel -->
+        <div class="card card-wide">
+          <div class="card-header">
+            <span class="card-tag tag-nav">Nav</span>
+            <h2 class="card-title">Carousel</h2>
+            <code class="card-selector">&lt;rcarousel&gt;</code>
+          </div>
+          <div class="card-body">
+
+            <rcarousel [EnableAutoPlay]="true" [AutoPlayDurationBetweenSlides]="3000" [Width]="'700px'" [Height]="'350px'" [SlideButtonsColor]="'white'">
+              	<img rimage src="./images/1.png">
+                <img rimage src="./images/2.png">
+                <img rimage src="./images/3.png">
+                
+                <img rimage src="./images/4.png">
+                <img rimage src="./images/5.png">
+            </rcarousel>
+
+          </div>
+          <div class="card-hint">RCarousel<code>&lt;rcarousel&gt;</code>.</div>
+        </div>
+
         <!-- Flat Tabs -->
         <div class="card card-wide">
           <div class="card-header">

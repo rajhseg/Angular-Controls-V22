@@ -167,9 +167,9 @@
     <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"  class="day dayheader">Fri</div>
     <div [ngStyle]="{ '--dwidth': dayWidth, '--dheight': dayHeight}"  class="day dayheader">Sat</div>
   </div>
-  @for (week of currentMonth?.weeks; track week) {
+  @for (week of currentMonth?.weeks; track $index) {
     <div [ngStyle]="{ '--wheight': weekHeight}" class="week">
-      @for (day of week.days; track day) {
+      @for (day of week.days; track $index) {
         <div
                     [ngStyle]="{ '--dwidth': dayWidth,
                                 '--wheight': weekHeight}" 
@@ -184,7 +184,7 @@
           </div>
           <div style="position: relative;height: 25%;">
             <div style="display: flex; flex-direction: row; gap: 2px;position: absolute; bottom: 0px;">
-              @for (item of getEvents(day); track item) {
+              @for (item of getEvents(day); track $index) {
                 <div style="width: 10px;height: 10px;"
                 [ngStyle]="{'backgroundColor': item.Indicator}"></div>
               }

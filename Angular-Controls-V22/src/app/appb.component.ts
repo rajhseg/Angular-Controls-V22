@@ -75,6 +75,7 @@ import { RTreeItem } from 'rcomponents';
 import { RSequenceVerticalItem } from 'rcomponents';
 import { delay, from, map, Observable, of, switchMap } from 'rxjs';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { RCarouselComponent, RImageDirective } from 'rcomponents';
 
 
 @Component({
@@ -129,6 +130,9 @@ import { CdkDropListGroup } from '@angular/cdk/drag-drop';
         RStepComponent,
         RTreeComponent,
         RSimpleTabsComponent,
+        RCarouselComponent,
+        RImageDirective,
+
         // Data display
         REventsCalenderComponent,
         RTimerComponent,

@@ -25,21 +25,21 @@
             '--fontsize': DropdownFontSize
             }">
       <div style="overflow-y: auto; border-right: 1px solid lightgray;" class="scrl">
-        @for (item of hours; track item) {
+        @for (item of hours; track item.Value) {
 <div class="cmb" [ngStyle]="{'color': item.IsSelected ? SelectedItemForeColor : '', 
                             'background-color': item.IsSelected ? SelectedItemBackgroundColor : ''}"
           (click)="SelectHour(item)">{{item.DisplayValue}}</div>
         }
       </div>
       <div style="overflow-y: auto; border-right: 1px solid lightgray;" class="scrl">
-        @for (item of minutes; track item) {
+        @for (item of minutes; track item.Value) {
 <div class="cmb" [ngStyle]="{'color': item.IsSelected ? SelectedItemForeColor : '', 
                             'background-color': item.IsSelected ? SelectedItemBackgroundColor : ''}"
           (click)="SelectMinute(item)">{{item.DisplayValue}}</div>
         }
       </div>
       <div style="overflow-y: auto;" class="scrl">
-        @for (item of modes; track item) {
+        @for (item of modes; track item.Value) {
 <div class="mod" [ngStyle]="{'color': Is24HourFormat ? 'lightgray' : item.IsSelected ? SelectedItemForeColor : '', 
                             'background-color': item.IsSelected ? SelectedItemBackgroundColor : ''}"
           (click)="SelectMode(item)">{{item.DisplayValue}}</div>

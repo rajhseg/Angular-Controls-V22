@@ -8,7 +8,7 @@ import { RChartBaseComponent } from '../rmodels/RBaseComponent';
     selector: 'rdonutchart',
     imports: [NgStyle],
     templateUrl: './rdonutchart.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.OnPush,
     styleUrl: './rdonutchart.component.css'
 })
 export class RDonutChartComponent  extends RChartBaseComponent  implements AfterViewInit, OnChanges {
