@@ -64,6 +64,8 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
     private totalItems!: number | undefined;
     private _interval: any;
 
+    public _slidesId!: string;
+
     FirstElement!: HTMLImageElement;
 
     LastElement!: HTMLImageElement;
@@ -73,6 +75,7 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
             public cdr: ChangeDetectorRef
     ) {    
         super(windowHelper);
+        this._slidesId = this.winObj.GenerateUniqueId();
     }
 
    slide(step: number) {
@@ -108,14 +111,20 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
       }
     }
 
-    ngAfterContentInit(): void {
-      this.items = document.getElementById("slides");
-      this.totalItems = this.Images.length + 2;
+  ngAfterContentInit(): void {
+    this.FirstElement = this.Images.first.element.nativeElement;
+    this.LastElement = this.Images.last.element.nativeElement;
+  }
+
+  ngAfterViewInit(): void {
+    this.Render();
+  }
+
+  private Render() {
+    this.items = document.getElementById(this._slidesId);
+    this.totalItems = this.Images.length + 2;
 
       if(this.items) {
-
-        this.FirstElement = this.Images.first.element.nativeElement;
-        this.LastElement = this.Images.last.element.nativeElement;
 
         this.items.style.transform = `translateX(-${this.currentItem * this.WidthInNumber}px)`;
 
@@ -132,7 +141,7 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
         }
 
         this.cdr.detectChanges();
-    }
-
+      }
   }
+
 }
