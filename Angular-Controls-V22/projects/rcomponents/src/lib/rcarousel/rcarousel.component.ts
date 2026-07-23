@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, DestroyRef, ElementRef, Input, QueryList } from '@angular/core'
+import { AfterContentInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, DestroyRef, ElementRef, EventEmitter, Input, Output, QueryList } from '@angular/core'
 import { RCssUnitsService, RelativeUnitType } from '../rcss-units.service';
 import { RWindowHelper } from '../rwindowObject';
 import { RBaseComponent } from '../rmodels/RBaseComponent';
@@ -47,6 +47,8 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
 
     @ContentChildren(RImageDirective) Images!: QueryList<RImageDirective>;
 
+    ImagesList!: RImageDirective[];
+
     @Input()
     SlideButtonsColor: string = 'white';
 
@@ -59,6 +61,9 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
     @Input()
     BorderColor: string = '#ccc';
     
+    @Output()
+    OnContentClick = new EventEmitter<RCarouselEventArgs>();
+
     private  currentItem = 1; 
     private items: HTMLElement | null = null;
     private totalItems!: number | undefined;
@@ -77,6 +82,10 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
         super(windowHelper);
         this._slidesId = this.winObj.GenerateUniqueId();
     }
+
+  imgClick(evt: Event, index: number) {
+    this.OnContentClick.emit(new RCarouselEventArgs(evt, index));
+  }
 
    slide(step: number) {
     this.currentItem++;
@@ -121,6 +130,20 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
   }
 
   private Render() {
+      
+    this.ImagesList = this.Images.toArray();
+
+    this.Images.changes.subscribe((images: QueryList<RImageDirective>) => {
+      
+      this.FirstElement = images.first.element.nativeElement;
+      this.LastElement = images.last.element.nativeElement;
+      this.ImagesList = images.toArray();
+      this.totalItems = images.length + 2;
+      
+      this.cdr.detectChanges();
+
+    });
+
     this.items = document.getElementById(this._slidesId);
     this.totalItems = this.Images.length + 2;
 
@@ -144,4 +167,9 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
       }
   }
 
+}
+
+
+export class RCarouselEventArgs {
+  constructor(public event: Event | null, public currentItemNo: number) {}
 }

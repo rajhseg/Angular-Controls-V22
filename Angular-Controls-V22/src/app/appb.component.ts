@@ -56,7 +56,7 @@ import { RTreeComponent } from 'rcomponents';
 // Data display
 import { RTimerComponent } from 'rcomponents';
 import { RStateVerticalComponent } from 'rcomponents';
-import { RCalendarComponent } from 'rcomponents';
+import { RCalendarComponent, RCarouselEventArgs } from 'rcomponents';
 
 // Models
 import {
@@ -162,6 +162,8 @@ export class AppRootComponent {
   optionA: boolean = true;
   optionB: boolean = false;
   optionC: boolean = false;
+
+  imagesNames: number[] = [1,2,3];
 
   enableGlassyEffect: boolean = false;
   glassyColor: string = '#A8BFCA';
@@ -395,6 +397,17 @@ export class AppRootComponent {
 
   spaceBarChanged(val: any){
     this.allocatedGap = this.selectedSpace.Value;
+  }
+
+  
+  AddImages(){
+    this.imagesNames.push(4);
+    this.imagesNames.push(5);
+  }
+
+  
+  OnContentClick(evt: RCarouselEventArgs) {
+    console.log('Carousel content clicked at index:', evt.currentItemNo);
   }
 
   // ─── Navigation: Stepper ─────────────────────────────────────────────

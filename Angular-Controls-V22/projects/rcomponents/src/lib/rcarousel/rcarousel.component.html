@@ -2,15 +2,15 @@
 <div [id]="Id" class="carousel" [ngStyle]="{'--width': Width , '--height': Height, '--bcolor': SlideButtonsColor,
     '--borcolor': BorderColor,
     'pointer-events': (IsReadOnly || IsDisabled) ? 'none': '', 'user-select': IsDisabled ? 'none': 'auto' }">
-    <div class="sds" [id]="_slidesId">
+    <div class="sds" #cslides [id]="_slidesId">
         
-        <img [src]="LastElement.src" class="clone" />
+        <img (click)="imgClick($event, ImagesList.length)" [src]="LastElement.src" class="clone" />
 
-         @for(img of Images; track $index) {
-            <img [src]="img.element.nativeElement.src">
+         @for(img of ImagesList; let i = $index; track $index) {
+            <img (click)="imgClick($event, i+1)" [src]="img.element.nativeElement.src">
         }
     
-        <img [src]="FirstElement.src" class="clone" />
+        <img (click)="imgClick($event, 1)" [src]="FirstElement.src" class="clone" />
     </div>
 
     <button class="prev" (click)="slide(-1)">❮</button>
