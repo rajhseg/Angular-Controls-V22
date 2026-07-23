@@ -239,7 +239,7 @@ RCarousel Control
 RTabs Control
 -------------------------
 
-![image](https://github.com/user-attachments/assets/ee78238e-b42f-403f-9dd9-5728ef8019c7)
+![image](https://github.com/user-attachments/assets/3623c19d-04f3-4d76-b332-f0ff7f634e5f)
 
 
 <br />
