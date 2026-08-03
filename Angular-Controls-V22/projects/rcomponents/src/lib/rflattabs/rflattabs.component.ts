@@ -4,6 +4,7 @@ import { AsyncPipe, CommonModule, JsonPipe, NgClass, NgTemplateOutlet, NgStyle }
 import { RWindowHelper } from "../rwindowObject";
 import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray, transferArrayItem, CdkDragEnd, CdkDropListGroup, CdkDragMove } from '@angular/cdk/drag-drop';
 import { RBaseComponent } from "../rmodels/RBaseComponent";
+import { CssUnit, RCssUnitsService, RelativeUnitType } from "../rcss-units.service";
 
 @Component({
     selector: 'rflattabs',
@@ -55,8 +56,9 @@ export class RFlatTabsComponent  extends RBaseComponent<any> implements AfterCon
     @Input({ required: true, alias: 'TabHeight' })
     set TabHeight(value: string) {
       if (value && value != '') {
-        this._tabHeight = value;
-      } else {
+          let _val = this.cssServ.ToPxValue(value, this.hostElementRef.nativeElement.parentElement, RelativeUnitType.Height);
+          this._tabHeight = _val + CssUnit.Px.toString();
+        } else {
         this._tabHeight = '200px';
       }
     }
@@ -67,7 +69,8 @@ export class RFlatTabsComponent  extends RBaseComponent<any> implements AfterCon
     @Input()
     set TabWidth(value: string) {
       if (value && value != '') {
-        this._tabWidth = value;
+        let _val = this.cssServ.ToPxValue(value, this.hostElementRef.nativeElement.parentElement, RelativeUnitType.Width);
+        this._tabWidth = _val + CssUnit.Px.toString();  
       } else {
         this._tabWidth = '100%';
       }
@@ -113,6 +116,7 @@ export class RFlatTabsComponent  extends RBaseComponent<any> implements AfterCon
       private injector: Injector,
       private moduleRef: NgModuleRef<any>,
       private viewRef: ViewContainerRef,
+      private cssServ: RCssUnitsService,
       @Host() public hostElementRef: ElementRef
     ) {
       super(winobj);
