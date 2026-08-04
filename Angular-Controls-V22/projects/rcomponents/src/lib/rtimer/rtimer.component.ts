@@ -8,6 +8,7 @@ import { RBaseComponent, RTimerResult } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rtimer',
+    standalone: true,
     imports: [RProgressbarComponent, NgStyle],
     templateUrl: './rtimer.component.html',
     styleUrl: './rtimer.component.css',

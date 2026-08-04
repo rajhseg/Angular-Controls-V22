@@ -6,6 +6,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
 
 @Component({
     selector: 'rserieschart',
+    standalone: true,
     imports: [NgStyle, NgClass],
     templateUrl: './rserieschart.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

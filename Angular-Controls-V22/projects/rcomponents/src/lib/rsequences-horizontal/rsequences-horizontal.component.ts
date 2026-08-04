@@ -8,6 +8,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rstate-horizontal',
+    standalone: true,
     imports: [RSequenceHorizontalComponent, NgStyle],
     templateUrl: './rsequences-horizontal.component.html',
     styleUrl: './rsequences-horizontal.component.css',

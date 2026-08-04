@@ -7,6 +7,7 @@ import { RGridHeaderTemplateContext, RGridTemplateContext } from '../rgridtempla
 
 @Component({
     selector: 'rcolumn',
+    standalone: true,
     imports: [ReadViewTemplateDirective, EditViewTemplateDirective, HeaderTemplateDirective, NgTemplateOutlet],
     templateUrl: './rcolumn.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

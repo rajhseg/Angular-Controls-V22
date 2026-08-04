@@ -1,5 +1,5 @@
 import { CdkDrag, CdkDragDrop, CdkDragPlaceholder, CdkDragPreview, CdkDragStart, CdkDropList, CdkDropListGroup, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { AsyncPipe, DatePipe, JsonPipe, KeyValuePipe, NgClass, NgForOf, NgIf, NgStyle, NgTemplateOutlet } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe, KeyValuePipe, NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChildren, DoCheck, ElementRef, EventEmitter, forwardRef, HostBinding, input, Input,
          NgZone, OnChanges, OnInit, Output, QueryList, SimpleChanges, TemplateRef, ViewChild } from '@angular/core';
 import { RColumnComponent } from './rcolumn/rcolumn.component';
@@ -55,7 +55,8 @@ export class RGridGroupData {
 
 @Component({
     selector: 'rgrid',
-    imports: [NgForOf, NgTemplateOutlet, AsyncPipe, NgIf, NgStyle, CdkDropListGroup,
+    standalone: true,
+    imports: [NgTemplateOutlet, AsyncPipe, NgStyle, CdkDropListGroup,
         KeyValuePipe, ScrollingModule,
         NgClass, CdkDrag, CdkDropList, CdkDragPlaceholder, JsonPipe, FormsModule, CdkDragPreview,
         ReactiveFormsModule, NgTemplateOutlet, RButtonComponent, RDropdownComponent, RTextboxComponent,
@@ -259,13 +260,17 @@ export class RGridComponent extends RBaseComponent<any> implements OnInit, DoChe
   get FitColumnsToContent(): boolean {
     return this._fitColumns;
   }
+  
+  TableHeight_C: string = '200px';
+  TableWidth_C: string = '99%';
 
   @Input()
   set TableHeight(val: string){
+    this._tableHeight = val;
     if(this.winObj.isExecuteInBrowser()) {
       let _val = val;
       let _height = this.cssUnit.ToPxString(_val, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
-      this._tableHeight = _height;
+      this.TableHeight_C = _height;
     }
   }
   get TableHeight(): string {
@@ -273,7 +278,7 @@ export class RGridComponent extends RBaseComponent<any> implements OnInit, DoChe
   }
 
   public get FooterWidth() {
-    let val = this.cssUnit.ToPxValue(this.TableWidth, null, null);
+    let val = this.cssUnit.ToPxValue(this.TableWidth_C, null, null);
     return (val - 2) + "px";
   }
 
@@ -281,15 +286,15 @@ export class RGridComponent extends RBaseComponent<any> implements OnInit, DoChe
 
   @Input()
   set TableWidth(val: string){
+    this._tableWidth = val;
     if(this.winObj.isExecuteInBrowser()) {
       let _val = val;
       let _width = this.cssUnit.ToPxString(_val, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
-      this._tableWidth = _width;
+      this.TableWidth_C = _width;
     }
   }
   get TableWidth(): string {
-    let _width = this.cssUnit.ToPxString(this._tableWidth, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
-    return _width;
+    return this._tableWidth;
   }
 
   @Input()
@@ -440,8 +445,8 @@ export class RGridComponent extends RBaseComponent<any> implements OnInit, DoChe
   }
 
   public get GetContentHeight(): string {
-    if(this.TableHeight != undefined && this.TableHeight != null) {
-      let _height = this.cssUnit.ToPxValue(this.TableHeight, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
+    if(this.TableHeight_C != undefined && this.TableHeight_C != null) {
+      let _height = this.cssUnit.ToPxValue(this.TableHeight_C, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
       let contentHeight =  _height - 40;
       let contentHeightPercent = (contentHeight/_height) * 100;
       return contentHeightPercent + CssUnit.Percentage;
@@ -1620,7 +1625,7 @@ export class RGridComponent extends RBaseComponent<any> implements OnInit, DoChe
     this.Headers = [];
     if (this.Columns.length > 0) {
 
-      let _wth = this.cssUnit.ToPxValue(this.TableWidth, null, null);
+      let _wth = this.cssUnit.ToPxValue(this.TableWidth_C, null, null);
       
       if(this.ShowEditUpdate)
         _wth = _wth - this.GetEditColumnTotalSize;
@@ -1727,7 +1732,7 @@ export class RGridComponent extends RBaseComponent<any> implements OnInit, DoChe
 
         if (dirs && dirs.length > 0) {
 
-          let _wth = this.cssUnit.ToPxValue(this.TableWidth, null, null);              
+          let _wth = this.cssUnit.ToPxValue(this.TableWidth_C, null, null);              
           
           if(this.ShowEditUpdate)
             _wth = _wth - this.GetEditColumnTotalSize;
@@ -1769,7 +1774,7 @@ export class RGridComponent extends RBaseComponent<any> implements OnInit, DoChe
       _dataItems.Rows.push(_row);
     }
 
-    let _wth = this.cssUnit.ToPxValue(this.TableWidth, null, null);          
+    let _wth = this.cssUnit.ToPxValue(this.TableWidth_C, null, null);          
     
     if(this.ShowEditUpdate)
       _wth = _wth - this.GetEditColumnTotalSize;
@@ -1845,7 +1850,7 @@ export class RGridComponent extends RBaseComponent<any> implements OnInit, DoChe
           dir.Width = (100/totCols)+"%"; 
         }
 
-        let _wth = this.cssUnit.ToPxValue(this.TableWidth, null, null);              
+        let _wth = this.cssUnit.ToPxValue(this.TableWidth_C, null, null);              
         
         if(this.ShowEditUpdate)
           _wth = _wth - this.GetEditColumnTotalSize;

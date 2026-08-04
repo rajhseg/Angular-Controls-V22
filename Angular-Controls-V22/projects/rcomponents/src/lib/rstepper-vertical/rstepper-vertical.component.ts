@@ -12,6 +12,7 @@ import { RCssUnitsService, RelativeUnitType } from '../rcss-units.service';
 
 @Component({
     selector: 'rstepper-vertical',
+    standalone: true,
     imports: [RButtonComponent, NgTemplateOutlet, EditViewTemplateDirective, NgStyle, NgClass, RStateVerticalComponent],
     templateUrl: './rstepper-vertical.component.html',
     styleUrl: './rstepper-vertical.component.css',
@@ -20,7 +21,7 @@ import { RCssUnitsService, RelativeUnitType } from '../rcss-units.service';
 export class RStepperVerticalComponent extends RBaseComponent<any> implements AfterContentInit {
 
   seqItems: RSequenceVerticalItem[] = [];
-
+  
   private _width: string = '800px';
   private _height: string = '530px';
 
@@ -29,8 +30,10 @@ export class RStepperVerticalComponent extends RBaseComponent<any> implements Af
 
   @Input()
   public set Width(value: string) {
-    this.ContentWidth = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
     this._width = value;
+    if(this.ele) {
+      this.ContentWidth = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+    }
   }
   public get Width(): string {
     return this._width;
@@ -38,8 +41,10 @@ export class RStepperVerticalComponent extends RBaseComponent<any> implements Af
 
   @Input()
   public set Height(value: string) {
-     this.ContentHeight = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
-    this._height = value;
+     this._height = value;
+     if(this.ele) {
+      this.ContentHeight = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
+     }
   }
   public get Height(): string {
     return this._height;

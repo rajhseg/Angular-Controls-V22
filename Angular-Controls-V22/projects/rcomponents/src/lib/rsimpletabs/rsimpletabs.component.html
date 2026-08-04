@@ -1,6 +1,6 @@
 
 <div [ngClass]="{ 'boxshadow' : EnableBoxShadow }" class="rtabroot showcase-root" [style.font-family]="FontFamily" [id]="'rs_'+Id"
-  [style.width]="TabWidth" [ngStyle]="{'pointer-events': IsDisabled ? 'none': '', 'user-select': IsDisabled ? 'none' : 'auto' }">
+  [style.width]="TabWidth_C" [ngStyle]="{'pointer-events': IsDisabled ? 'none': '', 'user-select': IsDisabled ? 'none' : 'auto' }">
 
   <header class="showcase-header">
 
@@ -23,7 +23,7 @@
       <ng-container>
         @if (contentVisible && (this.tabTemps.length > 0 || DisplayTabContainerWhenZeroTabs)) {
           <div [ngStyle]="{ 'pointer-events': IsReadOnly ? 'none': '' }" class="tabcontent"
-            [style.width]="TabWidth" [style.height]="TabHeight">
+            [style.width]="TabWidth_C" [style.height]="TabHeight_C">
             @if (SelectedTabTemplateRef && SelectedTabTemplateRef.templateRef!=undefined) {
               <div
                 id="rsimpletabcontent_{{SelectedTabTemplateRef.TabId}}" class="tab active">

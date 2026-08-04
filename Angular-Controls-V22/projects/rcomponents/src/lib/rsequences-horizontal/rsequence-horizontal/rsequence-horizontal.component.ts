@@ -4,6 +4,7 @@ import { NgStyle } from '@angular/common';
 
 @Component({
     selector: 'rsequence-horizontal',
+    standalone: true,
     imports: [NgStyle],
     templateUrl: './rsequence-horizontal.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

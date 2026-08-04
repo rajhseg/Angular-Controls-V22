@@ -8,6 +8,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
 
 @Component({
     selector: 'rareachart',
+    standalone: true,
     imports: [NgStyle, NgClass],
     templateUrl: './rareachart.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

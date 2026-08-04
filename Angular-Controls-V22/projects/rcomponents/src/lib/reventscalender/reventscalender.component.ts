@@ -23,6 +23,7 @@ import { CalenderChangeMonthInfo, RBaseComponent, RChartBaseComponent, Validator
 
 @Component({
     selector: 'revents-calender',
+    standalone: true,
     imports: [NgClass, CommonModule, NgStyle, FormsModule, RTextboxComponent, ReactiveFormsModule, RDropdownComponent, RTimeSelectorComponent, RColorPickerComponent, RButtonComponent, RGrouppanelComponent, RGridComponent, RColumnComponent, ReadViewTemplateDirective, EditViewTemplateDirective],
     templateUrl: './reventscalender.component.html',
     styleUrl: './reventscalender.component.css',

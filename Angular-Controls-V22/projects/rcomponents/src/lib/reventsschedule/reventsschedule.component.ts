@@ -6,6 +6,7 @@ import { RBaseComponent } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'revents-schedule',
+    standalone: true,
     imports: [NgStyle],
     templateUrl: './reventsschedule.component.html',
     styleUrl: './reventsschedule.component.css',

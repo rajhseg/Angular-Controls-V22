@@ -6,6 +6,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
 
 @Component({
     selector: 'rallocated-barchart',
+    standalone: true,
     imports: [NgStyle, NgClass],
     templateUrl: './rallocated-barchart.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

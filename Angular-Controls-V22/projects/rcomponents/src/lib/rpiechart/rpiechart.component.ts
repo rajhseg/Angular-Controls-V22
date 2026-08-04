@@ -6,6 +6,7 @@ import { RChartBaseComponent } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rpiechart',
+    standalone: true,
     imports: [NgStyle, NgClass],
     templateUrl: './rpiechart.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,

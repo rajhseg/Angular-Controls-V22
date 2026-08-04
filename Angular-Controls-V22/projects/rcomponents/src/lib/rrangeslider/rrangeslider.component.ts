@@ -9,6 +9,7 @@ import { RBaseComponent, RRangeSliderData, ValidatorValueType } from '../rmodels
 
 @Component({
     selector: "rrangeslider",
+    standalone: true,
     imports: [CdkDrag, NgStyle, DragDropModule],
     templateUrl: "./rrangeslider.component.html",
     styleUrls: ["./rrangeslider.component.css"],
@@ -89,6 +90,8 @@ export class RRangeSliderComponent extends RBaseComponent<RRangeSliderData> impl
   @Input()
   set SliderBarWidth(val: string) {
 
+    this._sliderBarWidth = val;
+    
     if(this.ele.nativeElement) {
       let sh = this.cssunit.ToPxValue(val, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
       this._sliderBarWidthVM = sh + CssUnit.Px.toString();
@@ -96,7 +99,6 @@ export class RRangeSliderComponent extends RBaseComponent<RRangeSliderData> impl
       this._sliderBarWidthValue = sh;
     }
 
-    this._sliderBarWidth = val;
   }
   get SliderBarWidth(): string {
     return this._sliderBarWidth;
@@ -108,6 +110,9 @@ export class RRangeSliderComponent extends RBaseComponent<RRangeSliderData> impl
 
   @Input()
   set SliderBarHeight(val: string) {
+    
+    this._sliderBarHeight = val;
+
     if (this.ele.nativeElement) {
       let sh = this.cssunit.ToPxValue(val, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
       if (sh < 2) {
@@ -115,7 +120,6 @@ export class RRangeSliderComponent extends RBaseComponent<RRangeSliderData> impl
       }
       
       this._sliderBarHeightVM = sh + CssUnit.Px.toString();
-      this._sliderBarHeight = val;
     }
   }
   get SliderBarHeight(): string {
@@ -127,6 +131,9 @@ export class RRangeSliderComponent extends RBaseComponent<RRangeSliderData> impl
   
   @Input()
   set SliderMarkerSize(val: string) {
+    
+    this._sliderMarkerSize = val;
+
     if (this.ele.nativeElement) {
       let sh = this.cssunit.ToPxValue(val, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
       if (sh < 12) {
@@ -134,7 +141,6 @@ export class RRangeSliderComponent extends RBaseComponent<RRangeSliderData> impl
       }
 
       this._sliderMarkerSizeVM = sh + CssUnit.Px.toString();
-      this._sliderMarkerSize = val;
     }
   }
   get SliderMarkerSize(): string {

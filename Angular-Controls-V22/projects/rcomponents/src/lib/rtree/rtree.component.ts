@@ -6,6 +6,7 @@ import { RBaseComponent } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rtree',
+    standalone: true,
     imports: [NgClass, NgStyle],
     templateUrl: './rtree.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

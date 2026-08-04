@@ -9,6 +9,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rfileupload',
+    standalone: true,
     imports: [RGrouppanelComponent, NgClass, NgStyle],
     templateUrl: './rfileupload.component.html',
     styleUrl: './rfileupload.component.css',
@@ -75,7 +76,7 @@ export class RfileuploadComponent extends RBaseComponent<FileList> implements IR
   public EnableShadowEffect: boolean = true;
   
   @Input()
-  ShowFilesListMaximumHeight: string = "150px";
+  ShowFilesListMaximumHeightInPx: string = "150px";
 
   @Input()
   EnableMaximumHeightForShowFiles: boolean = false;

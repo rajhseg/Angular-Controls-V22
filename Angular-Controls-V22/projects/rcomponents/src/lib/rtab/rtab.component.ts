@@ -3,6 +3,7 @@ import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
 
 @Component({
     selector: 'rtab',
+    standalone: true,
     imports: [NgTemplateOutlet, AsyncPipe, NgClass, forwardRef(() => RTabIdFor)],
     templateUrl: './rtab.component.html',
     styleUrl: './rtab.component.css',

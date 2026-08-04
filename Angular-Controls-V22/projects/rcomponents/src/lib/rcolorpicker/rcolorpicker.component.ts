@@ -9,6 +9,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rcolorpicker',
+    standalone: true,
     imports: [NgStyle, UpperCasePipe],
     templateUrl: './rcolorpicker.component.html',
     styleUrl: './rcolorpicker.component.css',

@@ -15,6 +15,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rdropdown',
+    standalone: true,
     imports: [CommonModule, FormsModule, RDropdownFilterPipe, RTextboxComponent, NgClass, RCheckboxComponent],
     templateUrl: './rdropdown.component.html',
     styleUrl: './rdropdown.component.css',

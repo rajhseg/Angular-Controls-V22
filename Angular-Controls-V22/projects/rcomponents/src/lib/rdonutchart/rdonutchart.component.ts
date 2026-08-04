@@ -6,6 +6,7 @@ import { RChartBaseComponent } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rdonutchart',
+    standalone: true,
     imports: [NgStyle],
     templateUrl: './rdonutchart.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,

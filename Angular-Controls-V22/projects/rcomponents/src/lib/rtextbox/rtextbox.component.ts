@@ -2,11 +2,12 @@ import { NgStyle, NgClass } from '@angular/common';
 import { AfterViewInit, Component, ElementRef, EventEmitter, forwardRef, HostBinding, HostListener, Input, Optional, Output, Self, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormsModule, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgControl, ReactiveFormsModule } from '@angular/forms';
 import { RWindowHelper } from '../rwindowObject';
-import { RCssUnitsService } from '../rcss-units.service';
+import { RCssUnitsService, RelativeUnitType } from '../rcss-units.service';
 import { RBaseComponent } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rtextbox',
+    standalone: true,
     imports: [NgStyle, FormsModule, ReactiveFormsModule, NgClass],
     templateUrl: './rtextbox.component.html',
     styleUrl: './rtextbox.component.css',
@@ -54,17 +55,39 @@ export class RTextboxComponent extends RBaseComponent<string> implements Control
   @Input()
   BottomLineColor: string = "blue";
 
+  _txtHeight: string = '20px';
+  _txtWidth: string = '150px';
+
+  TextBoxWidth_C: string = '150px';
+  TextBoxHeight_C: string = '20px';
+
   @Input()
-  TextBoxWidth: string = '150px';
+  set TextBoxWidth(value: string) {
+    this._txtWidth = value;
+    if(this.ele){
+      this.TextBoxWidth_C = this.cssUnitServ.ToPxString(value, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+    }
+  }
+  get TextBoxWidth(): string {
+    return this._txtWidth;
+  }
+
+  @Input()
+  set TextBoxHeight(value: string) {
+    this._txtHeight = value;
+    if(this.ele){
+      this.TextBoxHeight_C = this.cssUnitServ.ToPxString(value, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
+    }
+  }
+  get TextBoxHeight(): string {
+    return this._txtHeight;
+  }
 
   @Input()
   PaddingLeft: string = "7px";
 
   @Input()
   PaddingRight: string = "7px";
-
-  @Input()
-  TextBoxHeight: string = '20px';
 
   @Input()
   Font: string = '';
@@ -75,7 +98,7 @@ export class RTextboxComponent extends RBaseComponent<string> implements Control
   EnableMarginTextBottom: boolean = true;
 
   @Input()
-  MarginTextBottom: string = '10px';
+  MarginTextBottomInPx: string = '10px';
   
   @Input()
   public set IsPasswordBox(value: boolean) {

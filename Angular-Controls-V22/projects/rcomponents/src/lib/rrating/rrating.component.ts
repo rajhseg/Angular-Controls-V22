@@ -7,6 +7,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rstarrating',
+    standalone: true,
     imports: [],
     templateUrl: './rrating.component.html',
     styleUrl: './rrating.component.css',

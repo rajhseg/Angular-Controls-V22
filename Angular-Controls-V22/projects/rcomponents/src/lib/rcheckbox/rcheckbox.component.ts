@@ -7,6 +7,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rcheckbox',
+    standalone: true,
     imports: [NgClass, NgStyle],
     templateUrl: './rcheckbox.component.html',
     styleUrl: './rcheckbox.component.css',

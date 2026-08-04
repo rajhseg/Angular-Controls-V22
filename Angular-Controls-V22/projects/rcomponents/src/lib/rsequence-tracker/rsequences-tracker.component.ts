@@ -9,6 +9,7 @@ import { CssUnit, RCssUnitsService, RelativeUnitType } from "../rcss-units.servi
 
 @Component({
     selector: 'rsequences-tracker',
+    standalone: true,
     imports: [RSequenceTrackerComponent, RTrackerContentDirective, NgStyle, NgClass, NgTemplateOutlet],
     templateUrl: './rsequences-tracker.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
@@ -36,16 +37,21 @@ export class RSequencesTrackerComponent extends RBaseComponent<any> implements A
     
 
     private _contentWidth: string = "250px";
+    
+    ContentWidth_C: string = "250px";
 
     @Input()
     public set ContentWidth(value: string){
-        let _val = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
-        this._contentWidth = _val + CssUnit.Px.toString();
+        this._contentWidth = value;
+        if(this.ele) {
+            let _val = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+            this.ContentWidth_C = _val + CssUnit.Px.toString();
+        }
     }
     public get ContentWidth(): string {
         return this._contentWidth;
     }
-    
+
     @Input()
     public StripLineColor: string = "purple";
 
@@ -77,7 +83,7 @@ export class RSequencesTrackerComponent extends RBaseComponent<any> implements A
     }
 
     get GetContentWidth(): string {
-        let _wth = this.cssServ.ToPxValue(this.ContentWidth, null, null);
+        let _wth = this.cssServ.ToPxValue(this.ContentWidth_C, null, null);
         return (_wth - 30) + CssUnit.Px;
     }
 }

@@ -6,6 +6,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
 
 @Component({
     selector: 'rbarchart-vertical',
+    standalone: true,
     imports: [NgStyle],
     templateUrl: './rbarchart-vertical.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

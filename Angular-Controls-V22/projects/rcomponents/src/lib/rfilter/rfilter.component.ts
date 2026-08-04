@@ -39,6 +39,7 @@ export enum RFilterAlign{
 
 @Component({
     selector: 'rfilter',
+    standalone: true,
     imports: [NgStyle, RTextboxComponent, RNumericComponent, RButtonComponent, RCalendarComponent, RSelectDropdownComponent, FormsModule, ReactiveFormsModule],
     templateUrl: './rfilter.component.html',
     styleUrl: './rfilter.component.css',
@@ -94,10 +95,10 @@ export class RFilterComponent extends RBaseComponent<RFilterApplyModel> implemen
   TextColor: string = 'gray';
 
   @Input()
-  Width: string = '15px'
+  WidthInPx: string = '15px'
 
   @Input()
-  Height: string = '15px';
+  HeightInPx: string = '15px';
 
   @Input()
   Color: string = 'grey';

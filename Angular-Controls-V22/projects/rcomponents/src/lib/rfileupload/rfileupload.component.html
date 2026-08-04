@@ -46,7 +46,7 @@
             [ngStyle]="{ 'visibility':showFiles ? 'visible': 'collapse', 'height':'fit-content',
                 '--tdsize': FontSize,
                 'background-color': ShowFilesAsDropdownContainer ? 'white': '',
-                'max-height':EnableMaximumHeightForShowFiles ? ShowFilesListMaximumHeight : ''}">
+                'max-height':EnableMaximumHeightForShowFiles ? ShowFilesListMaximumHeightInPx : ''}">
             @if (ErrorMessages.length == 0) {
               <table class="tab">
                 <thead>

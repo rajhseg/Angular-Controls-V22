@@ -14,6 +14,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rselectdropdown',
+    standalone: true,
     imports: [ROptionsTemplateDirective, RDropdownFilterPipe, RTextboxComponent, CommonModule, NgIf, FormsModule, NgForOf, NgClass, RCheckboxComponent],
     templateUrl: './rselectdropdown.component.html',
     styleUrl: './rselectdropdown.component.css',

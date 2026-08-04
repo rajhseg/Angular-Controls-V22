@@ -10,6 +10,7 @@ import { CssUnit, RCssUnitsService, RelativeUnitType } from '../rcss-units.servi
 
 @Component({
     selector: 'rstepper-horizontal',
+    standalone: true,
     imports: [RStateHorizontalComponent, RButtonComponent, NgStyle, NgClass, NgTemplateOutlet],
     templateUrl: './rstepper-horizontal.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
@@ -28,8 +29,10 @@ export class RStepperHorizontalComponent extends RBaseComponent<any> implements 
 
   @Input()
   public set Width(value: string) {
-    this.ContentWidth = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
     this._width = value;
+    if(this.ele) {
+      this.ContentWidth = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+    }
   }
   public get Width(): string {
     return this._width;
@@ -37,8 +40,10 @@ export class RStepperHorizontalComponent extends RBaseComponent<any> implements 
 
   @Input()
   public set Height(value: string) {
-     this.ContentHeight = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
     this._height = value;
+    if(this.ele) {
+     this.ContentHeight = this.cssServ.ToPxValue(value, this.ele.nativeElement.parentElement, RelativeUnitType.Height);
+    }
   }
   public get Height(): string {
     return this._height;

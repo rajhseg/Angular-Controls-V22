@@ -10,6 +10,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
 
 @Component({
     selector: 'rscatterchart',
+    standalone: true,
     imports: [NgStyle, NgClass],
     templateUrl: './rscatterchart.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

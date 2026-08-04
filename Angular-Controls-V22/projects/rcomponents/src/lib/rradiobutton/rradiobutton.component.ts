@@ -8,6 +8,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rradiobutton',
+    standalone: true,
     imports: [NgClass, NgStyle],
     templateUrl: './rradiobutton.component.html',
     styleUrl: './rradiobutton.component.css',
