@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, ChangeDetectionStrategy, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Form, FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule, ValidationErrors, AbstractControl } from '@angular/forms';
 
@@ -200,6 +200,10 @@ export class AppRootComponent {
   .filter(key => isNaN(Number(key)))
   .map(key => (new DropdownModel(RSpaceBetweenBars[key as keyof typeof RSpaceBetweenBars], key)));  
 
+  @ViewChild('tabContent4') tabContent4!: TemplateRef<any>;
+  ind: number = 0;
+  @ViewChild('rtabContainer', { read: RTabsComponent }) rtabContainer!: RTabsComponent;
+  tabIdParam: string = "rtabid4 from component";
 
   allocatedColumns: RAllocatedBarChartItem[] = [
     new RAllocatedBarChartItem(
@@ -393,6 +397,20 @@ export class AppRootComponent {
 
   onTreeExpand(item: RTreeItem) {
     item.IsExpanded = !item.IsExpanded;
+  }
+
+  
+  addNewTab(){
+    this.ind++;
+    this.tabIdParam = 'rtabParam from component';
+    this.rtabContainer.AddTab('rtab4'+this.ind, 'Profile '+this.ind, this, this.tabContent4, this.ind % 2 == 0);
+  }
+
+  deleteNewTab(){
+    if(this.ind > 0){
+      this.rtabContainer.DeleteTab('rtab4'+this.ind);
+      this.ind--;
+    }
   }
 
   spaceBarChanged(val: any){
