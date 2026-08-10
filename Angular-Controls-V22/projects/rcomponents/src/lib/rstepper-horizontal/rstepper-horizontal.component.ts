@@ -7,11 +7,12 @@ import { NgClass, NgStyle, NgTemplateOutlet } from '@angular/common';
 import { RButtonComponent } from '../rbutton/rbutton.component';
 import { RBaseComponent } from '../rmodels/RBaseComponent';
 import { CssUnit, RCssUnitsService, RelativeUnitType } from '../rcss-units.service';
+import { RStepViewDirective } from '../rstep/rsteptemplate.directive';
 
 @Component({
     selector: 'rstepper-horizontal',
     standalone: true,
-    imports: [RStateHorizontalComponent, RButtonComponent, NgStyle, NgClass, NgTemplateOutlet],
+    imports: [RStepComponent, RStepViewDirective, RStateHorizontalComponent, RButtonComponent, NgStyle, NgClass, NgTemplateOutlet],
     templateUrl: './rstepper-horizontal.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
     styleUrl: './rstepper-horizontal.component.css'
@@ -227,6 +228,10 @@ export class RStepperHorizontalComponent extends RBaseComponent<any> implements 
   }
 
   ngAfterContentInit(): void {
+    this.RenderUI();
+  }
+
+  private RenderUI() {
     if (this.winObj.isExecuteInBrowser()) {
       this.stepsList = this.Steps.toArray();
       let stepNo = 0;

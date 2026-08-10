@@ -8,12 +8,13 @@ import { RStateVerticalComponent } from "../rsequences/rsequences.component";
 import { RSequenceVerticalItem } from '../rsequences/rsequence/rsequenceitem';
 import { RBaseComponent } from '../rmodels/RBaseComponent';
 import { RCssUnitsService, RelativeUnitType } from '../rcss-units.service';
+import { RStepViewDirective } from '../rstep/rsteptemplate.directive';
 
 
 @Component({
     selector: 'rstepper-vertical',
     standalone: true,
-    imports: [RButtonComponent, NgTemplateOutlet, EditViewTemplateDirective, NgStyle, NgClass, RStateVerticalComponent],
+    imports: [RStepComponent, RStepViewDirective, RButtonComponent, NgTemplateOutlet, EditViewTemplateDirective, NgStyle, NgClass, RStateVerticalComponent],
     templateUrl: './rstepper-vertical.component.html',
     styleUrl: './rstepper-vertical.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -267,6 +268,10 @@ export class RStepperVerticalComponent extends RBaseComponent<any> implements Af
   }
 
   ngAfterContentInit(): void {
+    this.RenderUI();
+  }
+
+  private RenderUI() {
     if (this.winObj.isExecuteInBrowser()) {
       this.stepsList = this.Steps.toArray();
       let stepNo = 0;

@@ -49,7 +49,7 @@ import { RPageContentDirective } from 'rcomponents';
 // Navigation components
 import { RFlatTabsComponent } from 'rcomponents';
 import { RTabComponent, RTabIdFor } from 'rcomponents';
-import { RStepperVerticalComponent } from 'rcomponents';
+import { RStepperVerticalComponent, RStepViewDirective } from 'rcomponents';
 import { RStepComponent } from 'rcomponents';
 import { RTreeComponent } from 'rcomponents';
 
@@ -132,6 +132,7 @@ import { RCarouselComponent, RImageDirective } from 'rcomponents';
         RSimpleTabsComponent,
         RCarouselComponent,
         RImageDirective,
+        RStepViewDirective,
 
         // Data display
         REventsCalenderComponent,
