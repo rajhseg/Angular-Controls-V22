@@ -6,7 +6,7 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
-import { AppRootComponent } from './app/appb.component';
+import { RootComponent } from './app/root-component/root-component';
 
-bootstrapApplication(AppRootComponent, {...appConfig, providers: [provideZoneChangeDetection(), ...appConfig.providers]})
+bootstrapApplication(RootComponent, {...appConfig, providers: [provideZoneChangeDetection(), ...appConfig.providers]})
   .catch((err) => console.error(err));

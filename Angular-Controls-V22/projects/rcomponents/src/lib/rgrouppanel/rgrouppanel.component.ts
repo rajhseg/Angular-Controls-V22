@@ -5,6 +5,7 @@ import { RBaseComponent } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rgroup-panel',
+    standalone: true,
     imports: [NgStyle],
     templateUrl: './rgrouppanel.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

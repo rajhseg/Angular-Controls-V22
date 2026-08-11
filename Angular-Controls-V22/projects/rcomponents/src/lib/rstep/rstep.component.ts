@@ -3,6 +3,7 @@ import { RStepViewDirective } from './rsteptemplate.directive';
 
 @Component({
     selector: 'rstep',
+    standalone: true,
     imports: [],
     templateUrl: './rstep.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,

@@ -98,16 +98,10 @@
             [NoOfSplitInValueAxis]="5"
             [XAxisTitle]="'Month'"
             [YAxisTitle]="'Budget'"
-            [TextColor]="'#666'"
             [EnableBorder]="false"
-            [BorderColor]="'#e0e0e0'"
-            [GlassyEffect]="enableGlassyEffect"  [GlassyEffectColor]="glassyColor"
-            [AllocatedValueIndicatorColor]="'#333'"
-            [PopupBackColor]="'white'"
+            [GlassyEffect]="enableGlassyEffect"  
+            [GlassyEffectColor]="glassyColor"
             [EnableBorderForPopup] = "true"
-            [PopupBackColor]="'#AFA6FF'"
-            [PopupForeColor]="'white'"
-            [PopupBorderColor]="'lightgray'"
             [PopupBackgroundOpacity]="1">
           </rallocated-barchart>
         </div>
@@ -133,10 +127,8 @@
             [MarginX]="60"
             XAxisTitle="Quarter"
             YAxisTitle="Amount"
-            TextColor="#666"
             [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
-            [EnableBorder]="false"
-            BorderColor="#e0e0e0">
+            [EnableBorder]="false">
           </rbarchart-vertical>
         </div>
         <div class="card-hint">Revenue vs Expenses per quarter.</div>
@@ -160,10 +152,8 @@
             [MarginY]="50"
             XAxisTitle="Hours"
             YAxisTitle="Team"
-            TextColor="#666"
             [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
-            [EnableBorder]="false"
-            BorderColor="#e0e0e0">
+            [EnableBorder]="false">
           </rbarchart-horizontal>
         </div>
         <div class="card-hint">Planned vs actual hours per team.</div>
@@ -183,9 +173,7 @@
             [ChartWidth]="280"
             [DataListHeight]="100"
             [ChartFontSize]="'11px'"
-            TextColor="#666"
-            [EnableBorder]="false"
-            BorderColor="#e0e0e0">
+            [EnableBorder]="false">
           </rpiechart>
         </div>
         <div class="card-hint">Browser market share breakdown.</div>
@@ -204,9 +192,7 @@
             [ShadowBlur]="10"
             [ChartWidth]="280"
             [DataListHeight]="100"
-            TextColor="#666"
-            [EnableBorder]="false"
-            BorderColor="#e0e0e0">
+            [EnableBorder]="false">
           </rdonutchart>
         </div>
         <div class="card-hint">Task completion status ring.</div>
@@ -230,10 +216,7 @@
             [MarginX]="55"
             XAxisTitle="Month"
             YAxisTitle="Count"
-            TextColor="#666"
-            [PopupBorderColor]="'lightgray'"
             [EnableBorder]="false"
-            BorderColor="#e0e0e0"
             [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  >
           </rlinechart-vertical>
         </div>
@@ -254,9 +237,7 @@
             [Height]="240"
             XAxisTitle="Price"
             YAxisTitle="Sales"
-            TextColor="#666"
             [EnableBorder]="false"
-            BorderColor="#e0e0e0"
             [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  >
           </rscatterchart>
         </div>
@@ -299,15 +280,12 @@
             <rslider [(ngModel)]="progressValue" [MinValue]="0" 
                      [MaxValue]="100" 
                      [SliderBarWidth]="'330px'"
-                     [TrackColor]="'#e8e8f0'"
-                     [EmptyTrackColor]="'white'"
-                     [SliderColor]="'#e8e8f0'"
                      [IsDisplayValue]="false">
             </rslider>
           </div>
           
         <rprogressbar style="margin-left: 100px;margin-top: 20px;" [FloatInCenter]="false" 
-          [ForeColor]="'#7F77DD'" [TrackColor]="'#e8e8f0'" [EnableBackDrop]="false"
+           [EnableBackDrop]="false"
            [DisplayType]="progressDisplayType" [StraightLineTrackHeightInPx]="'16px'"
           [ProgressBarWidthInPx]="'150px'" [Percentage]="progressValue" [CircularLineWidthInPx]="'15px'"
           [FiniteCircularDisplayText]="'Progress '+progressValue+'%'" [Type]="progressBarType">
@@ -330,7 +308,6 @@
             <rserieschart [XAxisTitle]="'Disk'" 
               [EnableBorder]="false" 
               [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"   
-              [TextColor]="'#666'"
               [YAxisTitle]="'Speed'" [FillAreaColor]="false" [Width]="340"
               [PlotItemSize]="30"
               [Height]="240" [Items]="seriesModel2">
@@ -351,7 +328,6 @@
             <rserieschart 
               [XAxisTitle]="'Elements'" [YAxisTitle]="'Values'" 
               [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
-              [PopupBorderColor]="'lightgray'"
               [Width]="340" [Height]="240"
               [Items]="seriesModel">
             </rserieschart>
@@ -373,7 +349,6 @@
               [XAxisTitle]="'Elements'" [YAxisTitle]="'Values'" 
               [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
               [Width]="340" [Height]="240"
-              [PopupBorderColor]="'lightgray'"
               [Items]="seriesModel1">
             </rserieschart>
 
@@ -462,22 +437,16 @@
         </div>
         <div class="card-body" style="gap: 12px; display: flex; flex-wrap: wrap;">
           <rbutton
-            [BackgroundColor]="'#7F77DD'"
-            [ForeColor]="'white'"
             [ButtonWidth]="'110px'"
             (ButtonClick)="onButtonClick()">
             Primary
           </rbutton>
           <rbutton
-            [BackgroundColor]="'#1D9E75'"
-            [ForeColor]="'white'"
             [ButtonWidth]="'110px'"
             (ButtonClick)="onButtonClick()">
             Secondary
           </rbutton>
           <rbutton
-            [BackgroundColor]="'#E24B4A'"
-            [ForeColor]="'white'"
             [ButtonWidth]="'110px'"
             (ButtonClick)="onButtonClick()">
             Danger
@@ -501,8 +470,6 @@
             <rtextbox [email]="false"
               [PlaceholderText]="'Please enter full name'"
               [LabelText]="'Full Name'"
-              [LabelForeColor]="'black'"
-              [BottomLineColor]="selectedTheme.Value"
               formControlName="username">
             </rtextbox>
           
@@ -523,9 +490,7 @@
         <div class="card-body">
           <rtextbox [IsPasswordBox]="true"
             [PlaceholderText]="'Please enter password'"
-            [BottomLineColor]="selectedTheme.Value"
             [LabelText]="'Password'"
-            [LabelForeColor]="'black'"
             [(ngModel)]="password">
           </rtextbox>
         </div>
@@ -542,13 +507,11 @@
         <div class="card-body" style="gap: 12px; display: flex; flex-direction: column;">
           <rcheckbox
             DisplayText="Enable notifications"
-            [(ngModel)]="checkboxValue"
-            [CheckedColor]="selectedTheme.Value">
+            [(ngModel)]="checkboxValue">
           </rcheckbox>
           <rcheckbox
             DisplayText="Accept terms and conditions"
-            [IsChecked]="true"
-            [CheckedColor]="selectedTheme.Value">
+            [IsChecked]="true">
           </rcheckbox>
         </div>
         <div class="card-hint">Value: <strong>{{ checkboxValue }}</strong>. Supports <code>ControlValueAccessor</code>.</div>
@@ -567,8 +530,7 @@
             [IsReadOnly]="false"
             [IsDisabled]="false"
             [(ngModel)]="calendarSelectedDate"
-            (valueChanged)="onCalendarChange($event)"
-            [SelectedItemBackGroundColor]="selectedTheme.Value">
+            (valueChanged)="onCalendarChange($event)">
           </rcalendar>
         </div>
         <div class="card-hint">
@@ -588,11 +550,7 @@
             LabelText="Quantity"
             [(ngModel)]="numericValue"
             [MinValue]="11"
-            [MaxValue]="3000"
-            [BottomLineColor]="selectedTheme.Value"
-            [PlusBackgroundColor]="selectedTheme.Value"
-            [MinusBackgroundColor]="selectedTheme.Value"
-            [LabelTextForeColor]="'black'">
+            [MaxValue]="3000">
           </rnumeric>
         </div>
         <div class="card-hint">Value: <strong>{{ numericValue }}</strong>. Spin buttons with min/max validation.</div>
@@ -609,8 +567,7 @@
           
           <rslider
             [IsReadOnly]="false" [MinValue]="0" [MaxValue]="100"
-            [(ngModel)]="sliderValue" [TrackColor]="selectedTheme.Value" [EmptyTrackColor]="'white'"
-            [SliderColor]="selectedTheme.Value" [IsDisplayValue]="true" [IsDisplayLabel]="true"
+            [(ngModel)]="sliderValue" [IsDisplayValue]="true" [IsDisplayLabel]="true"
             [SliderBarWidth]="'300px'">
           </rslider>
 
@@ -629,9 +586,7 @@
         <div class="card-body">
 
           <rrangeslider [(ngModel)]="rrangeSliderData" 
-              [IsReadOnly]="false" [TrackColor]="selectedTheme.Value"
-              [EmptyTrackColor]="'white'" [Slider1Color]="selectedTheme.Value"
-              [Slider2Color]="selectedTheme.Value" [IsDisplayValue]="true" 
+              [IsReadOnly]="false"  [IsDisplayValue]="true" 
               [IsDisplayLabel]="true" [SliderBarWidth]="'300px'"
               [MinValue]="25" [MaxValue]="75">
           </rrangeslider>
@@ -653,15 +608,11 @@
         <div class="card-body" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
           <rswitch [IsDisabled]="false"
             DisplayLabel="Dark mode"
-            [(ngModel)]="switchValue"
-            [LabelForeColor]="'black'"
-            [SwitchBackColor]="selectedTheme.Value">
+            [(ngModel)]="switchValue">
           </rswitch>
           <rswitch
             DisplayLabel="Notifications"
-            [LabelForeColor]="'black'"
-            [ngModel]="true"
-            [SwitchBackColor]="selectedTheme.Value">
+            [ngModel]="true">
           </rswitch>
         </div>
         <div class="card-hint">Dark mode: <strong>{{ switchValue }}</strong>.</div>
@@ -678,7 +629,6 @@
           <rstarrating [IsReadOnly]="false"
             [noOfStars]="10"
             [(ngModel)]="ratingValue"
-            [starColor]="selectedTheme.Value"
             [starWidth]="28">
           </rstarrating>
         </div>
@@ -694,21 +644,18 @@
         </div>
         <div class="card-body" style="display: flex; flex-direction: column; gap: 10px;">
           <rradiobutton
-            [Color]="selectedTheme.Value"
             DisplayText="Option A"
             [GroupName]="'demo-group'"
             [(ngModel)]="optionA">
           </rradiobutton>
 
           <rradiobutton [IsReadOnly]="true"
-            [Color]="selectedTheme.Value"
             DisplayText="Option B"
             [GroupName]="'demo-group'"
             [(ngModel)]="optionB">
           </rradiobutton>
 
           <rradiobutton
-            [Color]="selectedTheme.Value"
             DisplayText="Option C"
             [GroupName]="'demo-group'"
             [(ngModel)]="optionC">
@@ -778,7 +725,6 @@
             [IsDisplayLabelText]="true"
             [DisplayColorInHex]="true"
             [LabelText]="'Fore Color :'"
-            [LabelTextForeColor]="'black'"
             [IsReadOnly]="false"
             [(ngModel)]="pickedColor">
           </rcolorpicker>
@@ -804,7 +750,6 @@
             [EnableMaximumHeightForShowFiles]="true"
             [ShowFilesListMaximumHeightInPx]="'150px'"
             [AllowedMaxFileSizeInMB]="10"
-            [IconForeColor]="selectedTheme.Value"
             [IsReadOnly]= "false"
             [SelectMultipleFiles]="true">
           </rfileupload>
@@ -822,10 +767,7 @@
         <div class="card-body">
           <rtimeselector
             [(ngModel)]="selectedTime"
-            [ButtonBackgroundColor]="selectedTheme.Value"
-            [IsReadOnly]="false"
-            [TextBottomLineColor]="selectedTheme.Value"
-            [SelectedItemBackgroundColor]="selectedTheme.Value">
+            [IsReadOnly]="false">
           </rtimeselector>
         </div>
         <div class="card-hint">Selected: <strong>{{ selectedTime }}</strong>. Hour/minute/AM-PM dropdowns.</div>
@@ -849,24 +791,22 @@
           <rgroup-panel
             groupname="Personal Info"
             [IsReadOnly]="false"
-            TitleForeColor="#7F77DD"
             [EnableShadowEffect]="false">
             <div style="display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 0;">
-              <rtextbox [IsDisabled]="true" [ngModel]="'First'" [BottomLineColor]="'#7F77DD'" [LabelForeColor]="'#7F77DD'" PlaceholderText="First name" LabelText="First name"></rtextbox>
-              <rtextbox [IsReadOnly]="true" [ngModel]="'Last'" [BottomLineColor]="'#7F77DD'" [LabelForeColor]="'#7F77DD'" PlaceholderText="Last name" LabelText="Last name"></rtextbox>
-              <rtextbox [BottomLineColor]="'#7F77DD'" [LabelForeColor]="'#7F77DD'" PlaceholderText="Email" LabelText="Email"></rtextbox>
+              <rtextbox [IsDisabled]="true" [ngModel]="'First'" PlaceholderText="First name" LabelText="First name"></rtextbox>
+              <rtextbox [IsReadOnly]="true" [ngModel]="'Last'"  PlaceholderText="Last name" LabelText="Last name"></rtextbox>
+              <rtextbox  PlaceholderText="Email" LabelText="Email"></rtextbox>
             </div>
           </rgroup-panel>
 
           <rgroup-panel
             groupname="Preferences"
             [IsReadOnly]="false"
-            TitleForeColor="#1D9E75"
             [IsItemsArrangeHorizontal]="true"
             style="margin-top: 16px; display: block;">
-            <rswitch [LabelForeColor]="'#7F77DD'" DisplayLabel="Newsletter" SwitchBackColor="rgb(76 67 205)"></rswitch> &nbsp;&nbsp;
-            <rswitch [LabelForeColor]="'#7F77DD'" DisplayLabel="SMS alerts" SwitchBackColor="rgb(76 67 205)"></rswitch> &nbsp;&nbsp;
-            <rswitch [LabelForeColor]="'#7F77DD'" DisplayLabel="Push notifications" SwitchBackColor="rgb(76 67 205)"></rswitch>
+            <rswitch  DisplayLabel="Newsletter"></rswitch> &nbsp;&nbsp;
+            <rswitch DisplayLabel="SMS alerts"></rswitch> &nbsp;&nbsp;
+            <rswitch DisplayLabel="Push notifications"></rswitch>
           </rgroup-panel>
         </div>
         <div class="card-hint">Groups content with a titled border. Supports horizontal and vertical layouts.</div>
@@ -986,8 +926,7 @@
           <div class="card-body">
 
             <rcarousel [EnableAutoPlay]="true" [AutoPlayDurationBetweenSlides]="3000" [Width]="'700px'" 
-                      [Height]="'350px'" [SlideButtonsColor]="'white'"
-                      (OnContentClick)="OnContentClick($event)">
+                      [Height]="'350px'" (OnContentClick)="OnContentClick($event)">
 
                 @for (im of imagesNames; track $index) {
                   <img rimage src="./images/{{im}}.png" />
@@ -997,7 +936,7 @@
 
             &nbsp;&nbsp;&nbsp;&nbsp;
 
-            <rbutton [BackgroundColor]="'#7F77DD'" [ForeColor]="'white'" [ButtonWidth]="'120px'" (ButtonClick)="AddImages()">
+            <rbutton [ButtonWidth]="'120px'" (ButtonClick)="AddImages()">
               Add Slides
             </rbutton>
 
@@ -1084,13 +1023,13 @@
             </div>
           </ng-template>
           
-          <rbutton [BackgroundColor]="'#7F77DD'" [ForeColor]="'white'" [ButtonWidth]="'120px'" (ButtonClick)="addNewTab()">
+          <rbutton [ButtonWidth]="'120px'" (ButtonClick)="addNewTab()">
             Add New Tab
           </rbutton>
           
           &nbsp;&nbsp;&nbsp;&nbsp;
           
-          <rbutton [BackgroundColor]="'#7F77DD'" [ForeColor]="'white'" [ButtonWidth]="'120px'" (ButtonClick)="deleteNewTab()">
+          <rbutton [ButtonWidth]="'120px'" (ButtonClick)="deleteNewTab()">
             Delete New Tab
           </rbutton>
 
@@ -1129,7 +1068,6 @@
         <div class="card-body">
         <rtree [IsDisabled]="false"
             [Items]="treeItems"
-            ExpandIconColor="#7F77DD"
             (onExpandClicked)="onTreeExpand($event)"
             (onItemSelected)="onTreeExpand($event)">
           </rtree>
@@ -1147,13 +1085,6 @@
         </div>
         <div class="card-body">
           <rstepper-vertical [IsDisabled]="false"
-            [ActiveBackColor]="'#7F77DD'"
-            [ActiveBorderColor]="'7F77DD'"
-            [StripLineColor]="'#7F77DD'"
-            [PendingBackColor]="'#7F77DD'"
-            [PendingBorderColor]="'#7F77DD'"
-            [NextButtonBackColor]="'#7F77DD'"
-            [BackButtonBackColor]="'#7F77DD'"
             [ShowStateVertical]="false">
             <rstep [Title]="'Account'" [IsStepValid]="true">
               <ng-template rstepview>
@@ -1202,15 +1133,7 @@
           <code class="card-selector">&lt;rstepper-horizontal&gt;</code>
         </div>
         <div class="card-body">
-          <rstepper-horizontal [IsDisabled]="false"
-            [ActiveBackColor]="'#7F77DD'"
-            [ActiveBorderColor]="'7F77DD'"
-            [StripLineColor]="'#7F77DD'"
-            [PendingBackColor]="'#7F77DD'"
-            [PendingBorderColor]="'#7F77DD'"
-            [NextButtonBackColor]="'#7F77DD'"
-            [BackButtonBackColor]="'#7F77DD'"
-            [ShowStateHorizontal]="false">
+          <rstepper-horizontal [IsDisabled]="false" [ShowStateHorizontal]="false">
             <rstep [Title]="'Account'" [IsStepValid]="true">
               <ng-template rstepview>
                 <div style="padding: 8px 0; font-size: 13px; color: #888;">Enter email and password.</div>
@@ -1245,7 +1168,7 @@
           <code class="card-selector">&lt;rsequences-tracker&gt;</code>
         </div>
         <div class="card-body">
-          <rsequences-tracker [IsDisabled]="false" [StripLineColor]="'#7F77DD'" [ContentWidth]="'1000px'">
+          <rsequences-tracker [IsDisabled]="false" [ContentWidth]="'1000px'">
             <rsequencetracker *rtrackercontent="{ 'StepNo': 1, 'Height': '200px'}">
               <div style="">
                 <div style="padding: 8px 0; font-size: 13px; color: gray;">Enter email and password.</div>
@@ -1276,10 +1199,7 @@
           <code class="card-selector">&lt;raccordion&gt;</code>
         </div>
         <div class="card-body">
-          <raccordion [IsDisabled]="false" [BorderColor]="'lightgray'" [GapBetweenContent]="'5px'" 
-                [TitleBarBackColor]="'#5f6a9d'"
-                [TitleForeColor]="'white'"
-                [ContentWidth]="'650px'">
+          <raccordion [IsDisabled]="false" [GapBetweenContent]="'5px'" [ContentWidth]="'650px'">
             <ng-container *rcontent="{ 'ContentId': 1, 'Title': 'Title 1', 'Height': '200px', 'IsOpened': false }">
               <div style="height: 90%;border-radius: 5px; padding:5px">
                 <div style="padding: 8px 0; font-size: 13px; color: gray;">Enter email and password.</div>
@@ -1319,8 +1239,7 @@
         <div class="card-body center" style="margin-left:-100px">
           <rcalendar
             [(ngModel)]="calendarSelectedDate"
-            (valueChanged)="onCalendarChange($event)"
-            [SelectedItemBackGroundColor]="'rgb(127, 119, 221)'">
+            (valueChanged)="onCalendarChange($event)">
           </rcalendar>
         </div>
         <div class="card-hint">
@@ -1341,11 +1260,7 @@
             [CircularWidth]="100"
             #timerRef
             [CallbackAfterCertainSeconds]="callbackAfterCertainSeconds"
-            (CallbackTriggeredAfterCertainSeconds)="CallbackMethodAfterCertainSeconds($event)"
-            [DisplayTextForeColor]="selectedTheme.Value"
-            [HoursForeColor]="'#7F77DD'" [HoursTrackColor]="'#e8e8f0'"
-            [MinuteForeColor]="'#7F77DD'" [MinuteTrackColor]="'#e8e8f0'"
-            [SecondsForeColor]="'#7F77DD'" [SecondsTrackColor]="'#e8e8f0'">
+            (CallbackTriggeredAfterCertainSeconds)="CallbackMethodAfterCertainSeconds($event)">
           </rtimer>
           <div style="display: flex; gap: 10px;">
             <rbutton
@@ -1375,11 +1290,7 @@
         <div class="card-body">
 
           <rstate-vertical [IsDisabled]="false"
-            [Items]="sequenceItems"
-            [ActiveBackgroundColor]="'#7F77DD'"
-            [CompletedBackgroundColor]="'#1D9E75'"
-            [PendingBackgroundColor]="'darkblue'"
-            [StripLineColor]="'#e0e0e0'">
+            [Items]="sequenceItems">
           </rstate-vertical>
 
         </div>
@@ -1395,11 +1306,7 @@
         </div>
         <div class="card-body">
           <rstate-horizontal [IsDisabled]="false"
-            [Items]="hsequenceItems"
-            [ActiveForeColor]="'#7F77DD'"
-            [CompletedForeColor]="'#1D9E75'"
-            [PendingForeColor]="'darkblue'"
-            [StripLineColor]="'#e0e0e0'">
+            [Items]="hsequenceItems">
           </rstate-horizontal>
         </div>
         <div class="card-hint">Order tracking pipeline. States: completed, active, pending.</div>
@@ -1419,13 +1326,7 @@
         <div class="card-body">
         
           <revents-schedule [IsDisabled]="false" [FontSize]="'12px'"
-            [ContainerBackgroundColor]="'#534AB7'" 
-            [ContainerBorderColor]="'#a39cf3'" 
-            [EventBorderColor]="'#a39cf3'"
-            [EventBackgroundColor]="'#534AB7'" 
-            [MarkerBackgroundColor]="'white'" 
             [ShowMarker]="true" [ShowScrollBar]="false"
-            [SelectedDateBackgroundColor]="'#a39cf3'"
             [MinutesForEachCell]="30" [SelectedDate]="selectedDate" 
             [EnableMovePageToCurrentTime]="true"
             [ScheduleItems]="scheduleItems">
@@ -1481,27 +1382,19 @@
             <br />
             <br />
             
-            <rgrid [PageItems]="ditems" [Items]="gridItems1" 
-                   [IsDisabled]="true"
-                  [RowHoverBackgroundOpacity] = "0.8"
-                  [EnableAlternateRowColor]="true"
-                  [EnableShadow]="false" [ShowGroupHeader]="true"
-                  [RowHeightInPx]="'auto'" [GroupHeaderRowHeightInPx]="'30px'"
-                  [GroupByIconColor]="'#8f19ff'" [ShowEditUpdate]="true"
-                  [EnableSelectColummn]="true" [ItemsPerPage]="ItemsPerPage"
+            <rgrid  [PageItems]="ditems" [Items]="gridItems1" 
+                    [IsDisabled]="true"
+                    [RowHoverBackgroundOpacity] = "0.8"
+                    [EnableAlternateRowColor]="true"
+                    [EnableShadow]="false" [ShowGroupHeader]="true"
+                    [RowHeightInPx]="'auto'" [GroupHeaderRowHeightInPx]="'30px'"
+                    [GroupByIconColor]="'#8f19ff'" [ShowEditUpdate]="true"
+                    [EnableSelectColummn]="true" [ItemsPerPage]="ItemsPerPage"
 
-                  [EnableAlternateRowColor]="true"
-                  [GroupByIconColor]="'white'"
-                  [GroupHeaderForeColor]="'darkblue'" 
-                  [GroupHeaderRowBorderColor]="selectedColor.Value.header"
-                  [GroupHeaderRowForeColor]="'white'"
-                  [GroupHeaderRowBackColor]="selectedColor.Value.header"
-                  [HeaderBackgroundColor]="selectedColor.Value.header"
-                  [RowHoverBackColor]="selectedColor.Value.rowhover"
-                  [RowHoverForeColor]="selectedColor.Value.rowhoverfore"
-                  [RowHoverBackgroundOpacity]="1"
+                    [EnableAlternateRowColor]="true"
+                    [RowHoverBackgroundOpacity]="1"
 
-                  [TableHeight]="'400px'" [TableWidth]="'950px'">
+                    [TableHeight]="'400px'" [TableWidth]="'950px'">
 
             </rgrid>
                 
@@ -1539,14 +1432,6 @@
                   [ItemsPerPage]="ItemsPerPage"
 
                   [EnableAlternateRowColor]="true"
-                  [GroupByIconColor]="'white'"
-                  [GroupHeaderForeColor]="'darkblue'" 
-                  [GroupHeaderRowBorderColor]="selectedColor.Value.header"
-                  [GroupHeaderRowForeColor]="'white'"
-                  [GroupHeaderRowBackColor]="selectedColor.Value.header"
-                  [HeaderBackgroundColor]="selectedColor.Value.header"
-                  [RowHoverBackColor]="selectedColor.Value.rowhover"
-                  [RowHoverForeColor]="selectedColor.Value.rowhoverfore"
                   [RowHoverBackgroundOpacity]="1"
 
                   [TableHeight]="'400px'" [TableWidth]="'950px'">
@@ -1557,7 +1442,7 @@
                       <span>{{cell.Value}}</span>
                     </ng-template>
                     <ng-template editviewtemplate let-Item let-rcell="CellInfo">
-                      <rtextbox [BottomLineColor]="'lightblue'" [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
+                      <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
                         [PaddingLeft]="'0px'"
                         [TextBoxWidth]="'50px'" [(ngModel)]="rcell.Value" />
                     </ng-template>
@@ -1571,7 +1456,7 @@
                       <span>{{Item.Name}} -- {{cell.Value}}</span>
                     </ng-template>
                     <ng-template editviewtemplate let-cell="CellInfo">
-                      <rtextbox [BottomLineColor]="'lightblue'" [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
+                      <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
                         [PaddingLeft]="'0px'"
                         [TextBoxWidth]="'140px'" [(ngModel)]="cell.Value" />
                     </ng-template>
@@ -1582,9 +1467,8 @@
                       <span>{{Item.Age}}</span>
                     </ng-template>
                     <ng-template editviewtemplate let-cell="CellInfo">
-                      <rnumeric [BottomLineColor]="'lightblue'" [MinusBackgroundColor]="'darkblue'" 
+                      <rnumeric
                         [PaddingLeft]="'0px'" 
-                        [PlusBackgroundColor]="'darkblue'"
                         [(ngModel)]="cell.Value" [LabelText]="''" [TextBoxWidth]="'120px'" [TextBoxHeight]="'15px'"></rnumeric>
                     </ng-template>
                   </rcolumn>
@@ -1596,7 +1480,7 @@
                       <span>{{Item.Education}}</span>
                     </ng-template>
                     <ng-template editviewtemplate let-cell="CellInfo">
-                      <rtextbox [BottomLineColor]="'lightblue'" [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
+                      <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
                         [PaddingLeft]="'0px'"
                         [TextBoxWidth]="'100px'" [(ngModel)]="cell.Value" />
                     </ng-template>
@@ -1607,7 +1491,7 @@
                       <span>{{Item.Age + 4}}</span>
                     </ng-template>
                     <ng-template editviewtemplate let-cell="CellInfo">
-                      <rtextbox [BottomLineColor]="'lightblue'" [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
+                      <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
                         [PaddingLeft]="'0px'"
                         [TextBoxWidth]="'40px'" [(ngModel)]="cell.Value" />
                     </ng-template>

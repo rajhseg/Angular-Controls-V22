@@ -6,6 +6,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
     selector: 'rswitch',
+    standalone: true,
     imports: [NgStyle],
     templateUrl: './rswitch.component.html',
     styleUrl: './rswitch.component.css',

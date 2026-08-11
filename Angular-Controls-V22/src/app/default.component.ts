@@ -79,7 +79,8 @@ import { RCarouselComponent, RImageDirective } from 'rcomponents';
 
 
 @Component({
-    selector: 'app-root',
+    selector: 'app-default',
+    standalone: true,
     imports: [
         CdkDropListGroup,
         CommonModule,
@@ -154,12 +155,11 @@ import { RCarouselComponent, RImageDirective } from 'rcomponents';
         RContentDirective,
         RAccordionComponent,
     ],
-    templateUrl: './appb.component.html',
+    templateUrl: './default.component.html',
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: true,
-    styleUrl: './appb.component.css'
+    styleUrl: './default.component.css'
 })
-export class AppRootComponent {
+export class DefaultComponent {
 
   optionA: boolean = true;
   optionB: boolean = false;
