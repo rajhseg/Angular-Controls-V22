@@ -28,9 +28,6 @@ export class RSimpleTabsComponent extends RBaseComponent<any> implements AfterCo
     public SelectedTabIndex: number = 0;
     public TabHeaders: RTabHeaderWithTabId[] = [];
     public activeSection: string = '';
-
-    @Input()
-    Name: string = "";
     
     @Input()
     EnableBoxShadow : boolean = true;
