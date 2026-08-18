@@ -4,13 +4,23 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
+import { ɵsetAngularAppEngineManifest } from '@angular/ssr';
 import express from 'express';
 import { join } from 'node:path';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+const appEngineManifestPath = join(import.meta.dirname, 'angular-app-engine-manifest.mjs');
+const { default: appEngineManifest } = require(appEngineManifestPath);
+ɵsetAngularAppEngineManifest(appEngineManifest);
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
-const angularApp = new AngularNodeAppEngine();
+const angularApp = new AngularNodeAppEngine({
+  allowedHosts: ['localhost', '127.0.0.1', '0.0.0.0', '[::1]'],
+  trustProxyHeaders: ['x-forwarded-host', 'x-forwarded-port', 'x-forwarded-proto', 'x-forwarded-prefix'],
+});
 
 /**
  * Example Express Rest API endpoints can be defined here.

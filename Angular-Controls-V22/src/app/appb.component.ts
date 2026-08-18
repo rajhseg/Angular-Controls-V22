@@ -165,6 +165,9 @@ export class AppRootComponent {
   optionB: boolean = false;
   optionC: boolean = false;
 
+  _HostId: string = "sampleId";
+  _HostName: string = "sampleName";
+  
   imagesNames: number[] = [1,2,3];
 
   enableGlassyEffect: boolean = false;

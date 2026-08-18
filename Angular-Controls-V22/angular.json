@@ -33,7 +33,15 @@
             "prerender": true,
             "ssr": {
               "entry": "server.ts"
-            }                
+            },
+            "security": {
+              "allowedHosts": [
+                "localhost",
+                "127.0.0.1",
+                "0.0.0.0",
+                "[::1]"
+              ]
+            }
           },
           "configurations": {
             "production": {
