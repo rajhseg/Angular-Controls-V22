@@ -284,18 +284,37 @@ RSplitter Component
 <br />
 <br />
 
+RSequence Horizontal
+------------------------------
+
+<img width="440" height="282" alt="image" src="https://github.com/user-attachments/assets/acce056a-7559-4239-9a36-5696f4f66eb0" />
+
+<br />
+<br />
+
+
+RSequence Vertical
+------------------------------
+
+<img width="436" height="484" alt="image" src="https://github.com/user-attachments/assets/54bf5c64-28d3-4053-86fd-7c4a59bfa1a9" />
+
+<br />
+<br />
+
+
+RTimer
+------------------------------
+
+<img width="436" height="394" alt="image" src="https://github.com/user-attachments/assets/9dc37ffb-3959-4cd3-a781-94051f6238a5" />
+
+<br />
+<br />
+
 
 RGrid Control
 ------------------------------
 
-#### ViewMode
-
-<img width="992" height="336" alt="Screenshot from 2025-12-01 14-42-15" src="https://github.com/user-attachments/assets/c52a71ec-1cd1-4568-93bb-7e159267554f" />
-
-
-#### EditMode
-
-<img width="992" height="336" alt="image" src="https://github.com/user-attachments/assets/dee8deb2-d5a0-4781-803a-72622375181a" />
+<img width="1012" height="781" alt="image" src="https://github.com/user-attachments/assets/d60a578e-7b64-4792-8dc4-1c6b93d93c09" />
 
 <br/>
 <br />
@@ -303,9 +322,25 @@ RGrid Control
 REventsSchedule
 -------------------------------
 
-![image](https://github.com/user-attachments/assets/97e54714-093f-46f7-b1ad-3e7dff7580a4)
+<img width="785" height="624" alt="image" src="https://github.com/user-attachments/assets/a36275e0-3df9-4a3a-b607-27c31e0fe942" />
 
 <br/>
+<br />
+
+
+REventsCalender
+------------------------
+
+### Main Screen
+
+<img width="744" height="745" alt="image" src="https://github.com/user-attachments/assets/03541214-7957-4b60-b66b-caec474b227a" />
+
+
+### Add Events Screen (this screen will open on double click of Main screen Day Cell)
+
+<img width="785" height="672" alt="image" src="https://github.com/user-attachments/assets/95985ca1-d2cf-4fcc-b6ff-5bd874cefc48" />
+
+<br />
 <br />
 
 RDonutChart Control
@@ -470,20 +505,6 @@ RFilter
 
 <br />
 
-REventsCalender
-------------------------
-
-### Main Screen
-
-![image](https://github.com/user-attachments/assets/f7fab9d8-f9c6-4b39-bc07-9988171cb750)
-
-
-### Add Events Screen (this screen will open on double click of Main screen Day Cell)
-
-<img width="785" height="672" alt="image" src="https://github.com/user-attachments/assets/95985ca1-d2cf-4fcc-b6ff-5bd874cefc48" />
-
-<br />
-<br />
 
 RCarousel Control
 -------------------------
