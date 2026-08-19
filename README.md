@@ -187,6 +187,49 @@ RNumeric
 <br />
 <br />
 
+
+RSequence Horizontal
+------------------------------
+
+<img width="440" height="282" alt="image" src="https://github.com/user-attachments/assets/acce056a-7559-4239-9a36-5696f4f66eb0" />
+
+<br />
+<br />
+
+
+RSequence Vertical
+------------------------------
+
+<img width="436" height="484" alt="image" src="https://github.com/user-attachments/assets/54bf5c64-28d3-4053-86fd-7c4a59bfa1a9" />
+
+<br />
+<br />
+
+
+RTimer
+------------------------------
+
+<img width="436" height="394" alt="image" src="https://github.com/user-attachments/assets/9dc37ffb-3959-4cd3-a781-94051f6238a5" />
+
+<br />
+<br />
+
+RProgressBar
+------------------------------------
+
+<img width="515" height="576" alt="image" src="https://github.com/user-attachments/assets/d185aa2b-0a39-4509-ae17-557260c563a6" />
+
+<br />
+<br />
+
+RTree
+------------------------------------
+
+<img width="557" height="271" alt="image" src="https://github.com/user-attachments/assets/6c7107bf-68eb-4e03-a1f2-4ccbb9bb3825" />
+
+<br />
+<br />
+
 RTimeSelector
 -----------------------------
 
@@ -254,14 +297,6 @@ RSequencesTracker
 <br />
 <br />
 
-RTree
-------------------------------------
-
-<img width="557" height="271" alt="image" src="https://github.com/user-attachments/assets/6c7107bf-68eb-4e03-a1f2-4ccbb9bb3825" />
-
-<br />
-<br />
-
 
 RGroupPanel Control
 -----------------------------------
@@ -280,32 +315,6 @@ RSplitter Component
 <br />
 
 <img width="1132" height="590" alt="image" src="https://github.com/user-attachments/assets/6cb0b521-3430-4414-a82b-fe919a3b1b9f" />
-
-<br />
-<br />
-
-RSequence Horizontal
-------------------------------
-
-<img width="440" height="282" alt="image" src="https://github.com/user-attachments/assets/acce056a-7559-4239-9a36-5696f4f66eb0" />
-
-<br />
-<br />
-
-
-RSequence Vertical
-------------------------------
-
-<img width="436" height="484" alt="image" src="https://github.com/user-attachments/assets/54bf5c64-28d3-4053-86fd-7c4a59bfa1a9" />
-
-<br />
-<br />
-
-
-RTimer
-------------------------------
-
-<img width="436" height="394" alt="image" src="https://github.com/user-attachments/assets/9dc37ffb-3959-4cd3-a781-94051f6238a5" />
 
 <br />
 <br />
