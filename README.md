@@ -197,15 +197,6 @@ RTimeSelector
 <br />
 <br />
 
-RCarousel Control
--------------------------
-
-<img width="766" height="596" alt="image" src="https://github.com/user-attachments/assets/ce6aa2f9-f9af-491b-964b-d8f474eefd89" />
-
-<br />
-<br />
-
-
 RTabs Control
 -------------------------
 
@@ -272,12 +263,12 @@ RTree
 <br />
 
 
-Timer Control
+RGroupPanel Control
 -----------------------------------
 
 <br />
 
-<img width="386" height="166" alt="image" src="https://github.com/user-attachments/assets/cf2502fb-e863-4a60-8c52-ca667d7c18eb" />
+<img width="630" height="439" alt="image" src="https://github.com/user-attachments/assets/1a37629e-4d0d-4139-898b-399ffff5f66d" />
 
 <br/>
 <br />
@@ -288,7 +279,7 @@ RSplitter Component
 
 <br />
 
-<img width="1004" height="333" alt="image" src="https://github.com/user-attachments/assets/e4ea40cd-28a3-4f97-bbd8-b481c7091432" />
+<img width="1132" height="590" alt="image" src="https://github.com/user-attachments/assets/6cb0b521-3430-4414-a82b-fe919a3b1b9f" />
 
 <br />
 <br />
@@ -490,6 +481,14 @@ REventsCalender
 ### Add Events Screen (this screen will open on double click of Main screen Day Cell)
 
 <img width="785" height="672" alt="image" src="https://github.com/user-attachments/assets/95985ca1-d2cf-4fcc-b6ff-5bd874cefc48" />
+
+<br />
+<br />
+
+RCarousel Control
+-------------------------
+
+<img width="766" height="596" alt="image" src="https://github.com/user-attachments/assets/ce6aa2f9-f9af-491b-964b-d8f474eefd89" />
 
 <br />
 <br />
