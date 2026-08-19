@@ -389,15 +389,6 @@ RFilter
 <br />
 
 
-RCarousel Control
--------------------------
-
-<img width="766" height="596" alt="image" src="https://github.com/user-attachments/assets/ce6aa2f9-f9af-491b-964b-d8f474eefd89" />
-
-<br />
-<br />
-
-
 RTabs Control
 -------------------------
 
@@ -495,6 +486,14 @@ REventsCalender
 <br />
 <br />
 
+
+RCarousel Control
+-------------------------
+
+<img width="766" height="596" alt="image" src="https://github.com/user-attachments/assets/ce6aa2f9-f9af-491b-964b-d8f474eefd89" />
+
+<br />
+<br />
 
 
 
