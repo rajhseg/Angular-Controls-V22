@@ -37,6 +37,13 @@ const angularApp = new AngularNodeAppEngine({
 /**
  * Serve static files from /browser
  */
+
+
+app.use('/angularv22', express.static(browserDistFolder, {
+    maxAge: '1y'
+  }));
+
+  
 app.use(
   express.static(browserDistFolder, {
     maxAge: '1y',
@@ -44,6 +51,7 @@ app.use(
     redirect: false,
   }),
 );
+
 
 /**
  * Handle all other requests by rendering the Angular application.
