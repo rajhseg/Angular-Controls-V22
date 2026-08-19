@@ -335,11 +335,6 @@ REventsCalender
 
 <img width="744" height="745" alt="image" src="https://github.com/user-attachments/assets/03541214-7957-4b60-b66b-caec474b227a" />
 
-
-### Add Events Screen (this screen will open on double click of Main screen Day Cell)
-
-<img width="785" height="672" alt="image" src="https://github.com/user-attachments/assets/95985ca1-d2cf-4fcc-b6ff-5bd874cefc48" />
-
 <br />
 <br />
 
@@ -348,11 +343,7 @@ RDonutChart Control
 
 <br/>
 
-![image](https://github.com/user-attachments/assets/30ac5cd0-0750-4969-a13d-85825520a637)
-
-
-<br />
-<br />
+<img width="506" height="611" alt="image" src="https://github.com/user-attachments/assets/2da52728-c86a-4b51-9834-e7a27f4ebdd2" />
 
 <br/>
 <br/>
@@ -362,11 +353,7 @@ RPieChart Control
 
 <br/>
 
-![image](https://github.com/user-attachments/assets/2c46f4d3-351c-4d05-b0b0-d6a491a923f0)
-
-
-<br/>
-<br/>
+<img width="511" height="608" alt="image" src="https://github.com/user-attachments/assets/66674c80-87b9-4d12-ab53-6275bc069490" />
 
 <br/>
 <br/>
@@ -376,10 +363,7 @@ RBarChart Vertical Control
 
 <br/>
 
-<img width="371" height="508" alt="Barchart-Vertical" src="https://github.com/user-attachments/assets/e75f7328-11cf-4a4f-b554-534d98b59ea6" />
-
-<br/>
-<br/>
+<img width="511" height="547" alt="image" src="https://github.com/user-attachments/assets/5810880b-860b-4f69-bc7a-5c9fb9ca8ba4" />
 
 <br/>
 <br/>
@@ -389,11 +373,7 @@ RBarChart Horizontal Control
 
 <br/>
 
-<img width="367" height="503" alt="Barchart-Horizontal" src="https://github.com/user-attachments/assets/7af0bb8f-5b06-4ad8-88c3-ee17b1fd7cd7" />
-
-
-<br/>
-<br/>
+<img width="510" height="544" alt="image" src="https://github.com/user-attachments/assets/67b3f2e8-491f-4aa0-a642-e1e4b8fc76d0" />
 
 <br/>
 <br/>
@@ -403,9 +383,8 @@ RStackedBarChart Vertical Control
 
 <br/>
 
-![image](https://github.com/user-attachments/assets/1bcc4c09-c94a-450a-a9c8-111629407ed1)
+<img width="510" height="546" alt="image" src="https://github.com/user-attachments/assets/7be2363a-097a-4a49-9e19-cd162e719867" />
 
-<br/>
 <br/>
 <br/>
 
@@ -414,9 +393,8 @@ RStackedBarChart Horizontal Control
 
 <br/>
 
-![image](https://github.com/user-attachments/assets/43a8a50f-527e-4ea7-9683-428eece78dfb)
+<img width="513" height="545" alt="image" src="https://github.com/user-attachments/assets/24721c87-ed01-4d16-9aad-b6bfa8e5dec4" />
 
-<br/>
 <br/>
 <br/>
 
@@ -426,11 +404,10 @@ RStackedRangeBarChart Vertical Control
 
 <br/>
 
-![image](https://github.com/user-attachments/assets/b5537a0b-2b5a-407d-8468-369f970353b9)
+<img width="511" height="549" alt="image" src="https://github.com/user-attachments/assets/3d57fe72-5b72-442f-8b56-a77b57a15e7a" />
 
 <br/>
 <br/>
-<br />
 
 
 RScatterChart
@@ -438,11 +415,9 @@ RScatterChart
 
 <br/>
 
-<img width="458" height="471" alt="" src="https://github.com/user-attachments/assets/c2c97d0a-c2a6-44b8-be38-bc0006c697b6" />
+<img width="510" height="577" alt="image" src="https://github.com/user-attachments/assets/8a23a61b-6367-47b5-92c1-509a14c3c18a" />
 
 <br />
-
-<br/>
 <br/>
 
 RLineChart
@@ -450,9 +425,7 @@ RLineChart
 
 <br/>
 
-<img width="456" height="478" alt="" src="https://github.com/user-attachments/assets/2b56727a-3ef6-4767-94a7-4d8cb250d881" />
-
-<br/>
+<img width="507" height="611" alt="image" src="https://github.com/user-attachments/assets/60f885ce-7d85-468a-8997-ccba80f30350" />
 
 <br/>
 <br/>
@@ -462,9 +435,8 @@ RAreaChart
 
 <br/>
 
-<img width="460" height="471" alt="" src="https://github.com/user-attachments/assets/4d2b391c-2b04-4725-8c18-16b2819c502f" />
+<img width="509" height="575" alt="image" src="https://github.com/user-attachments/assets/d7bc8580-3ed1-4e47-b8c3-6bf15b569566" />
 
-<br/>
 <br/>
 <br/>
 
@@ -473,9 +445,8 @@ RAllocationBarChart
 
 <br/>
 
-<img width="366" height="508" alt="allocated barchart" src="https://github.com/user-attachments/assets/50dd96d7-18e6-461c-80ac-1477a7ee492f" />
+<img width="511" height="548" alt="image" src="https://github.com/user-attachments/assets/9170a259-7adf-483a-ac1b-5c5e0d8d7716" />
 
-<br />
 <br/>
 <br/>
 
@@ -484,17 +455,15 @@ RSeriesChart
 
 #### YSeriesChart
 
-<img width="901" height="476" alt="" src="https://github.com/user-attachments/assets/d8444ffc-7cff-4f9c-bc08-cc38a1e1bb37" />
+<img width="515" height="560" alt="image" src="https://github.com/user-attachments/assets/8e6b8ba0-c253-4a64-9720-ceb569a39d55" />
 
-<br />
 <br/>
 <br/>
 
 #### GraphSeriesChart
 
-<img width="462" height="476" alt="" src="https://github.com/user-attachments/assets/02dea651-3c2c-41ab-9ab4-6b4f4dcdee4e" />
+<img width="510" height="556" alt="image" src="https://github.com/user-attachments/assets/b58206e7-ec85-4140-9dc0-ec6d24edb1c9" />
 
-<br/>
 <br/>
 <br/>
 
