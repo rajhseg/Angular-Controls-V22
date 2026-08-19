@@ -65,22 +65,12 @@ Password Control
 <br />
 
 
-Group Panel Control
---------------------------------------
-
-<br />
-
-
-![image](https://github.com/user-attachments/assets/d18acc04-5212-4118-a7b9-abc98a7fed1c)
-
-<br />
-
 Calender Control
 -------------------------------
 
 <br />
 
-<img width="345" height="297" alt="image" src="https://github.com/user-attachments/assets/28e93cae-48b4-47a6-b867-5b1dbbcfb328" />
+<img width="508" height="269" alt="image" src="https://github.com/user-attachments/assets/6a4a9e9c-9ce8-4f71-b262-b1809a79408d" />
 
 <br />
 <br />
@@ -90,9 +80,7 @@ Calender Control
 
 <br />
 
-
-<img width="283" height="283" alt="image" src="https://github.com/user-attachments/assets/516f7586-ea57-4ce9-a25e-74013c6ef70d" />
-
+<img width="513" height="330" alt="image" src="https://github.com/user-attachments/assets/2b4b3518-2589-4898-aac6-128e790b22ac" />
 
 <br />
 <br />
@@ -102,21 +90,10 @@ RSelectDropdown Control
 
 <br />
 
-
-<img width="300" height="285" alt="image" src="https://github.com/user-attachments/assets/d686b727-7fae-4056-9616-e9f26b4acc9a" />
+<img width="509" height="296" alt="image" src="https://github.com/user-attachments/assets/c84676d3-9f9f-4dab-8f3f-f0ed6a7293e6" />
 
 <br/>
 <br/>
-
-Tree Control
---------------------------
-
-<br />
-
-<img width="301" height="223" alt="image" src="https://github.com/user-attachments/assets/4e18aae7-4102-4059-bb1e-862e43919d98" />
-
-<br />
-<br />
 
 
 Checkbox
@@ -124,7 +101,7 @@ Checkbox
 
 <br />
 
-<img width="314" height="110" alt="image" src="https://github.com/user-attachments/assets/a7f2af42-e10c-4d55-8ebf-41a44181a9e9" />
+<img width="504" height="273" alt="image" src="https://github.com/user-attachments/assets/5d2309c8-87f7-41af-a106-7e33b71f830c" />
 
 <br />
 <br />
@@ -134,39 +111,18 @@ RadioButton
 
 <br />
 
-<img width="331" height="104" alt="image" src="https://github.com/user-attachments/assets/712eb7fe-d050-4541-b59f-e8bf40e7d32f" />
+<img width="514" height="330" alt="image" src="https://github.com/user-attachments/assets/3b836f01-88be-461d-b42a-b61a1b6f0f16" />
 
 <br />
 <br />
 
-
-Rstate-Horizontal Control
---------------------------------------
-
-<br />
-
-<img width="538" height="227" alt="image" src="https://github.com/user-attachments/assets/57ad1cb3-15a7-4b2f-a021-707558db4445" />
-
-<br />
-<br />
-
-
-Rstate-Vertical Control 
-----------------------------------------------
-
-<br />
-
-<img width="396" height="299" alt="image" src="https://github.com/user-attachments/assets/97f15f2f-b813-464f-9577-cdab75e07c1b" />
-
-<br />
-<br />
 
 Slider
 -----------------------------
 
 <br />
 
-<img width="351" height="88" alt="image" src="https://github.com/user-attachments/assets/cd2fb13c-e2a1-4e10-9fd5-ca03cc38f246" />
+<img width="516" height="255" alt="image" src="https://github.com/user-attachments/assets/3d079cbe-12f3-49ca-b892-ea90e953a7eb" />
 
 <br />
 <br />
@@ -176,7 +132,7 @@ RangeSlider
 
 <br />
 
-<img width="341" height="81" alt="image" src="https://github.com/user-attachments/assets/561acbaa-0c93-4f80-bbc6-fcc9504879c7" />
+<img width="515" height="254" alt="image" src="https://github.com/user-attachments/assets/374564ac-a659-4149-ba18-dbb1c0d6d6d2" />
 
 <br />
 <br />
@@ -186,7 +142,7 @@ RangeSlider
 
 <br />
 
-<img width="322" height="107" alt="image" src="https://github.com/user-attachments/assets/66b99462-bf44-454f-a05b-409420981211" />
+<img width="510" height="331" alt="image" src="https://github.com/user-attachments/assets/4152f231-2da5-4e14-a557-c13e419eeb6e" />
 
 <br />
 <br />
@@ -196,7 +152,7 @@ Switch Control
 
 <br />
 
-<img width="194" height="42" alt="image" src="https://github.com/user-attachments/assets/cb4ab400-9dad-4915-9442-18fbc6af81a8" />
+<img width="522" height="256" alt="image" src="https://github.com/user-attachments/assets/195bcd43-ef0e-498a-8de0-d5528cc46eb1" />
 
 <br />
 <br />
