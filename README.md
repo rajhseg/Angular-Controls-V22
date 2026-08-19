@@ -197,40 +197,10 @@ RTimeSelector
 <br />
 <br />
 
-
-ProgressBar Control
----------------------
-
-### Circle Infinite
-
-<img width="263" height="237" alt="image" src="https://github.com/user-attachments/assets/20d5481c-1c26-423f-9aa2-4bbb458b7215" />
-
-<br />
-
-### StraightLine Infinite
-
-<img width="484" height="148" alt="image" src="https://github.com/user-attachments/assets/87642eb4-36b7-46cf-b2ad-73becc8b424e" />
-
-<br />
-
-### StraightLine Finite
-
-![image](https://github.com/rajhseg/Angular-Controls/assets/9523832/f429bb04-072f-4b12-af27-bf1fc2636fda)
-
-<br />
-
-### Circular Finite
-
-![image](https://github.com/rajhseg/Angular-Controls/assets/9523832/b5e76ad3-cfca-4fd4-999a-f8a68c544537)
-
-<br />
-<br />
-
-
 RCarousel Control
 -------------------------
 
-![image](https://github.com/user-attachments/assets/8904a864-bd04-4fbe-8957-38f356588ddd)
+<img width="766" height="596" alt="image" src="https://github.com/user-attachments/assets/ce6aa2f9-f9af-491b-964b-d8f474eefd89" />
 
 <br />
 <br />
@@ -239,8 +209,7 @@ RCarousel Control
 RTabs Control
 -------------------------
 
-![image](https://github.com/user-attachments/assets/ee78238e-b42f-403f-9dd9-5728ef8019c7)
-
+<img width="565" height="443" alt="image" src="https://github.com/user-attachments/assets/602e62b0-a8c6-48c9-b231-830d00c8e683" />
 
 <br />
 <br />
@@ -248,7 +217,7 @@ RTabs Control
 RSimpleTabs Control
 -----------------------------
 
-![image](https://github.com/user-attachments/assets/87ed4a09-b036-4a7f-97fb-b2b850e6a82d)
+<img width="575" height="415" alt="image" src="https://github.com/user-attachments/assets/1cc4babc-e53f-48ea-8937-141c3f5a4a1d" />
 
 <br />
 <br />
@@ -256,8 +225,7 @@ RSimpleTabs Control
 RFlatTabs Control
 ------------------------------
 
-![image](https://github.com/user-attachments/assets/ba64778a-ed66-4f9d-a0e1-e6599a521066)
-
+<img width="582" height="390" alt="image" src="https://github.com/user-attachments/assets/b5698949-7d6d-4cb4-92ae-7f3cd87bde66" />
 
 <br/>
 <br/>
@@ -265,7 +233,40 @@ RFlatTabs Control
 RAccordion Control
 ---------------------------------
 
-![image](https://github.com/user-attachments/assets/a4bb0593-5636-4545-87fa-23399b1898d5)
+<img width="727" height="601" alt="image" src="https://github.com/user-attachments/assets/84e65d1f-21f5-4585-8a5e-c66773983a8e" />
+
+<br />
+<br />
+
+RStepper-Vertical
+-------------------------------
+
+<img width="952" height="771" alt="image" src="https://github.com/user-attachments/assets/7c314fbf-f02f-444d-8bc7-2a5567c4ef9b" />
+
+<br />
+<br />
+
+
+RStepperHorizontal
+-----------------------------------
+
+<img width="859" height="782" alt="image" src="https://github.com/user-attachments/assets/98e85743-7449-4412-9c62-801368e9a5e0" />
+
+<br />
+<br />
+
+RSequencesTracker
+------------------------------------
+
+<img width="1055" height="639" alt="image" src="https://github.com/user-attachments/assets/9ae875e0-2146-4124-8782-83884fe24c6d" />
+
+<br />
+<br />
+
+RTree
+------------------------------------
+
+<img width="557" height="271" alt="image" src="https://github.com/user-attachments/assets/6c7107bf-68eb-4e03-a1f2-4ccbb9bb3825" />
 
 <br />
 <br />
@@ -315,32 +316,6 @@ REventsSchedule
 
 <br/>
 <br />
-
-RStepper-Vertical
--------------------------------
-
-![image](https://github.com/user-attachments/assets/f62388f4-6c1a-403a-a3db-a11791a3d2a3)
-
-<br />
-<br />
-
-
-RStepperHorizontal
------------------------------------
-
-![image](https://github.com/user-attachments/assets/cc2a436f-feaa-4b8f-9edc-539df2327da1)
-
-<br />
-<br />
-
-RSequencesTracker
-------------------------------------
-
-![image](https://github.com/user-attachments/assets/95559b17-8596-4bfb-8931-73d4b46db996)
-
-<br />
-<br />
-
 
 RDonutChart Control
 ----------------------------------
