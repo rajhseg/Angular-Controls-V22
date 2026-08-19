@@ -26,7 +26,7 @@ ng build rcomponents
 ng serve
  
 # Run with SSR
-npm run dev:ssr
+npm run serve:ssr:angularcontrols
  
 # Visit http://localhost:4200
 ```
