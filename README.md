@@ -240,63 +240,6 @@ RTimeSelector
 <br />
 <br />
 
-RTabs Control
--------------------------
-
-<img width="565" height="443" alt="image" src="https://github.com/user-attachments/assets/602e62b0-a8c6-48c9-b231-830d00c8e683" />
-
-<br />
-<br />
-
-RSimpleTabs Control
------------------------------
-
-<img width="575" height="415" alt="image" src="https://github.com/user-attachments/assets/1cc4babc-e53f-48ea-8937-141c3f5a4a1d" />
-
-<br />
-<br />
-
-RFlatTabs Control
-------------------------------
-
-<img width="582" height="390" alt="image" src="https://github.com/user-attachments/assets/b5698949-7d6d-4cb4-92ae-7f3cd87bde66" />
-
-<br/>
-<br/>
-
-RAccordion Control
----------------------------------
-
-<img width="727" height="601" alt="image" src="https://github.com/user-attachments/assets/84e65d1f-21f5-4585-8a5e-c66773983a8e" />
-
-<br />
-<br />
-
-RStepper-Vertical
--------------------------------
-
-<img width="952" height="771" alt="image" src="https://github.com/user-attachments/assets/7c314fbf-f02f-444d-8bc7-2a5567c4ef9b" />
-
-<br />
-<br />
-
-
-RStepperHorizontal
------------------------------------
-
-<img width="859" height="782" alt="image" src="https://github.com/user-attachments/assets/98e85743-7449-4412-9c62-801368e9a5e0" />
-
-<br />
-<br />
-
-RSequencesTracker
-------------------------------------
-
-<img width="1055" height="639" alt="image" src="https://github.com/user-attachments/assets/9ae875e0-2146-4124-8782-83884fe24c6d" />
-
-<br />
-<br />
-
 
 RGroupPanel Control
 -----------------------------------
@@ -308,44 +251,6 @@ RGroupPanel Control
 <br/>
 <br />
 
-
-RSplitter Component
---------------------------
-
-<br />
-
-<img width="1132" height="590" alt="image" src="https://github.com/user-attachments/assets/6cb0b521-3430-4414-a82b-fe919a3b1b9f" />
-
-<br />
-<br />
-
-
-RGrid Control
-------------------------------
-
-<img width="1012" height="781" alt="image" src="https://github.com/user-attachments/assets/d60a578e-7b64-4792-8dc4-1c6b93d93c09" />
-
-<br/>
-<br />
-
-REventsSchedule
--------------------------------
-
-<img width="785" height="624" alt="image" src="https://github.com/user-attachments/assets/a36275e0-3df9-4a3a-b607-27c31e0fe942" />
-
-<br/>
-<br />
-
-
-REventsCalender
-------------------------
-
-### Main Screen
-
-<img width="744" height="745" alt="image" src="https://github.com/user-attachments/assets/03541214-7957-4b60-b66b-caec474b227a" />
-
-<br />
-<br />
 
 RDonutChart Control
 ----------------------------------
@@ -491,6 +396,105 @@ RCarousel Control
 
 <br />
 <br />
+
+
+RTabs Control
+-------------------------
+
+<img width="565" height="443" alt="image" src="https://github.com/user-attachments/assets/602e62b0-a8c6-48c9-b231-830d00c8e683" />
+
+<br />
+<br />
+
+RSimpleTabs Control
+-----------------------------
+
+<img width="575" height="415" alt="image" src="https://github.com/user-attachments/assets/1cc4babc-e53f-48ea-8937-141c3f5a4a1d" />
+
+<br />
+<br />
+
+RFlatTabs Control
+------------------------------
+
+<img width="582" height="390" alt="image" src="https://github.com/user-attachments/assets/b5698949-7d6d-4cb4-92ae-7f3cd87bde66" />
+
+<br/>
+<br/>
+
+RAccordion Control
+---------------------------------
+
+<img width="727" height="601" alt="image" src="https://github.com/user-attachments/assets/84e65d1f-21f5-4585-8a5e-c66773983a8e" />
+
+<br />
+<br />
+
+RStepper-Vertical
+-------------------------------
+
+<img width="952" height="771" alt="image" src="https://github.com/user-attachments/assets/7c314fbf-f02f-444d-8bc7-2a5567c4ef9b" />
+
+<br />
+<br />
+
+
+RStepperHorizontal
+-----------------------------------
+
+<img width="859" height="782" alt="image" src="https://github.com/user-attachments/assets/98e85743-7449-4412-9c62-801368e9a5e0" />
+
+<br />
+<br />
+
+RSequencesTracker
+------------------------------------
+
+<img width="1055" height="639" alt="image" src="https://github.com/user-attachments/assets/9ae875e0-2146-4124-8782-83884fe24c6d" />
+
+<br />
+<br />
+
+
+
+RSplitter Component
+--------------------------
+
+<br />
+
+<img width="1132" height="590" alt="image" src="https://github.com/user-attachments/assets/6cb0b521-3430-4414-a82b-fe919a3b1b9f" />
+
+<br />
+<br />
+
+
+RGrid Control
+------------------------------
+
+<img width="1012" height="781" alt="image" src="https://github.com/user-attachments/assets/d60a578e-7b64-4792-8dc4-1c6b93d93c09" />
+
+<br/>
+<br />
+
+REventsSchedule
+-------------------------------
+
+<img width="785" height="624" alt="image" src="https://github.com/user-attachments/assets/a36275e0-3df9-4a3a-b607-27c31e0fe942" />
+
+<br/>
+<br />
+
+
+REventsCalender
+------------------------
+
+### Main Screen
+
+<img width="744" height="745" alt="image" src="https://github.com/user-attachments/assets/03541214-7957-4b60-b66b-caec474b227a" />
+
+<br />
+<br />
+
 
 
 
