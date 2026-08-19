@@ -3,28 +3,34 @@
 
 This project is under development which can offers a comprehensive suite of reusable Angular UI components, known as **rcomponents** (like RDropdown, RGrid, RCalender). The core functionality focuses on providing robust cross-platform compatibility. especially for Server-Side Rendering (SSR), achieved through the Window and Environment Helper
 
-<br />
-
+### Prerequisites
+- Node.js 18+
+- Angular 22+
+  
+### Installation
+ 
 ```bash
 
 # Clone the repository
-git clone https://github.com/rajhseg/Angular-Controls
+git clone https://github.com/rajhseg/Angular-Controls-V22
 
-cd Angular-Controls
-
+cd Angular-Controls-V22
+ 
 # Install dependencies
 npm install
-
-# Build the library (required before running the demo app)
+ 
+# Build the library
 ng build rcomponents
-
-# Run demo application in development mode
+ 
+# Run demo application
 ng serve
-
-# Run SSR version
+ 
+# Run with SSR
 npm run dev:ssr
-
+ 
+# Visit http://localhost:4200
 ```
+
 
 Button Control
 --------------------------------------
