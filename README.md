@@ -157,6 +157,47 @@ Switch Control
 <br />
 <br />
 
+RColorPicker
+--------------------------
+
+<br />
+
+<img width="512" height="302" alt="image" src="https://github.com/user-attachments/assets/65ca253b-6ffc-4098-ace1-3da89d6e83c2" />
+
+<br />
+<br />
+
+RFileUpload
+---------------------------
+
+<br />
+
+<img width="510" height="295" alt="image" src="https://github.com/user-attachments/assets/612be1e7-9e55-4bfa-8d00-91292991d934" />
+
+<br />
+<br />
+
+RNumeric
+----------------------------
+
+<br />
+
+<img width="514" height="273" alt="image" src="https://github.com/user-attachments/assets/d2cf33b3-09f3-4018-89c1-ad860bfe8f29" />
+
+<br />
+<br />
+
+RTimeSelector
+-----------------------------
+
+<br />
+
+<img width="514" height="258" alt="image" src="https://github.com/user-attachments/assets/0dc6fdc5-3f58-4e92-aa9c-b21deb8c8c4e" />
+
+<br />
+<br />
+
+
 ProgressBar Control
 ---------------------
 
@@ -229,35 +270,6 @@ RAccordion Control
 <br />
 <br />
 
-FileUpload Control
---------------------------------
-
-<br/>
-
-<img width="320" height="120" alt="image" src="https://github.com/user-attachments/assets/8a949651-b5c9-4554-a809-83748dcd1b46" />
-
-<br />
-<br />
-
-ColorPicker
----------------------------------
-
-<br />
-
-<img width="348" height="360" alt="image" src="https://github.com/user-attachments/assets/84e0613f-1ab8-4bd7-9673-15fd5c190076" />
-
-<br />
-<br />
-
-Numeric Control
----------------------------------
-
-<br />
-
-<img width="242" height="94" alt="image" src="https://github.com/user-attachments/assets/09a6af80-448e-482f-ab20-7d0a19d256e6" />
-
-<br />
-<br />
 
 Timer Control
 -----------------------------------
@@ -269,13 +281,6 @@ Timer Control
 <br/>
 <br />
 
-TimeSelector
--------------------------------------
-
-![image](https://github.com/user-attachments/assets/3af32442-7d88-4c53-84f9-1d4ace726636)
-
-<br/>
-<br/>
 
 RSplitter Component
 --------------------------
