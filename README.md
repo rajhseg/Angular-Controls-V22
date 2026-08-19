@@ -37,8 +37,7 @@ Button Control
 
 <br />
 
-
-<img width="110" height="58" alt="image" src="https://github.com/user-attachments/assets/a39ae1ca-a904-49b2-a604-56ac9c62408d" />
+<img width="511" height="267" alt="image" src="https://github.com/user-attachments/assets/cfcdb97d-6386-411e-8486-6bcf8a17984e" />
 
 <br />
 <br />
@@ -49,8 +48,7 @@ Textbox Control
 
 <br />
 
-
-<img width="561" height="90" alt="image" src="https://github.com/user-attachments/assets/66fb75ac-6320-4622-9b21-64d9a1e55a96" />
+<img width="515" height="266" alt="image" src="https://github.com/user-attachments/assets/29cb2a4f-1322-438f-8770-5c0d9328fa28" />
 
 <br />
 <br />
@@ -61,8 +59,7 @@ Password Control
 
 <br />
 
-
-<img width="574" height="88" alt="image" src="https://github.com/user-attachments/assets/34420472-4b75-4a87-b2ef-46e011546fff" />
+<img width="514" height="268" alt="image" src="https://github.com/user-attachments/assets/687134b1-f15f-4f8a-baa4-02ec2d5ad851" />
 
 <br />
 <br />
