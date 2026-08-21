@@ -1,5 +1,5 @@
 @if (Headers.length > 0) {
-  <div class="display: flex;" [ngClass]="{ 'root': EnableShadow, 'rootNormal': !EnableShadow }"
+  <div class="tabcontent" [ngClass]="{ 'root': EnableShadow, 'rootNormal': !EnableShadow }"
     [ngStyle]="{ '--fontsize': FontSize }"
     [style.font-family]="FontFamily" [id]="Id" cdkDropListGroup>
     @if (ShowGroupHeader) {
@@ -17,7 +17,7 @@
         }
       </div>
     }
-    <div #parentElement [ngStyle]="{'width': TableWidth_C, 'height': TableHeight_C }" style="overflow: hidden;">
+    <div #parentElement [ngStyle]="{'width': TableWidth_C, 'height': TableHeight_C }" style="overflow: visible;">
       <table class="tblheader" [ngStyle]="{ 'width': '100%' }">
         <thead>
                 <tr [ngStyle]="{'background': 'linear-gradient(135deg, ' + HeaderBackgroundColor + ' 0%, ' + HeaderBackgroundColor + ' 100%)',
@@ -162,7 +162,7 @@
               @for (item of ShowItems.Rows; track cdkVirtualTrackBy(i, item); let i = $index) {
                 <tr class="hgh"
                     [ngStyle]="{ 'background': EnableAlternateRowColor ? i%2 == 0 ? OddRowBackColor : EvenRowBackColor : RowBackColor, 
-                        'width': '100%', 'height':  RowHeightInPx, 'align-content' : 'center', 'overflow': 'hidden',
+                        'width': '100%', 'height':  RowHeightInPx, 'align-content' : 'center', 'overflow': 'visible',
                         '--rowhoverbackcolor': RowHoverBackColor, '--rowhoverforecolor': RowHoverForeColor, 
                         '--rowhoverbackgroundopacity': RowHoverBackgroundOpacity,
                         'pointer-events': (IsReadOnly || IsDisabled) ? 'none': '', 
@@ -233,7 +233,7 @@
             }
             @if (IsGroupHaveColumns && DisplayGroupItems) {
               @for (grpitem of DisplayGroupItems; track cdkVirtualGroupTrackBy($index, grpitem)) {
-                        <tr [ngStyle]="{ 'width': '100%', 'overflow': 'hidden', 
+                        <tr [ngStyle]="{ 'width': '100%', 'overflow': 'visible', 
                                          'border-top': '1px solid '+ GroupHeaderRowBorderColor,
                                          'border-bottom': '1px solid '+ GroupHeaderRowBorderColor,
                                          'height': GroupHeaderRowHeightInPx, 'align-content' : 'center' , 
@@ -256,7 +256,7 @@
                     <tr class="hgh"
                                     [ngStyle]="{ 'background': EnableAlternateRowColor ? i%2 == 0 ? OddRowBackColor : EvenRowBackColor : RowBackColor, 
                                         'width': '100%', 'height': RowHeightInPx, 
-                                        'align-content' : 'center', 'overflow': 'hidden',
+                                        'align-content' : 'center', 'overflow': 'Visible',
                                         'pointer-events': (IsReadOnly || IsDisabled) ? 'none': '', 
                                         'user-select': IsDisabled ? 'none': 'auto',
                                         '--rowhoverbackcolor': RowHoverBackColor, '--rowhoverforecolor': RowHoverForeColor, 
@@ -381,7 +381,7 @@
 }
 
 <ng-template #viewmode let-cell="CellInfo" let-header="Header">
-  <div style="text-overflow: ellipsis; overflow: hidden;" [ngStyle]="{'width': GetColumnsWidth(header) }">{{cell.Value}}</div>
+  <div style="text-overflow: ellipsis; overflow: hidden;text-wrap: wrap;" [ngStyle]="{'width': GetColumnsWidth(header) }">{{cell.Value}}</div>
 </ng-template>
 
 <ng-template #editmode let-cell="CellInfo" let-header="Header">
