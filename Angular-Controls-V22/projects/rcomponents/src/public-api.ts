@@ -73,5 +73,4 @@ export * from './lib/raccordion/raccordion.component';
 export * from './lib/rcarousel/rcarousel.component';
 export * from './lib/rcarousel/rcarousel.directive';
 export * from './lib/rdropdown-filter.pipe';
-
 export * from './lib/rcomponents.module';

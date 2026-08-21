@@ -1,6 +1,6 @@
 
 
-<div #startElement class="rfilterclose dropdown"  [style.font-family]="FontFamily" [id]="Id">
+<div #startElement class="rfilterclose dropdown"  [style.font-family]="FontFamily" [id]="Id" [style.font-size]="FontSize">
   <div #openbtn (click)="FilterToggle($event)">
     @if (!IsFilteredApplied) {
       <svg [attr.width]="WidthInPx" [attr.height]="HeightInPx" viewBox="0 0 24 24"
@@ -35,22 +35,90 @@
 
         <div class="container">
 
-          <div class="space">
+          <table>
+            <tbody>
+            <tr style="height: 70px;">
 
-            <span [ngStyle]="{'color': TextColor}">Contains</span>
+              <td colspan="2">
+                <div class="space">
 
-            <div style="margin-top: 5px; margin-bottom: 15px;font-size: 16px;"
-              [ngStyle]="{ 'color': ForeColor}">
-              <rselectdropdown [Items]="ItemValues" [IsMulti]="true"
-                [ForeColor]="'gray'" [ParentDropDownId]="Id"
-                [Width]="'153px'" [(ngModel)]="ContainsList"
-                [DropDownContentWidth]="dropdownMaxChars+'px'">
-              </rselectdropdown>
-            </div>
+                  <span [ngStyle]="{'color': TextColor}">Contains</span>
 
-          </div>
+                  <div style="margin-top: 5px;font-size: 16px;"
+                    [ngStyle]="{ 'color': ForeColor}">
+                    <rselectdropdown [Items]="ItemValues" [IsMulti]="true"
+                      [ForeColor]="'gray'" [ParentDropDownId]="Id"
+                      [Width]="'165px'" [(ngModel)]="ContainsList"
+                      [DropDownContentWidth]="dropdownMaxChars+'px'">
+                    </rselectdropdown>
+                  </div>
 
-          <div  [ngStyle]="{'margin-top': DataType=='date' ? '': '10px'}"  style="width: 190px;">
+                </div>
+              </td>
+
+            </tr>
+            <tr>
+              <td>
+                  <span [ngStyle]="{'margin-top': DataType == 'date' ? '-10px': '', 'color': TextColor}" style="float: left;"> Greater Than</span>
+              </td>
+              <td>
+                  @if (DataType != 'date') {
+                    <rnumeric [IsReadOnly]="DataType != 'number' "
+                      [(ngModel)]="GreaterThanNumber"
+                      [TextBoxWidth]="'87px'">
+                    </rnumeric>
+                  }
+
+                  @if (DataType =='date') {
+                    <rcalendar [ParentDropDownId]="Id" [Width]="'91px'"
+                      [(ngModel)]="GreaterThanDate" [DateFormat]="DateFormat"></rcalendar>
+                  }
+              </td>
+            </tr>
+            <tr>
+              <td>
+                 <span [ngStyle]="{'margin-top': DataType == 'date' ? '-10px': '', 'color': TextColor}" style="float: left;"> Lesser Than</span>
+              </td>
+              <td>
+                  @if (DataType != 'date') {
+                    <rnumeric [IsReadOnly]="DataType != 'number'" [(ngModel)]="LessThanNumber"
+                      [TextBoxWidth]="'87px'" style="left: 4px;"
+                    ></rnumeric>
+                  }
+
+                  @if (DataType=='date') {
+                    <rcalendar [ParentDropDownId]="Id" [Width]="'91px'"
+                      [(ngModel)]="LessThanDate" [DateFormat]="DateFormat"></rcalendar>
+                  }
+              </td>
+            </tr>
+            <tr style="height: 58px;">
+
+              <td>
+                <rbutton style="float: left;" [ButtonWidth]="'85px'" (ButtonClick)="Clear($event)"
+                  [BackgroundColor]="'orangered'">
+                  <content>
+                    Clear
+                  </content>
+                </rbutton>
+              </td>
+
+              <td>
+                <rbutton style="float:right" [ButtonWidth]="'85px'" (ButtonClick)="Apply($event)">
+                  <content>
+                    Apply
+                  </content>
+                </rbutton>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
+          <!--
+          
+          
+          <div style="display: flex;flex-direction: row;justify-content: space-around;width: 190px;" 
+              [ngStyle]="{'margin-top': DataType=='date' ? '': '10px'}">
             <span [ngStyle]="{'color': TextColor}" style="float: left;"> Greater Than</span>
 
             @if (DataType != 'date') {
@@ -67,7 +135,8 @@
             }
           </div>
 
-          <div [ngStyle]="{'margin-top': DataType=='date' ? '': '10px'}" style="width: 190px;">
+          <div style="display: flex;flex-direction: row;justify-content: space-around;width: 190px;" 
+              [ngStyle]="{'margin-top': DataType=='date' ? '': '10px'}">
             <span [ngStyle]="{'color': TextColor}" style="float: left;"> Lesser Than</span>
 
             @if (DataType != 'date') {
@@ -102,6 +171,8 @@
             </rbutton>
 
           </div>
+        
+          -->
 
         </div>
 

@@ -75,7 +75,8 @@ import { RTreeItem } from 'rcomponents';
 import { RSequenceVerticalItem } from 'rcomponents';
 import { delay, from, map, Observable, of, switchMap } from 'rxjs';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
-import { RCarouselComponent, RImageDirective } from 'rcomponents';
+import { RCarouselComponent, RImageDirective, RFilterComponent } from 'rcomponents';
+import { RFilterDataType } from 'rcomponents';
 
 
 @Component({
@@ -153,12 +154,14 @@ import { RCarouselComponent, RImageDirective } from 'rcomponents';
         RSequencesTrackerComponent,
         RTrackerContentDirective,
         RContentDirective,
-        RAccordionComponent,
+        RAccordionComponent
     ],
     templateUrl: './default.component.html',
     styleUrl: './default.component.css'
 })
 export class DefaultComponent {
+
+  dType: RFilterDataType = RFilterDataType.DateType;
 
   optionA: boolean = true;
   optionB: boolean = false;
