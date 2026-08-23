@@ -225,7 +225,7 @@ RProgressBar
 
 <br />
 
-<img width="515" height="576" alt="image" src="https://github.com/user-attachments/assets/d185aa2b-0a39-4509-ae17-557260c563a6" />
+<img width="515" height="535" alt="image" src="https://github.com/user-attachments/assets/b1478820-e5b0-4dd9-9d05-fc51045420b7" />
 
 <br />
 <br />
@@ -406,7 +406,7 @@ RTabs Control
 
 <br />
 
-<img width="565" height="443" alt="image" src="https://github.com/user-attachments/assets/602e62b0-a8c6-48c9-b231-830d00c8e683" />
+<img width="565" height="443" alt="image" src="https://github.com/user-attachments/assets/96775965-7f25-450a-bb3e-a39adcd173c4" />
 
 <br />
 <br />
@@ -446,7 +446,7 @@ RStepper-Vertical
 
 <br />
 
-<img width="952" height="771" alt="image" src="https://github.com/user-attachments/assets/7c314fbf-f02f-444d-8bc7-2a5567c4ef9b" />
+<img width="952" height="771" alt="image" src="https://github.com/user-attachments/assets/93910bac-cc2b-48b3-8208-cc0cd1f82f38" />
 
 <br />
 <br />
@@ -524,7 +524,7 @@ RCarousel Control
 
 <br />
 
-<img width="766" height="596" alt="image" src="https://github.com/user-attachments/assets/ce6aa2f9-f9af-491b-964b-d8f474eefd89" />
+<img width="766" height="596" alt="image" src="https://github.com/user-attachments/assets/f39c3f69-6100-4ed7-b060-133f3879e0fc" />
 
 <br />
 <br />
