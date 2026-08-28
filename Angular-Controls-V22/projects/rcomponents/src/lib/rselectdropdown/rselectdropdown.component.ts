@@ -315,7 +315,7 @@ AfterContentInit, AfterContentChecked, OnDestroy, IRPopupCloseInterface {
           });
 
           this.loadSelectedItems();
-          this.NotifyToUI();
+          this.SearchItem = "";
           this.isSelectAllChecked = this.ComplexItems.every(x=>x.IsSelected);
 
         }
@@ -346,7 +346,7 @@ AfterContentInit, AfterContentChecked, OnDestroy, IRPopupCloseInterface {
             this.loadSelectedItems();
           }
 
-          this.NotifyToUI();
+          this.SearchItem = "";
         }
       }
     }

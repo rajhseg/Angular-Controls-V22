@@ -295,8 +295,6 @@ export class RNumericComponent extends RBaseComponent<number> implements Control
       let _num = parseInt(obj);
         
       this.validateNumValue(_num);
-
-      this.valueChanged.emit(this.Value);
     }
   }
 

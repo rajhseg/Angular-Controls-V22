@@ -318,8 +318,6 @@ export class RFilterComponent extends RBaseComponent<RFilterApplyModel> implemen
 
       this.IsFilteredApplied = obj.IsFiltered;
     }
-
-    this.valueChanged.emit(obj);
   }
 
   registerOnChange(fn: any): void {
