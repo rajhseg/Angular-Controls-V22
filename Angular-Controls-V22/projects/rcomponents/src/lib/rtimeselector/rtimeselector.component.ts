@@ -39,7 +39,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
             multi: true
         }
     ],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     host: {}
 })
 export class RTimeSelectorComponent extends RBaseComponent<string> implements IRDropDown, ControlValueAccessor {
@@ -252,36 +252,8 @@ export class RTimeSelectorComponent extends RBaseComponent<string> implements IR
   }
 
   closeDropdown(): void {
-    this.IsDropDownOpen =false;    
+    this.IsDropDownOpen = false;    
     this.cdr.detectChanges();
-  }
-
-  private windowOnClick($event: Event) {
-
-    this.cls.PrintLog();
-
-    if (this.IsDropDownOpen) {
-      let i = 15;
-      let element = $event.srcElement;
-      let sameelementClicked: boolean = false;
-      let elementId: string | undefined = undefined;
-
-      while (element != undefined && i > -1) {
-        if ((element as HTMLElement).classList.contains('rtimeselectorwindowclose')) {
-          elementId = (element as HTMLElement).id;
-          if (elementId == this.Id) {
-            sameelementClicked = true;
-          }
-          break;
-        }
-
-        i--;
-        element = (element as HTMLElement).parentElement;
-      }
-
-      if (!sameelementClicked)
-        this.IsDropDownOpen = false;
-    }
   }
 
 

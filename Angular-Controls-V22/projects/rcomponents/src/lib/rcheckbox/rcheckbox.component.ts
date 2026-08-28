@@ -6,44 +6,44 @@ import { RWindowHelper } from '../rwindowObject';
 import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
-    selector: 'rcheckbox',
-    standalone: true,
-    imports: [NgClass, NgStyle],
-    templateUrl: './rcheckbox.component.html',
-    styleUrl: './rcheckbox.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => RCheckboxComponent),
-            multi: true
-        },
-        {
-            provide: NG_VALIDATORS,
-            useFactory: (instance: RCheckboxComponent) => {
-                return {
-                    validate: (control: AbstractControl) => {
-                        return instance.getSyncErrors(control);
-                    }
-                };
-            },
-            multi: true,
-            deps: [forwardRef(() => RCheckboxComponent)]
-        },
-        {
-            provide: NG_ASYNC_VALIDATORS,
-            useExisting: forwardRef(() => RCheckboxComponent),
-            multi: true
-        }
-    ]
+  selector: 'rcheckbox',
+  standalone: true,
+  imports: [NgClass, NgStyle],
+  templateUrl: './rcheckbox.component.html',
+  styleUrl: './rcheckbox.component.css',
+  changeDetection: ChangeDetectionStrategy.Default,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => RCheckboxComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useFactory: (instance: RCheckboxComponent) => {
+        return {
+          validate: (control: AbstractControl) => {
+            return instance.getSyncErrors(control);
+          }
+        };
+      },
+      multi: true,
+      deps: [forwardRef(() => RCheckboxComponent)]
+    },
+    {
+      provide: NG_ASYNC_VALIDATORS,
+      useExisting: forwardRef(() => RCheckboxComponent),
+      multi: true
+    }
+  ]
 })
 export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implements ControlValueAccessor {
 
-  private _isChecked: boolean =false;
-  
+  private _isChecked: boolean = false;
+
 
   @Input()
-  public set IsChecked(val: boolean){
+  public set IsChecked(val: boolean) {
     this._isChecked = val;
   }
   public get IsChecked(): boolean {
@@ -67,7 +67,7 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
 
   @Output()
   OnCheckBoxClick = new EventEmitter<CheckboxEventArgs>();
-  
+
   private onChange: Function = () => { };
 
   private onTouch: Function = () => { };
@@ -80,7 +80,7 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
 
   @Input()
   CheckSize: string = "12px";
-  
+
   constructor(private windowHelper: RWindowHelper, private service: CheckboxService, private destroyRef: DestroyRef) {
     super(windowHelper);
     this.HostElementId = this.windowHelper.GenerateUniqueId();
@@ -99,13 +99,13 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
   }
 
   check(event: Event) {
-    if(!this.IsReadOnly && !this.IsDisabled) {  
+    if (!this.IsReadOnly && !this.IsDisabled) {
       this.toggleCheck(event);
     }
   }
 
   private toggleCheck($event: Event) {
-    if(!this.IsReadOnly) {
+    if (!this.IsReadOnly) {
       let checkValue = !this.IsChecked;
 
       if (checkValue && this.GroupName != "" && this.GroupName != null && this.GroupName != undefined) {
@@ -113,19 +113,19 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
       }
 
       this.IsChecked = checkValue;
-      let args=new CheckboxEventArgs($event, this.IsChecked);
+      let args = new CheckboxEventArgs($event, this.IsChecked);
       this.onChange(this.IsChecked);
       this.onTouch(this.IsChecked);
-      this.OnCheckChanged.emit(args);  
-      this.OnCheckBoxClick.emit(args); 
+      this.OnCheckChanged.emit(args);
+      this.OnCheckBoxClick.emit(args);
       this.valueChanged.emit(args);
     }
   }
-    
+
   protected override IsValidatorSupported(): boolean {
     return true;
   }
-  
+
   protected override GetValidatorValueType(): ValidatorValueType {
     return ValidatorValueType.Switch;
   }
@@ -134,10 +134,10 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
     return this.IsChecked;
   }
 
-  emitValueToModel($event: Event | undefined){
-    let args=new CheckboxEventArgs($event, this.IsChecked);
+  emitValueToModel($event: Event | undefined) {
+    let args = new CheckboxEventArgs($event, this.IsChecked);
     this.onChange(this.IsChecked);
-    this.onTouch(this.IsChecked);    
+    this.onTouch(this.IsChecked);
     this.OnCheckChanged.emit(args);
     this.valueChanged.emit(args);
   }
@@ -148,7 +148,7 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
 
     let checkValue: boolean = false;
 
-    if(obj instanceof CheckboxEventArgs){
+    if (obj instanceof CheckboxEventArgs) {
       checkValue = obj.isChecked;
     }
     else if (typeof obj === 'boolean') {
@@ -164,21 +164,16 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
 
     let sameValue = false;
 
-    if(this.IsChecked==checkValue)
+    if (this.IsChecked == checkValue)
       sameValue = true;
 
-    if(!sameValue) {
-    
+    if (!sameValue) {
+
       if (checkValue && this.GroupName != "" && this.GroupName != null && this.GroupName != undefined) {
         this.resetValueForGroupedCheckbox(undefined, this.GroupName);
       }
 
       this.IsChecked = checkValue;
-
-      let args=new CheckboxEventArgs(undefined, this.IsChecked);
-    
-      this.OnCheckChanged.emit(args);
-      this.valueChanged.emit(args);
     }
   }
 

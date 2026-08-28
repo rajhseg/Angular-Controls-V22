@@ -36,19 +36,23 @@ export class RCell {
 
             let props = this.HeaderKey.split(".");
             if (props.length > 1) {
-                let _obj = undefined;
-                let _fobj = this.Item;
+                let _obj: any = undefined;
+                let _fobj: any = this.Item;
 
                 for (let index = 0; index < props.length - 1; index++) {
                     const _p = props[index];
                     _fobj = _fobj[_p];
-                    if (_fobj == undefined)
+                    if (_fobj == undefined) {
+                        _obj = undefined;
                         break;
+                    }
 
                     _obj = _fobj;
                 }
 
-                _obj[props[props.length - 1]] = _validData;
+                if (_obj !== undefined && _obj !== null) {
+                    _obj[props[props.length - 1]] = _validData;
+                }
             }            
 
             if(!this.FromModel) {
@@ -74,19 +78,23 @@ export class RCell {
             let props = this.HeaderKey.split(".");
                         
             if (props.length > 1) {
-                let _obj = undefined;
-                let _fobj = _item;
+                let _obj: any = undefined;
+                let _fobj: any = _item;
 
                 for (let index = 0; index < props.length - 1; index++) {
                     const _p = props[index];
                     _fobj = _fobj[_p];
-                    if (_fobj == undefined)
+                    if (_fobj == undefined) {
+                        _obj = undefined;
                         break;
+                    }
 
                     _obj = _fobj;
                 }
 
-                _obj[props[props.length - 1]] = data;
+                if (_obj !== undefined && _obj !== null) {
+                    _obj[props[props.length - 1]] = data;
+                }
 
             } else {                
                 _item[this.HeaderKey] = data;

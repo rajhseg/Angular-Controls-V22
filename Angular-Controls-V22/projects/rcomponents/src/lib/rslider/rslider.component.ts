@@ -12,7 +12,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
     imports: [CdkDrag, NgStyle],
     templateUrl: './rslider.component.html',
     styleUrl: './rslider.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -174,25 +174,21 @@ export class RSliderComponent extends RBaseComponent<number> implements ControlV
   }
 
   writeValue(obj: any): void {
-    if (obj == null)
+    if (obj == null || obj === '')
       return;
 
-    if (obj < this.MinValue || obj > this.MaxValue) {
-      this.SliderValue = 0;
-      this.RangeValue = 0;
-      throw Error("Invalid Value between slider range");
+    let number = Number.parseFloat(obj);
+    if (isNaN(number)) {
       return;
     }
 
-    let number = Number.parseFloat(obj);
-
+    number = Math.max(this.MinValue, Math.min(this.MaxValue, number));
     this.SliderValue = number;
-    let marker = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
 
+    let marker = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement?.parentElement, RelativeUnitType.Width);
     let total = this._sliderBarWidthValue - marker + 3;
-
-    let percentage = (this.SliderValue - this.MinValue) / (this.MaxValue - this.MinValue);
-
+    let range = this.MaxValue - this.MinValue;
+    let percentage = range > 0 ? (this.SliderValue - this.MinValue) / range : 0;
     let width = total * percentage;
 
     this.currentDistance = Number.parseInt(width.toString());
@@ -206,8 +202,6 @@ export class RSliderComponent extends RBaseComponent<number> implements ControlV
     } else {
       this.RangeValue = parseInt(this.SliderValue.toString());
     }
-
-    this.valueChanged.emit(this.RangeValue);
   }
 
   

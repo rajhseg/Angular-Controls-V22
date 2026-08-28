@@ -10,12 +10,12 @@ import { RBaseComponent, RSplitterResult } from "../rmodels/RBaseComponent";
 
 
 @Component({
-    selector: 'rsplitter',
-    templateUrl: './rsplitter.component.html',
-    styleUrls: ['./rsplitter.component.css'],
-    standalone: true,
-    imports: [NgTemplateOutlet, JsonPipe, NgStyle],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'rsplitter',
+  templateUrl: './rsplitter.component.html',
+  styleUrls: ['./rsplitter.component.css'],
+  standalone: true,
+  imports: [NgTemplateOutlet, JsonPipe, NgStyle],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RSplitterComponent extends RBaseComponent<RSplitterResult> implements AfterContentInit {
 
@@ -39,7 +39,7 @@ export class RSplitterComponent extends RBaseComponent<RSplitterResult> implemen
   SplitterSize: string = '6px';
 
   @Input()
-   SplitterBackgroundColor: string = '#555';
+  SplitterBackgroundColor: string = '#555';
 
   private _totalWidth: string = '500px';
   private _totalHeight: string = '400px';
@@ -54,8 +54,8 @@ export class RSplitterComponent extends RBaseComponent<RSplitterResult> implemen
 
   get TotalWidthInPx(): string {
 
-    if(this.winHelper.isExecuteInBrowser()) {
-        this._totalWidthInPx = this.cssUnitService.ToPxString(this._totalWidth, this.eleRef.nativeElement.parentElement, RelativeUnitType.Width);
+    if (this.winHelper.isExecuteInBrowser()) {
+      this._totalWidthInPx = this.cssUnitService.ToPxString(this._totalWidth, this.eleRef.nativeElement.parentElement, RelativeUnitType.Width);
     }
 
     return this._totalWidthInPx;
@@ -71,8 +71,8 @@ export class RSplitterComponent extends RBaseComponent<RSplitterResult> implemen
 
   get TotalHeightInPx(): string {
 
-    if(this.winHelper.isExecuteInBrowser()){
-       this._totalHeightInPx = this.cssUnitService.ToPxString(this._totalHeight, this.eleRef.nativeElement.parentElement, RelativeUnitType.Height);
+    if (this.winHelper.isExecuteInBrowser()) {
+      this._totalHeightInPx = this.cssUnitService.ToPxString(this._totalHeight, this.eleRef.nativeElement.parentElement, RelativeUnitType.Height);
     }
 
     return this._totalHeightInPx;
@@ -92,32 +92,34 @@ export class RSplitterComponent extends RBaseComponent<RSplitterResult> implemen
   @ContentChildren(RPageContentDirective, { descendants: true }) Contents!: QueryList<RPageContentDirective>;
 
   constructor(winObj: RWindowHelper, private cdr: ChangeDetectorRef,
-              private winHelper: RWindowHelper, private destroy: DestroyRef,
-              private cssUnitService: RCssUnitsService, private eleRef: ElementRef) {
+    private winHelper: RWindowHelper, private destroy: DestroyRef,
+    private cssUnitService: RCssUnitsService, private eleRef: ElementRef) {
     super(winObj);
     this.Id = this.winObj.GenerateUniqueId();
     this.HostElementId = this.winObj.GenerateUniqueId();
   }
 
-  getPanelStyle(Id: string){
+  getPanelStyle(Id: string) {
 
-    let page = this.RenderItems.filter(x=>x.Id == Id)[0];
+    let page = this.RenderItems.filter(x => x.Id == Id)[0];
 
-    switch(this.SplitterType){
+    switch (this.SplitterType) {
       case RSplitterType.Vertical:
-          return {  'min-width': '50px', 
-                    'width': page.InitialWidth, 
-                    'flex': page.InitialWidth == '' ? '1' : '', 
-                    'height': page.InitialHeight == '' ? '100%' : page.InitialHeight  
-                  }
+        return {
+          'min-width': '50px',
+          'width': page.InitialWidth,
+          'flex': page.InitialWidth == '' ? '1' : '',
+          'height': page.InitialHeight == '' ? '100%' : page.InitialHeight
+        }
         break;
       case RSplitterType.Horizontal:
-          return {  'min-height': '50px', 
-                    'height': page.InitialHeight, 
-                    'flex': page.InitialHeight == '' ? '1' : '', 
-                    'width': page.InitialWidth == '' ? '100%' : page.InitialWidth  
-                  
-                }
+        return {
+          'min-height': '50px',
+          'height': page.InitialHeight,
+          'flex': page.InitialHeight == '' ? '1' : '',
+          'width': page.InitialWidth == '' ? '100%' : page.InitialWidth
+
+        }
         break;
     }
   }
@@ -125,10 +127,10 @@ export class RSplitterComponent extends RBaseComponent<RSplitterResult> implemen
   getSplitterStyle() {
     switch (this.SplitterType) {
       case RSplitterType.Vertical:
-          return { 'width': this.SplitterSize, 'height': '100%', 'background': this.SplitterBackgroundColor }
+        return { 'width': this.SplitterSize, 'height': '100%', 'background': this.SplitterBackgroundColor }
         break;
       case RSplitterType.Horizontal:
-          return { 'height': this.SplitterSize, 'width': '100%', 'background': this.SplitterBackgroundColor }
+        return { 'height': this.SplitterSize, 'width': '100%', 'background': this.SplitterBackgroundColor }
         break;
     }
   }
@@ -145,7 +147,7 @@ export class RSplitterComponent extends RBaseComponent<RSplitterResult> implemen
     }
   }
 
-  private ReFill(){
+  private ReFill() {
     this.RenderItems = [];
     this.Contents.forEach((x, index) => {
       this.RenderItems.push(x);
@@ -159,119 +161,121 @@ export class RSplitterComponent extends RBaseComponent<RSplitterResult> implemen
 
   ngAfterContentInit(): void {
 
-      this.Contents.forEach((x, index) => {
+    this.Contents.forEach((x, index) => {
 
-        this.RenderItems.push(x);
-        this.RenderItems.push(new RSplitterObj(this.winObj, this.SplitterType, this.getSplitterStyle()))
+      this.RenderItems.push(x);
+      this.RenderItems.push(new RSplitterObj(this.winObj, this.SplitterType, this.getSplitterStyle()))
 
-        x.ValueChanged.subscribe(()=>{
-          this.ReFill();
+      x.ValueChanged.subscribe(() => {
+        this.ReFill();
+      });
+
+    });
+
+    this.RemoveLastSplitter();
+
+    if (this.winHelper.isExecuteInBrowser()) {
+      var selectorobj = this.RenderItems.filter(x => x.IsSplitObj).map(y => "#" + y.Id).join(", ");
+
+      const dividers = document.querySelectorAll(selectorobj);
+
+      dividers.forEach((divider, index) => {
+
+        let isDragging = false;
+        let startX = 0;
+        let prevPanel: any, nextPanel: any;
+        let prevStartSize: any, nextStartSize: any;
+        let prevUserSelect: string = '';
+
+        const _mouseUp = () => {
+          if (isDragging) {
+            isDragging = false;
+            document.body.style.userSelect = prevUserSelect;
+            document.removeEventListener('mousemove', _moveMove);
+            document.removeEventListener('mouseup', _mouseUp);
+          }
+        };
+
+        const _moveMove = (e: any) => {
+          if (!isDragging) return;
+
+          const dx = this._splitterType == RSplitterType.Vertical ?
+            e.clientX - startX : e.clientY - startX;
+
+          const newPrevSize = prevStartSize + dx;
+          const newNextSize = nextStartSize - dx;
+
+          if (newPrevSize > 50 && newNextSize > 50) {
+            prevPanel.style.flex = 'none';
+            nextPanel.style.flex = 'none';
+
+            if (this.SplitterType == RSplitterType.Vertical) {
+              prevPanel.style.width = newPrevSize + 'px';
+              nextPanel.style.width = newNextSize + 'px';
+            } else {
+              prevPanel.style.height = newPrevSize + 'px';
+              nextPanel.style.height = newNextSize + 'px';
+            }
+
+            let position = index + 1;
+
+            let dragInfo = new RSplitterResult(divider.id,
+              this.SplitterType,
+              newPrevSize + 'px',
+              newNextSize + 'px',
+              position,
+              prevPanel.id,
+              nextPanel.id);
+            this.valueChanged.emit(dragInfo);
+            this.OnSizeChanged.emit(dragInfo);
+          }
+        };
+
+        const _mouseDown = (e: any) => {
+
+          isDragging = true;
+
+          prevPanel = divider.previousElementSibling;
+          nextPanel = divider.nextElementSibling;
+
+          if (this._splitterType == RSplitterType.Vertical) {
+            startX = e.clientX;
+          }
+          else {
+            startX = e.clientY;
+          }
+
+          if (this.SplitterType == RSplitterType.Vertical) {
+            prevStartSize = prevPanel.offsetWidth;
+            nextStartSize = nextPanel.offsetWidth;
+          } else {
+            prevStartSize = prevPanel.offsetHeight;
+            nextStartSize = nextPanel.offsetHeight;
+          }
+
+          // Save previous user-select and prevent text selection while dragging
+          prevUserSelect = document.body.style.userSelect || '';
+          document.body.style.userSelect = 'none';
+
+          document.addEventListener('mousemove', _moveMove);
+          document.addEventListener('mouseup', _mouseUp);
+        };
+
+        divider.addEventListener('mousedown', _mouseDown);
+
+        this.destroy.onDestroy(() => {
+          if (isDragging) {
+            document.body.style.userSelect = prevUserSelect;
+          }
+          divider.removeEventListener('mousedown', _mouseDown);
+          document.removeEventListener('mousemove', _moveMove);
+          document.removeEventListener('mouseup', _mouseUp);
         });
 
       });
+    }
 
-      this.RemoveLastSplitter();
-
-      if(this.winHelper.isExecuteInBrowser()) 
-      {
-        var selectorobj = this.RenderItems.filter(x=>x.IsSplitObj).map(y=>"#"+y.Id).join(", ");
-
-        const dividers = document.querySelectorAll(selectorobj);
-
-        dividers.forEach((divider, index) => {
-
-          let isDragging = false;
-          let startX = 0;
-          let prevPanel: any, nextPanel: any;
-          let prevStartSize: any, nextStartSize: any;
-
-          const _mouseDown = (e: any) => {
-
-            isDragging = true;
-
-            prevPanel = divider.previousElementSibling;
-            nextPanel = divider.nextElementSibling;
-
-            if (this._splitterType == RSplitterType.Vertical) {
-              startX = e.clientX;
-            }
-            else {
-              startX = e.clientY;
-            }
-
-            if(this.SplitterType == RSplitterType.Vertical) {
-              prevStartSize = prevPanel.offsetWidth;
-              nextStartSize = nextPanel.offsetWidth;
-            } else {
-              prevStartSize = prevPanel.offsetHeight;
-              nextStartSize = nextPanel.offsetHeight;
-            }
-
-            // Prevent text selection while dragging
-            document.body.style.userSelect = 'none';
-          };
-
-          const _moveMove = (e: any) => {
-            if (!isDragging) return;
-
-            const dx = this._splitterType == RSplitterType.Vertical ?
-                            e.clientX - startX : e.clientY - startX;
-
-            const newPrevSize = prevStartSize + dx;
-            const newNextSize = nextStartSize - dx;
-
-            if (newPrevSize > 50 && newNextSize > 50) {
-              prevPanel.style.flex = 'none';
-              nextPanel.style.flex = 'none';
-
-              if(this.SplitterType==RSplitterType.Vertical) {
-                prevPanel.style.width = newPrevSize + 'px';
-                nextPanel.style.width = newNextSize + 'px';
-              } else {
-                prevPanel.style.height = newPrevSize + 'px';
-                nextPanel.style.height = newNextSize + 'px';
-              }
-
-              let position = index + 1;
-
-              let dragInfo = new RSplitterResult(divider.id, 
-                                                  this.SplitterType, 
-                                                  newPrevSize + 'px', 
-                                                  newNextSize + 'px', 
-                                                  position, 
-                                                  prevPanel.id, 
-                                                  nextPanel.id);   
-              this.valueChanged.emit(dragInfo);
-              this.OnSizeChanged.emit(dragInfo);
-            }
-          };
-
-          const _mouseUp = () => {
-            if (isDragging) {
-              isDragging = false;
-              document.body.style.userSelect = '';
-            }
-          };
-
-          divider.addEventListener('mousedown', _mouseDown);
-
-          document.addEventListener('mousemove', _moveMove);
-
-          document.addEventListener('mouseup', _mouseUp);
-
-          this.destroy.onDestroy(()=>{
-
-              divider.removeEventListener('mousedown', _mouseDown);
-
-              document.removeEventListener('mousemove', _moveMove);
-
-              document.removeEventListener('mouseup', _mouseUp);
-          });
-
-        });
-      }
-
-      this.cdr.detectChanges();
+    this.cdr.detectChanges();
 
   }
 

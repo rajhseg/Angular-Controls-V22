@@ -5,14 +5,14 @@ import { NgClass, NgStyle } from '@angular/common';
 import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseComponent';
 
 @Component({
-    selector: 'rallocated-barchart',
-    standalone: true,
-    imports: [NgStyle, NgClass],
-    templateUrl: './rallocated-barchart.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    styleUrl: './rallocated-barchart.component.css'
+  selector: 'rallocated-barchart',
+  standalone: true,
+  imports: [NgStyle, NgClass],
+  templateUrl: './rallocated-barchart.component.html',
+  changeDetection: ChangeDetectionStrategy.Default,
+  styleUrl: './rallocated-barchart.component.css'
 })
-export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
+export class RAllocatedBarChartComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
 
   private _width: number = 300;
   private _height: number = 300;
@@ -41,15 +41,15 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
   MarginBottom: number = 10;
 
   @Input()
-  public set TextColor(val: string){
+  public set TextColor(val: string) {
     this._textColor = val
   }
   public get TextColor(): string {
     return this._textColor;
   }
-  
+
   @Input()
-  public set XAxisTitle(val: string){
+  public set XAxisTitle(val: string) {
     this._xAxisTitle = val;
   }
   public get XAxisTitle(): string {
@@ -92,7 +92,7 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
 
   @Input()
   public set GapBetweenBars(val: RSpaceBetweenBars) {
-    this._gapBetweenBars =  val;
+    this._gapBetweenBars = val;
   }
   public get GapBetweenBars(): number {
     return this._gapBetweenBars;
@@ -176,7 +176,7 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
   private PopupItems: RPopupChartItem[] = [];
 
   public IsRendered: boolean = false;
-  
+
   constructor(winObj: RWindowHelper, private cdr: ChangeDetectorRef) {
     super(winObj);
     this.Id = this.winObj.GenerateUniqueId();
@@ -184,7 +184,7 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(Object.keys(changes).length > 0 && this.IsInitialized) {
+    if (Object.keys(changes).length > 0 && this.IsInitialized) {
       this.Render();
     }
   }
@@ -194,7 +194,7 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
       if (this.bar != undefined) {
         this.IsInitialized = true;
         this.context = this.bar.nativeElement.getContext('2d');
-        this.bar.nativeElement.onmousemove = this.MouseMove.bind(this); 
+        this.bar.nativeElement.onmousemove = this.MouseMove.bind(this);
         this.RenderBarChart();
       }
     }
@@ -209,14 +209,14 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
     return 50;
   }
 
-  trackById(index: number, item: RAllocatedBarChartItem){
+  trackById(index: number, item: RAllocatedBarChartItem) {
     return item.Id;
   }
 
-  private getTextHeight(met: TextMetrics){
+  private getTextHeight(met: TextMetrics) {
     return met.actualBoundingBoxAscent + met.actualBoundingBoxDescent;
   }
-  
+
   private getNameIndicator(itm: RAllocatedBarChartItem) {
     return typeof itm.barItemsBackColor === 'string' ? itm.barItemsBackColor : itm.barItemsBackColor.length > 0 ?
       itm.barItemsBackColor[0] : "orangered";
@@ -226,15 +226,15 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
     return typeof prop === 'string';
   }
 
-  
+
   private MouseMove(event: MouseEvent) {
 
     let totalWidth = this.Width + this.MarginLeft + this.MarginRight;
     let totalHeight = this.Height + this.MarginTop + this.MarginBottom;
 
-    if(this.context && this.bar){            
+    if (this.context && this.bar) {
       this.ResetCanvasContext(this.context);
-      
+
       this.context?.beginPath();
       this.context.clearRect(0, 0, totalWidth, totalHeight);
       this.context.closePath();
@@ -243,7 +243,7 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
 
       let item = this.MouseOnTopOfItem(event.offsetX, event.offsetY);
 
-      if(item) {      
+      if (item) {
         let lineItem = item.Item as RAllocatedBarChartItem;
         let x = event.offsetX + 10;
         let y = event.offsetY;
@@ -251,8 +251,8 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
         let met = this.context.measureText(this.xAxisItemNames[item.ValueIndex].toString());
         let met1 = this.context.measureText(val.Spent.toString());
         let met2 = this.context.measureText(val.Allocated.toString());
-        let alloc = this.context.measureText(lineItem.AllocatedDisplayName+" :");
-        let spent = this.context.measureText(lineItem.SpentDisplayName+" :");
+        let alloc = this.context.measureText(lineItem.AllocatedDisplayName + " :");
+        let spent = this.context.measureText(lineItem.SpentDisplayName + " :");
 
         let xtitle = this.context.measureText(this.XAxisTitle);
         let ytitle = this.context.measureText(this.YAxisTitle);
@@ -260,51 +260,51 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
         let w1 = met.width + xtitle.width;
         let w2 = ytitle.width;
         let w3 = alloc.width + met2.width;
-        let w4 = spent.width +met1.width;
+        let w4 = spent.width + met1.width;
 
         let width = Math.max(w1, w2);
         width = Math.max(width, w3);
         width = Math.max(width, w4);
-        
-        let textWidth =  25 + width;
-                
-        if(x + textWidth > this.Width) {          
+
+        let textWidth = 25 + width;
+
+        if (x + textWidth > this.Width) {
           x = x - textWidth - 20;
         }
 
         let height = 90;
-        if(y + height > this.Height) {
+        if (y + height > this.Height) {
           y = y - height;
         }
-               
+
         this.context.beginPath();
         this.context.save();
         this.context.globalAlpha = this.PopupBackgroundOpacity;
         this.context.fillStyle = this.PopupBackColor;
-        
-        if(this.EnableBorderForPopup) {
+
+        if (this.EnableBorderForPopup) {
           this.context.strokeStyle = this.PopupBorderColor;
         }
 
-        this.context.roundRect(x, y, textWidth, 90, 4); 
+        this.context.roundRect(x, y, textWidth, 90, 4);
         this.context.fill();
         this.context.stroke();
         this.context.restore();
         this.context.closePath();
-        
-        this.context.beginPath();      
+
+        this.context.beginPath();
         this.context.save();
-        
+
         this.context.strokeStyle = this.PopupForeColor ?? item.ItemColor;
         this.context.fillStyle = this.PopupForeColor ?? item.ItemColor;
-        this.context.fillText(" "+this.XAxisTitle+" : "+ this.xAxisItemNames[item.ValueIndex], x + 5, y + 15);
-        this.context.fillText(" "+this.YAxisTitle+"", x + 5, y + 35);
-        this.context.fillText("   "+lineItem.AllocatedDisplayName+" : "+val.Allocated, x + 5, y + 55);
-        this.context.fillText("   "+lineItem.SpentDisplayName+" : "+val.Spent, x + 5, y + 75);
+        this.context.fillText(" " + this.XAxisTitle + " : " + this.xAxisItemNames[item.ValueIndex], x + 5, y + 15);
+        this.context.fillText(" " + this.YAxisTitle + "", x + 5, y + 35);
+        this.context.fillText("   " + lineItem.AllocatedDisplayName + " : " + val.Allocated, x + 5, y + 55);
+        this.context.fillText("   " + lineItem.SpentDisplayName + " : " + val.Spent, x + 5, y + 75);
 
         this.context.stroke();
         this.context.restore();
-        this.context?.closePath();  
+        this.context?.closePath();
       }
     }
   }
@@ -315,8 +315,8 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
 
     for (let index = 0; index < this.PopupItems.length; index++) {
       const element = this.PopupItems[index];
-      if(x>= element.x1 - boundaryRange && x<= element.x2 + boundaryRange 
-        && y>= element.y1 - boundaryRange && y <= element.y2 + boundaryRange){
+      if (x >= element.x1 - boundaryRange && x <= element.x2 + boundaryRange
+        && y >= element.y1 - boundaryRange && y <= element.y2 + boundaryRange) {
         return element;
       }
     }
@@ -324,16 +324,16 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
     return undefined;
   }
 
-  private calculateDisplayNameWidth(){
-    var names = this.Columns.map(x=>x.DisplayName);
+  private calculateDisplayNameWidth() {
+    var names = this.Columns.map(x => x.DisplayName);
     var length = 0;
 
-    if(this.context){
+    if (this.context) {
       for (let index = 0; index < names.length; index++) {
         const element = names[index];
         var mText = this.context?.measureText(element);
-        if(mText.width > length){
-            length = mText.width
+        if (mText.width > length) {
+          length = mText.width
         }
       }
     }
@@ -382,24 +382,24 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
     if (this.bar && this.context && this.Columns.length > 0 && this.xAxisItemNames.length > 0) {
       let min: number | undefined = undefined;
       let max: number | undefined = undefined;
-      
+
       this.PopupItems = [];
 
       this.ResetCanvasContext(this.context);
-      
+
       this.context.clearRect(0, 0, totalWidth, totalHeight);
-      
+
       this.EnableGlassyEffectOnTopOfChart();
-      
+
       let spaceFromTopYAxis = 25;
 
       for (let index = 0; index < this.Columns.length; index++) {
         const element = this.Columns[index];
         if (element) {
 
-          let list: number[] = element.Values.map(x=>x.Allocated);
-          let list2: number[] = element.Values.map(x=>x.Spent);
-          
+          let list: number[] = element.Values.map(x => x.Allocated);
+          let list2: number[] = element.Values.map(x => x.Spent);
+
           list = [...list, ...list2];
 
           if (min != undefined && max != undefined) {
@@ -444,9 +444,9 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
 
       /* Draw Title on x-axis */
       this.context.beginPath();
-      
+
       let met = this.context.measureText(this.XAxisTitle);
-      let xTextPoint = (this.Width - this.MarginX) / 2 + (this.MarginX/1.5) + this.MarginLeft;
+      let xTextPoint = (this.Width - this.MarginX) / 2 + (this.MarginX / 1.5) + this.MarginLeft;
       xTextPoint = xTextPoint - (met.width / 2);
       let yTextPoint = this.Height + this.MarginTop - 5;
 
@@ -457,22 +457,22 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
 
       this.context.closePath();
 
-      /* Draw Title On Y axis */      
+      /* Draw Title On Y axis */
       this.context.beginPath();
       this.context.save();
 
       met = this.context.measureText(this.XAxisTitle);
       yTextPoint = (this.Height - this.MarginY) / 2 - this.MarginBottom;
       yTextPoint = yTextPoint + this.MarginTop + this.MarginBottom + (met.width / 2);
-      xTextPoint = this.MarginLeft + 15;            
+      xTextPoint = this.MarginLeft + 15;
       this.context.fillStyle = this.TextColor;
       this.context.translate(xTextPoint, yTextPoint);
-      this.context.rotate((Math.PI/180) * 270);
-      this.context.fillText(this.YAxisTitle, 0, 0);      
-      
+      this.context.rotate((Math.PI / 180) * 270);
+      this.context.fillText(this.YAxisTitle, 0, 0);
+
       this.context.restore();
       this.context.closePath();
-      
+
       /* Draw y axis line */
       let vDistance = (StartY - this.MarginTop - spaceFromTopYAxis) / (this.NoOfSplitInValueAxis);
 
@@ -526,24 +526,24 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
 
             this.context.save();
 
-            this.context.beginPath();            
-            this.context.strokeStyle = this.EmptyAreaBorderColor;            
+            this.context.beginPath();
+            this.context.strokeStyle = this.EmptyAreaBorderColor;
             this.context.moveTo(xPoint + 3, y);
             this.context.lineTo(xPoint + 3, allocatedY);
             this.context.stroke();
-                        
-            this.context.strokeStyle = this.EmptyAreaBorderColor;  
-            this.context.moveTo(xPoint + 2 + eachBarLength - 5, y+ StartY - y);
+
+            this.context.strokeStyle = this.EmptyAreaBorderColor;
+            this.context.moveTo(xPoint + 2 + eachBarLength - 5, y + StartY - y);
             this.context.lineTo(xPoint + 2 + eachBarLength - 5, allocatedY);
-            this.context.stroke();            
+            this.context.stroke();
             this.context.closePath();
 
             this.context.restore();
 
-            this.PopupItems.push(new RPopupChartItem(xPoint, y, xPoint + eachBarLength, 
+            this.PopupItems.push(new RPopupChartItem(xPoint, y, xPoint + eachBarLength,
               y + (StartY - y), element, index, index, color));
 
-            this.PopupItems.push(new RPopupChartItem(xPoint, allocatedY, xPoint + eachBarLength, 
+            this.PopupItems.push(new RPopupChartItem(xPoint, allocatedY, xPoint + eachBarLength,
               allocatedY + (StartY - allocatedY), element, index, index, color));
 
             /* Draw Text on top of Bar */
@@ -556,7 +556,7 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
                 element.barItemsForeColor[index] : this.TextColor;
 
             halfValueXPoint = remXWidth / 2;
-            
+
             let yTextOnBar = 0;
             if ((y + 15) >= (this.Height + this.MarginTop - this.MarginY)) {
               yTextOnBar = this.Height + this.MarginTop - this.MarginY - 10;
@@ -618,7 +618,7 @@ export class RAllocatedBarChartComponent  extends RChartPopupBaseComponent imple
     }
   }
 
-  
+
   private DrawRectLine(startX: number, startY: number, xdistance: number, yDistance: number, color: string) {
     if (this.context) {
       this.context.beginPath();

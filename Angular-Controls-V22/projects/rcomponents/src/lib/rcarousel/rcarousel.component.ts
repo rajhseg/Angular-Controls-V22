@@ -142,7 +142,7 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
       
     this.ImagesList = this.Images.toArray();
 
-    this.Images.changes.subscribe((images: QueryList<RImageDirective>) => {
+    const imgChangesSub = this.Images.changes.subscribe((images: QueryList<RImageDirective>) => {
       
       this.FirstElement = images.first.element.nativeElement;
       this.LastElement = images.last.element.nativeElement;
@@ -156,24 +156,31 @@ export class RCarouselComponent extends RBaseComponent<any> implements AfterCont
     this.items = document.getElementById(this._slidesId);
     this.totalItems = this.Images.length + 2;
 
-      if(this.items) {
+    if (this.items) {
 
-        this.items.style.transform = `translateX(-${this.currentItem * this.WidthInNumber}px)`;
+      this.items.style.transform = `translateX(-${this.currentItem * this.WidthInNumber}px)`;
 
-        this.items.removeEventListener("transitionend", this.onTransitionEnd);
-        this.items.addEventListener("transitionend", this.onTransitionEnd);
+      this.items.removeEventListener("transitionend", this.onTransitionEnd);
+      this.items.addEventListener("transitionend", this.onTransitionEnd);
 
-        if(this.EnableAutoPlay){
-          this._interval = setInterval(() => this.slide(1), this.AutoPlayDurationBetweenSlides);
-          
-          this.destroy.onDestroy(() => {
-            this.items?.removeEventListener("transitionend", this.onTransitionEnd);
-            clearInterval(this._interval);
-          });
-        }
-
-        this.cdr.detectChanges();
+      if (this.EnableAutoPlay) {
+        this._interval = setInterval(() => this.slide(1), this.AutoPlayDurationBetweenSlides);
       }
+
+      this.destroy.onDestroy(() => {
+        imgChangesSub.unsubscribe();
+        this.items?.removeEventListener("transitionend", this.onTransitionEnd);
+        if (this._interval) {
+          clearInterval(this._interval);
+        }
+      });
+
+      this.cdr.detectChanges();
+    } else {
+      this.destroy.onDestroy(() => {
+        imgChangesSub.unsubscribe();
+      });
+    }
   }
 
 }
