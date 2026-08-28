@@ -37,7 +37,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
             multi: true
         }
     ],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     host: {}
 })
 export class RfileuploadComponent extends RBaseComponent<FileList> implements IRDropDown, ControlValueAccessor {

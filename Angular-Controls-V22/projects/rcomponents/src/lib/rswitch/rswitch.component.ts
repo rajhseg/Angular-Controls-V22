@@ -10,7 +10,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
     imports: [NgStyle],
     templateUrl: './rswitch.component.html',
     styleUrl: './rswitch.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

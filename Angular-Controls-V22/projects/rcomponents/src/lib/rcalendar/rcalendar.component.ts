@@ -44,7 +44,7 @@ import { CalenderChangeMonthInfo, RBaseComponent, ValidatorValueType } from '../
         },
         DatePipe
     ],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     host: {}
 })
 export class RCalendarComponent extends RBaseComponent<Date> implements IRDropDown, OnInit, AfterViewInit, OnDestroy, ControlValueAccessor, IRPopupCloseInterface {
@@ -109,7 +109,7 @@ export class RCalendarComponent extends RBaseComponent<Date> implements IRDropDo
 
   month: DropdownModel = this.monthNames[0];
 
-  year: DropdownModel | undefined = this.totalYears.find(x => x.Value == new Date().getFullYear());
+  year: DropdownModel | undefined = undefined;
 
 
   private onChange: any = () => { };
@@ -303,7 +303,10 @@ export class RCalendarComponent extends RBaseComponent<Date> implements IRDropDo
     this.HostElementId = windowHelper.GenerateUniqueId();
     this.Id = windowHelper.GenerateUniqueId();
     this.selectedDate = null;
-    this.loadYears(new Date().getFullYear());
+    const currentYear = new Date().getFullYear();
+    this.loadYears(currentYear);
+    this.year = this.totalYears.find(x => x.Value === currentYear);
+    this.month = this.monthNames[new Date().getMonth()] || this.monthNames[0];
     this.calService.AddInstance(this);
     this.windowObj = inject(WINDOWOBJECT);
     this.LoadMonth(new Date(), false);

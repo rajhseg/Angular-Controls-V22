@@ -7,7 +7,7 @@ import { AsyncPipe, NgClass, NgTemplateOutlet } from '@angular/common';
     imports: [NgTemplateOutlet, AsyncPipe, NgClass, forwardRef(() => RTabIdFor)],
     templateUrl: './rtab.component.html',
     styleUrl: './rtab.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: []
 })
 export class RTabComponent implements AfterContentInit {

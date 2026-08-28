@@ -4,9 +4,9 @@ import { ChangeDetectorRef, Injectable, InjectionToken, PLATFORM_ID, inject } fr
 export const WINDOWOBJECT = new InjectionToken<Window>('global window object', {
     factory:()=> {
         if(typeof window !== 'undefined') {
-            return window
-          }
-          return new Window();
+            return window;
+        }
+        return null as unknown as Window;
     }
 });
 
@@ -36,7 +36,10 @@ export class RWindowHelper {
     }
 
     GenerateUniqueId(){
-        return 'rid' + crypto.randomUUID().replace(/-/g,'');
+        if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+            return 'rid' + crypto.randomUUID().replace(/-/g,'');
+        }
+        return 'rid' + Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
     }  
     
     GetIntValueFromCssUnits(val: string): number {

@@ -13,7 +13,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
     standalone: true,
     imports: [NgStyle, NgClass],
     templateUrl: './rscatterchart.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rscatterchart.component.css'
 })
 export class RScatterChartComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {

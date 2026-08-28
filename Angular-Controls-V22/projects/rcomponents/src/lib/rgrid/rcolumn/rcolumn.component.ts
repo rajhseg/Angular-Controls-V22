@@ -10,7 +10,7 @@ import { RGridHeaderTemplateContext, RGridTemplateContext } from '../rgridtempla
     standalone: true,
     imports: [ReadViewTemplateDirective, EditViewTemplateDirective, HeaderTemplateDirective, NgTemplateOutlet],
     templateUrl: './rcolumn.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rcolumn.component.css'
 })
 export class RColumnComponent implements AfterContentInit {  

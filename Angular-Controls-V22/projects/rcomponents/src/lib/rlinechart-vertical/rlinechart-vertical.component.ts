@@ -9,7 +9,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
     standalone: true,
     imports: [NgStyle, NgClass],
     templateUrl: './rlinechart-vertical.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rlinechart-vertical.component.css'
 })
 export class RLineChartVerticalComponent  extends RChartPopupBaseComponent  implements AfterViewInit, OnChanges {

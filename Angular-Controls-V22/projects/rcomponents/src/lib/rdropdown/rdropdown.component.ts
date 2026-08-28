@@ -44,11 +44,10 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
             multi: true
         }
     ],
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     host: {}
 })
-export class RDropdownComponent extends RBaseComponent<DropdownModel | string | any> implements IRDropDown, AfterContentInit, OnDestroy, OnInit, ControlValueAccessor,
-  AfterContentInit, AfterContentChecked, OnDestroy, IRPopupCloseInterface {
+export class RDropdownComponent extends RBaseComponent<DropdownModel | string | any> implements IRDropDown, OnInit, AfterContentInit, AfterContentChecked, OnDestroy, ControlValueAccessor, IRPopupCloseInterface {
 
   private onChange: any = () => { }
   private onTouch: any = () => { }
@@ -423,6 +422,7 @@ export class RDropdownComponent extends RBaseComponent<DropdownModel | string | 
   // }
 
   ngOnDestroy(): void {
+    this.ddservice.RemoveInstance(this);
     this.cls.RemoveInstance(this);
   }
 

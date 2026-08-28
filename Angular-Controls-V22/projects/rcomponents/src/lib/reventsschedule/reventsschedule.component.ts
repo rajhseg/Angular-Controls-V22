@@ -10,7 +10,7 @@ import { RBaseComponent } from '../rmodels/RBaseComponent';
     imports: [NgStyle],
     templateUrl: './reventsschedule.component.html',
     styleUrl: './reventsschedule.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [DatePipe]
 })
 export class REventsScheduleComponent  extends RBaseComponent<any>  implements AfterViewInit, OnDestroy {

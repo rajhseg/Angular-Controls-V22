@@ -7,7 +7,7 @@ import { NgStyle } from '@angular/common';
     standalone: true,
     imports: [NgStyle],
     templateUrl: './rsequence.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rsequence.component.css'
 })
 export class RSequenceVerticalComponent {

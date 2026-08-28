@@ -12,7 +12,7 @@ import { CssUnit, RCssUnitsService, RelativeUnitType } from "../rcss-units.servi
     standalone: true,
     imports: [RSequenceTrackerComponent, RTrackerContentDirective, NgStyle, NgClass, NgTemplateOutlet],
     templateUrl: './rsequences-tracker.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rsequences-tracker.component.css'
 })
 export class RSequencesTrackerComponent extends RBaseComponent<any> implements AfterContentInit {

@@ -9,7 +9,7 @@ import { RCssUnitsService, RelativeUnitType } from '../rcss-units.service';
     standalone: true,
     imports: [NgStyle],
     templateUrl: './rbutton.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rbutton.component.css'
 })
 export class RButtonComponent extends RBaseComponent<any> {

@@ -12,7 +12,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
     imports: [NgClass, NgStyle],
     templateUrl: './rradiobutton.component.html',
     styleUrl: './rradiobutton.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [{
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => RRadiobuttonComponent),

@@ -14,7 +14,7 @@ import { RStepViewDirective } from '../rstep/rsteptemplate.directive';
     standalone: true,
     imports: [RStepComponent, RStepViewDirective, RStateHorizontalComponent, RButtonComponent, NgStyle, NgClass, NgTemplateOutlet],
     templateUrl: './rstepper-horizontal.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rstepper-horizontal.component.css'
 })
 export class RStepperHorizontalComponent extends RBaseComponent<any> implements AfterContentInit {

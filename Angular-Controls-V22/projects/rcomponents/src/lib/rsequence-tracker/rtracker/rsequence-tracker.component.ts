@@ -6,7 +6,7 @@ import { RTrackerContentDirective } from "./rtrackercontent.directive";
     selector: 'rsequencetracker',
     imports: [RTrackerContentDirective],
     templateUrl: './rsequence-tracker.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rsequence-tracker.component.css'
 })
 export class RSequenceTrackerComponent {

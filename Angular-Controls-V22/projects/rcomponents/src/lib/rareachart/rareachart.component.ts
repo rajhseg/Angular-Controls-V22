@@ -11,7 +11,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
     standalone: true,
     imports: [NgStyle, NgClass],
     templateUrl: './rareachart.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rareachart.component.css'
 })
 export class RAreaChartComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {

@@ -27,7 +27,7 @@ import { CalenderChangeMonthInfo, RBaseComponent, RChartBaseComponent, Validator
     imports: [NgClass, CommonModule, NgStyle, FormsModule, RTextboxComponent, ReactiveFormsModule, RDropdownComponent, RTimeSelectorComponent, RColorPickerComponent, RButtonComponent, RGrouppanelComponent, RGridComponent, RColumnComponent, ReadViewTemplateDirective, EditViewTemplateDirective],
     templateUrl: './reventscalender.component.html',
     styleUrl: './reventscalender.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

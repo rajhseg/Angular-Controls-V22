@@ -13,7 +13,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
     imports: [RTextboxComponent, FormsModule, ReactiveFormsModule, NgStyle, RButtonComponent],
     templateUrl: './rnumeric.component.html',
     styleUrl: './rnumeric.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

@@ -44,7 +44,7 @@ export enum RFilterAlign{
     templateUrl: './rfilter.component.html',
     styleUrl: './rfilter.component.css',
     host: {},
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

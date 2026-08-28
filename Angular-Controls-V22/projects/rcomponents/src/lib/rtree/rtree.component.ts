@@ -9,7 +9,7 @@ import { RBaseComponent } from '../rmodels/RBaseComponent';
     standalone: true,
     imports: [NgClass, NgStyle],
     templateUrl: './rtree.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rtree.component.css'
 })
 export class RTreeComponent extends RBaseComponent<any> {

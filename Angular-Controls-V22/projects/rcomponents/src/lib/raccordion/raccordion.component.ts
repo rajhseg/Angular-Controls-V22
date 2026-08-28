@@ -10,7 +10,7 @@ import { NgClass, NgStyle, NgTemplateOutlet } from "@angular/common";
     standalone: true,
     templateUrl: './raccordion.component.html',
     styleUrl: './raccordion.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     imports: [NgStyle, NgClass, RContentDirective, NgTemplateOutlet]
 })
 export class RAccordionComponent extends RBaseComponent<any> implements AfterContentInit {

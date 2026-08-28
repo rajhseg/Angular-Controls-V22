@@ -12,7 +12,7 @@ import { RBaseComponent } from '../rmodels/RBaseComponent';
     templateUrl: './rtextbox.component.html',
     styleUrl: './rtextbox.component.css',
     host: {},
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -141,7 +141,6 @@ export class RTextboxComponent extends RBaseComponent<string> implements Control
 
   writeValue(obj: any): void {
     this._textboxValue = obj;
-    this.notifyToUI();
   }
 
   notifyToModel() {

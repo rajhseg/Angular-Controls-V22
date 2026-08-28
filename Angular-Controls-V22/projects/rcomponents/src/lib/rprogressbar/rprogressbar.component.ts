@@ -9,7 +9,7 @@ import { RBaseComponent } from '../rmodels/RBaseComponent';
     standalone: true,
     imports: [NgClass, NgStyle],
     templateUrl: './rprogressbar.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rprogressbar.component.css'
 })
 export class RProgressbarComponent extends RBaseComponent<any> implements AfterViewInit, AfterViewChecked {

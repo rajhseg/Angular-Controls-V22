@@ -14,6 +14,13 @@ export class DropdownService {
     this.ddList.push(instance);
   }
 
+  RemoveInstance(instance: RDropdownComponent) {
+    const index = this.ddList.findIndex(x => x === instance || (x.Id && x.Id === instance.Id));
+    if (index > -1) {
+      this.ddList.splice(index, 1);
+    }
+  }
+
   GetAllInstance(): RDropdownComponent[] {
     return this.ddList;
   }

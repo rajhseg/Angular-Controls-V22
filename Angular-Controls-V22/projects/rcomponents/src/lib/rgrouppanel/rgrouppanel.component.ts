@@ -8,7 +8,7 @@ import { RBaseComponent } from '../rmodels/RBaseComponent';
     standalone: true,
     imports: [NgStyle],
     templateUrl: './rgrouppanel.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rgrouppanel.component.css'
 })
 export class RGrouppanelComponent  extends RBaseComponent<any>  {

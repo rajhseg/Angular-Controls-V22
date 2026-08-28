@@ -12,7 +12,7 @@ import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
     imports: [RSequenceHorizontalComponent, NgStyle],
     templateUrl: './rsequences-horizontal.component.html',
     styleUrl: './rsequences-horizontal.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

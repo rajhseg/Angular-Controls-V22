@@ -6,7 +6,7 @@ import { RStepViewDirective } from './rsteptemplate.directive';
     standalone: true,
     imports: [],
     templateUrl: './rstep.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rstep.component.css'
 })
 export class RStepComponent implements AfterContentInit {

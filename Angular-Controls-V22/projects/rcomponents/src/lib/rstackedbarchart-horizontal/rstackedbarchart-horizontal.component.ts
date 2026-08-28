@@ -9,7 +9,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
     standalone: true,
     imports: [NgStyle],
     templateUrl: './rstackedbarchart-horizontal.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rstackedbarchart-horizontal.component.css'
 })
 export class RStackedBarChartHorizontalComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
