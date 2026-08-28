@@ -1,5 +1,5 @@
 import { NgStyle, UpperCasePipe } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostBinding, inject, Input, OnDestroy, Output, viewChild, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, HostBinding, HostListener, inject, Input, OnDestroy, Output, viewChild, ViewChild, ViewEncapsulation } from '@angular/core';
 import { RWindowHelper, WINDOWOBJECT } from '../rwindowObject';
 import { RectShape } from './rectShape';
 import { AbstractControl, ControlValueAccessor, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -8,38 +8,38 @@ import { RCloseService, IRDropDown } from '../rpopup.service';
 import { RBaseComponent, ValidatorValueType } from '../rmodels/RBaseComponent';
 
 @Component({
-    selector: 'rcolorpicker',
-    standalone: true,
-    imports: [NgStyle, UpperCasePipe],
-    templateUrl: './rcolorpicker.component.html',
-    styleUrl: './rcolorpicker.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    host: {},
-    encapsulation: ViewEncapsulation.Emulated,
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => RColorPickerComponent),
-            multi: true
-        },
-        {
-            provide: NG_VALIDATORS,
-            useFactory: (instance: RColorPickerComponent) => {
-                return {
-                    validate: (control: AbstractControl) => {
-                        return instance.getSyncErrors(control);
-                    }
-                };
-            },
-            multi: true,
-            deps: [forwardRef(() => RColorPickerComponent)]
-        },
-        {
-            provide: NG_ASYNC_VALIDATORS,
-            useExisting: forwardRef(() => RColorPickerComponent),
-            multi: true
-        }
-    ]
+  selector: 'rcolorpicker',
+  standalone: true,
+  imports: [NgStyle, UpperCasePipe],
+  templateUrl: './rcolorpicker.component.html',
+  styleUrl: './rcolorpicker.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {},
+  encapsulation: ViewEncapsulation.Emulated,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => RColorPickerComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useFactory: (instance: RColorPickerComponent) => {
+        return {
+          validate: (control: AbstractControl) => {
+            return instance.getSyncErrors(control);
+          }
+        };
+      },
+      multi: true,
+      deps: [forwardRef(() => RColorPickerComponent)]
+    },
+    {
+      provide: NG_ASYNC_VALIDATORS,
+      useExisting: forwardRef(() => RColorPickerComponent),
+      multi: true
+    }
+  ]
 })
 export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs> implements IRDropDown, AfterViewInit, OnDestroy, ControlValueAccessor {
 
@@ -112,6 +112,12 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   private mainStartY: number = 0;
 
   private isColorPickerSelected: boolean = false;
+
+  @HostListener('window:scroll')
+  @HostListener('window:resize')
+  onWindowScrollOrResize(): void {
+    this.GetOffset();
+  }
 
   @Input()
   public EnableShadowEffect: boolean = false;
@@ -200,7 +206,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   protected override IsValidatorSupported(): boolean {
     return true;
   }
-  
+
   protected override GetValidatorValueType(): ValidatorValueType {
     return ValidatorValueType.Color;
   }
@@ -212,19 +218,19 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   writeValue(obj: any): void {
     if (obj) {
 
-      if (obj instanceof RColorPickerEventArgs) {        
+      if (obj instanceof RColorPickerEventArgs) {
         this.SelectedColorHex = (obj as RColorPickerEventArgs).SelectedColorInHex;
         this.SetDisplayColorsUsingHex((obj as RColorPickerEventArgs).SelectedColorInHex);
       } else {
         let col = obj as string;
-        if (col[0] == "#") {   
-          this.SelectedColorHex = col;       
+        if (col[0] == "#") {
+          this.SelectedColorHex = col;
           this.SetDisplayColorsUsingHex(col);
         } else {
           let colNums = col.match(/\d+/g);
           if (colNums) {
-            let _hexValue = this.RGBToHex(parseInt(colNums[0]), parseInt(colNums[1]), parseInt(colNums[2]))            
-            this.SelectedColorHex=_hexValue;
+            let _hexValue = this.RGBToHex(parseInt(colNums[0]), parseInt(colNums[1]), parseInt(colNums[2]))
+            this.SelectedColorHex = _hexValue;
             this.SetDisplayColorsUsingHex(_hexValue);
           }
         }
@@ -236,11 +242,11 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
         this.ColorSelected.emit(args);
         this.valueChanged.emit(args);
       } else {
-        
+
       }
-      
-      this.LoadColorOnFirst = false;      
-      this.RenderOnToggle = false;           
+
+      this.LoadColorOnFirst = false;
+      this.RenderOnToggle = false;
       this.cdr.detectChanges();
     }
   }
@@ -365,7 +371,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
 
     this.varStartX = _x;
     this.varStartY = _y;
-    
+
   }
 
   private mouseIsOnTopOfRect(x: number, y: number, shape: RectShape) {
@@ -456,41 +462,41 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
     if (this.openBtn.nativeElement) {
 
       const exp = /(-?[\d.]+)([a-z%]*)/;
-        
+
       let isInTab = false;
       let element: HTMLElement | null = this.eleRef.nativeElement as HTMLElement;
       let tabTop, tabLeft = 0;
-      let  i = 15;
+      let i = 15;
 
-      let tabEle : any = undefined;
+      let tabEle: any = undefined;
 
-      while(element && element != null && i > 0){
-        if(element.nodeName.toLowerCase() == 'rflattabs' 
-        || element.nodeName.toLowerCase() == 'rsimpletabs' 
+      while (element && element != null && i > 0) {
+        if (element.nodeName.toLowerCase() == 'rflattabs'
+          || element.nodeName.toLowerCase() == 'rsimpletabs'
           || element.nodeName.toLowerCase() == 'rgrid'
           || element.nodeName.toLowerCase() == 'rtabs'
-          || element.nodeName.toLowerCase() == 'rstepper-vertical' 
+          || element.nodeName.toLowerCase() == 'rstepper-vertical'
           || element.nodeName.toLowerCase() == 'rstepper-horizontal'
-          || element.nodeName.toLowerCase() == 'rgroup-panel' ){
+          || element.nodeName.toLowerCase() == 'rgroup-panel') {
           isInTab = true;
           break;
         }
-        
+
         i--;
         tabEle = element;
         element = element.parentElement;
       }
 
-      let tabHeight=0, tabWidth = 0;
-      if(isInTab && element) {
-        let tabContentEle = element.getElementsByClassName("tabcontent");          
+      let tabHeight = 0, tabWidth = 0;
+      if (isInTab && element) {
+        let tabContentEle = element.getElementsByClassName("tabcontent");
         let tabRect = tabEle.getBoundingClientRect();
         tabTop = tabRect.top;
         tabLeft = tabRect.left;
-        tabHeight = tabRect.height;   
-        tabWidth = tabRect.width;     
+        tabHeight = tabRect.height;
+        tabWidth = tabRect.width;
       } else {
-        tabTop = 0;          
+        tabTop = 0;
       }
 
       let btn = this.openBtn.nativeElement as HTMLElement;
@@ -499,10 +505,10 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
       if (res) {
         let dropDownHeight = parseFloat(res[1].toString());
         let btnPosTop = btn.getBoundingClientRect().top;
-        
-        if (((isInTab && (tabTop+tabHeight) - btnPosTop < dropDownHeight)
-              || (!isInTab&& windowHeight - btnPosTop < dropDownHeight  ))
-            && btnPosTop - tabTop > dropDownHeight) {               
+
+        if (((isInTab && (tabTop + tabHeight) - btnPosTop < dropDownHeight)
+          || (!isInTab && windowHeight - btnPosTop < dropDownHeight))
+          && btnPosTop - tabTop > dropDownHeight) {
           this.DDEBottom = '120%';
           this.DDETop = 'auto';
         } else {
@@ -524,8 +530,8 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
 
           let startPos = start.getBoundingClientRect();
 
-          if ((isInTab && (tabLeft+tabWidth) > dropDownWidth + startPos.left)
-            || (!isInTab && windowWidth > dropDownWidth + startPos.left)) {           
+          if ((isInTab && (tabLeft + tabWidth) > dropDownWidth + startPos.left)
+            || (!isInTab && windowWidth > dropDownWidth + startPos.left)) {
             this.DDELeft = '0px';
             this.DDERight = 'auto';
           } else {
@@ -545,14 +551,14 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   async toggle($event: Event) {
     $event.stopPropagation();
     $event.preventDefault();
-    
-    if(this.IsReadOnly || this.IsDisabled)
+
+    if (this.IsReadOnly || this.IsDisabled)
       return;
 
     this.IsColorPickerOpen = !this.IsColorPickerOpen;
     if (this.IsColorPickerOpen) {
       this.cls.CloseAllPopups(this);
-      this.RenderOnToggle = true;            
+      this.RenderOnToggle = true;
       await this.RenderCanvas();
       this.AttachDropdown();
       this.LoadColorOnFirst = true;
@@ -561,7 +567,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
     }
   }
 
-  
+
   IsOpen(): boolean {
     return this.IsColorPickerOpen;
   }
@@ -638,40 +644,40 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
     }
   }
 
-  private GetXYFromColorCode(from: number, to: number): Promise<{x:number|undefined, y: number|undefined} | undefined> {
-    
+  private GetXYFromColorCode(from: number, to: number): Promise<{ x: number | undefined, y: number | undefined } | undefined> {
+
     var tol = 2;
-    return new Promise((res, rej)=>{
-      
+    return new Promise((res, rej) => {
+
       let _varX, _varY;
 
-        if (this.varContext) {
-          for (let x = 0; x < 250; x++) {
+      if (this.varContext) {
+        for (let x = 0; x < 250; x++) {
 
-            if (_varX != undefined)
+          if (_varX != undefined)
+            break;
+
+          for (let y = from; y < to; y++) {
+            let colorData = this.varContext.getImageData(x, y, 1, 1)['data'];
+            let rgb = `rgb(${colorData[0]},${colorData[1]},${colorData[2]})`;
+
+            if (Math.abs(this.DisplayColorR - colorData[0]) <= tol
+              && Math.abs(this.DisplayColorG - colorData[1]) <= tol
+              && Math.abs(this.DisplayColorB - colorData[2]) <= tol) {
+              _varX = x;
+              _varY = y;
               break;
-
-            for (let y = from; y < to; y++) {
-              let colorData = this.varContext.getImageData(x, y, 1, 1)['data'];
-              let rgb = `rgb(${colorData[0]},${colorData[1]},${colorData[2]})`;
-
-              if ( Math.abs(this.DisplayColorR - colorData[0]) <= tol
-                    && Math.abs(this.DisplayColorG - colorData[1]) <= tol
-                    && Math.abs(this.DisplayColorB - colorData[2]) <= tol) {
-                _varX = x;
-                _varY = y;
-                break;
-              }
             }
-
           }
-        }
 
-        if(_varX){
-           res({x:_varX, y: _varY});
-        } else {
-          res(undefined);
         }
+      }
+
+      if (_varX) {
+        res({ x: _varX, y: _varY });
+      } else {
+        res(undefined);
+      }
 
     });
   }
@@ -731,7 +737,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   }
 
 
-  private async setColorPickerOnLoad() { 
+  private async setColorPickerOnLoad() {
 
     var backR = this.DisplayColorR, backG = this.DisplayColorG, backB = this.DisplayColorB;
 
@@ -778,17 +784,17 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
     }
 
     let value = await Promise.all(task);
-    let result = value.filter(x=>x!=undefined);
-    if(result && result.length > 0 && result[0] != undefined){
-        foundX = result[0].x;
-        foundY = result[0].y;
+    let result = value.filter(x => x != undefined);
+    if (result && result.length > 0 && result[0] != undefined) {
+      foundX = result[0].x;
+      foundY = result[0].y;
     }
-    
+
     // Fallback to neareset color match found with best closest value
     if (foundX === undefined) {
 
       const result = await this.GetClosestXYFromColorCode(this.varContext, w, h, r, g, b, 60);
-    
+
       if (result) {
         const { fX, fY } = result;
         foundX = fX;
@@ -808,7 +814,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
     this.SelectedColorR = backR;
     this.SelectedColorG = backG;
     this.SelectedColorB = backB;
-    
+
     this.SetDisplayColorsUsingHex(this.SelectedColorHex);
   }
 
@@ -817,11 +823,10 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
     if (!this.LoadColorOnFirst || !this.isColorPickerSelected) {
       if (this.SelectedColorHex == undefined)
         this.LoadDefault();
-      else                       
-      {        
-        if(!this.LoadColorOnFirst)
-        await this.setColorPickerOnLoad();    
-        return;                          
+      else {
+        if (!this.LoadColorOnFirst)
+          await this.setColorPickerOnLoad();
+        return;
       }
     }
 
@@ -835,17 +840,14 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   }
 
   async ngAfterViewInit(): Promise<void> {
-    if (this.windowHelper.isExecuteInBrowser()) {  
-  
+    if (this.windowHelper.isExecuteInBrowser()) {
+
       this.AddColorGradients();
       this.RenderUI();
-   
+
       await this.RenderCanvas();
 
       if (this.windowHelper.isExecuteInBrowser()) {
-        window.onscroll = this.GetOffset;
-        window.onresize = this.GetOffset;
-
         if (this.variations) {
           this.variations.nativeElement.onscroll = this.GetOffset.bind(this);
           this.variations.nativeElement.onresize = this.GetOffset.bind(this);
@@ -905,7 +907,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
     let l = lum * 255;
     let s = sat * 255;
     let h = hue * 255;
-    
+
     return new HsvColor(h, s, l);
   }
 
@@ -1075,7 +1077,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
       let yPoint = event.offsetY;
 
       yPoint = this.GetMainYValueWithInRect(yPoint);
-      
+
       this._prevRectX = xPoint;
       this._prevRectY = yPoint;
 
@@ -1123,7 +1125,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
       let xPoint = event.offsetX;
       let yPoint = event.offsetY;
 
-      if(xPoint != undefined && yPoint != undefined) {
+      if (xPoint != undefined && yPoint != undefined) {
         xPoint = this.GetVarXValueWithInRect(xPoint);
         yPoint = this.GetVarYValueWithInRect(yPoint);
 
@@ -1207,13 +1209,10 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
 
 
   ngOnDestroy(): void {
-    
+
     this.cls.RemoveInstance(this);
 
     if (this.windowHelper.isExecuteInBrowser()) {
-      window.onscroll = null;
-      window.onresize = null;
-
       if (this.variations) {
         this.variations.nativeElement.onscroll = null;
         this.variations.nativeElement.onresize = null;

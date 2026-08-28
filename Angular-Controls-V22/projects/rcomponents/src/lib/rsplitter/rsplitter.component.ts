@@ -20,6 +20,8 @@ import { RBaseComponent, RSplitterResult } from "../rmodels/RBaseComponent";
 export class RSplitterComponent extends RBaseComponent<RSplitterResult> implements AfterContentInit {
 
   RenderItems: IRSplitterInterface[] = [];
+  
+  prevUserSelect:any;
 
   RSType = RSplitterType;
 
@@ -161,122 +163,125 @@ export class RSplitterComponent extends RBaseComponent<RSplitterResult> implemen
 
   ngAfterContentInit(): void {
 
-    this.Contents.forEach((x, index) => {
+      this.Contents.forEach((x, index) => {
 
-      this.RenderItems.push(x);
-      this.RenderItems.push(new RSplitterObj(this.winObj, this.SplitterType, this.getSplitterStyle()))
+        this.RenderItems.push(x);
+        this.RenderItems.push(new RSplitterObj(this.winObj, this.SplitterType, this.getSplitterStyle()))
 
-      x.ValueChanged.subscribe(() => {
-        this.ReFill();
-      });
-
-    });
-
-    this.RemoveLastSplitter();
-
-    if (this.winHelper.isExecuteInBrowser()) {
-      var selectorobj = this.RenderItems.filter(x => x.IsSplitObj).map(y => "#" + y.Id).join(", ");
-
-      const dividers = document.querySelectorAll(selectorobj);
-
-      dividers.forEach((divider, index) => {
-
-        let isDragging = false;
-        let startX = 0;
-        let prevPanel: any, nextPanel: any;
-        let prevStartSize: any, nextStartSize: any;
-        let prevUserSelect: string = '';
-
-        const _mouseUp = () => {
-          if (isDragging) {
-            isDragging = false;
-            document.body.style.userSelect = prevUserSelect;
-            document.removeEventListener('mousemove', _moveMove);
-            document.removeEventListener('mouseup', _mouseUp);
-          }
-        };
-
-        const _moveMove = (e: any) => {
-          if (!isDragging) return;
-
-          const dx = this._splitterType == RSplitterType.Vertical ?
-            e.clientX - startX : e.clientY - startX;
-
-          const newPrevSize = prevStartSize + dx;
-          const newNextSize = nextStartSize - dx;
-
-          if (newPrevSize > 50 && newNextSize > 50) {
-            prevPanel.style.flex = 'none';
-            nextPanel.style.flex = 'none';
-
-            if (this.SplitterType == RSplitterType.Vertical) {
-              prevPanel.style.width = newPrevSize + 'px';
-              nextPanel.style.width = newNextSize + 'px';
-            } else {
-              prevPanel.style.height = newPrevSize + 'px';
-              nextPanel.style.height = newNextSize + 'px';
-            }
-
-            let position = index + 1;
-
-            let dragInfo = new RSplitterResult(divider.id,
-              this.SplitterType,
-              newPrevSize + 'px',
-              newNextSize + 'px',
-              position,
-              prevPanel.id,
-              nextPanel.id);
-            this.valueChanged.emit(dragInfo);
-            this.OnSizeChanged.emit(dragInfo);
-          }
-        };
-
-        const _mouseDown = (e: any) => {
-
-          isDragging = true;
-
-          prevPanel = divider.previousElementSibling;
-          nextPanel = divider.nextElementSibling;
-
-          if (this._splitterType == RSplitterType.Vertical) {
-            startX = e.clientX;
-          }
-          else {
-            startX = e.clientY;
-          }
-
-          if (this.SplitterType == RSplitterType.Vertical) {
-            prevStartSize = prevPanel.offsetWidth;
-            nextStartSize = nextPanel.offsetWidth;
-          } else {
-            prevStartSize = prevPanel.offsetHeight;
-            nextStartSize = nextPanel.offsetHeight;
-          }
-
-          // Save previous user-select and prevent text selection while dragging
-          prevUserSelect = document.body.style.userSelect || '';
-          document.body.style.userSelect = 'none';
-
-          document.addEventListener('mousemove', _moveMove);
-          document.addEventListener('mouseup', _mouseUp);
-        };
-
-        divider.addEventListener('mousedown', _mouseDown);
-
-        this.destroy.onDestroy(() => {
-          if (isDragging) {
-            document.body.style.userSelect = prevUserSelect;
-          }
-          divider.removeEventListener('mousedown', _mouseDown);
-          document.removeEventListener('mousemove', _moveMove);
-          document.removeEventListener('mouseup', _mouseUp);
+        x.ValueChanged.subscribe(()=>{
+          this.ReFill();
         });
 
       });
-    }
 
-    this.cdr.detectChanges();
+      this.RemoveLastSplitter();
 
+      if(this.winHelper.isExecuteInBrowser()) 
+      {
+        var selectorobj = this.RenderItems.filter(x=>x.IsSplitObj).map(y=>"#"+y.Id).join(", ");
+
+        const dividers = document.querySelectorAll(selectorobj);
+
+        dividers.forEach((divider, index) => {
+
+          let isDragging = false;
+          let startX = 0;
+          let prevPanel: any, nextPanel: any;
+          let prevStartSize: any, nextStartSize: any;
+
+          const _mouseDown = (e: any) => {
+
+            isDragging = true;
+
+            prevPanel = divider.previousElementSibling;
+            nextPanel = divider.nextElementSibling;
+
+            if (this._splitterType == RSplitterType.Vertical) {
+              startX = e.clientX;
+            }
+            else {
+              startX = e.clientY;
+            }
+
+            if(this.SplitterType == RSplitterType.Vertical) {
+              prevStartSize = prevPanel.offsetWidth;
+              nextStartSize = nextPanel.offsetWidth;
+            } else {
+              prevStartSize = prevPanel.offsetHeight;
+              nextStartSize = nextPanel.offsetHeight;
+            }
+
+            this.prevUserSelect = document.body.style.userSelect || '';
+
+            // Prevent text selection while dragging
+            document.body.style.userSelect = 'none';
+          };
+
+          const _moveMove = (e: any) => {
+            if (!isDragging) return;
+
+            const dx = this._splitterType == RSplitterType.Vertical ?
+                            e.clientX - startX : e.clientY - startX;
+
+            const newPrevSize = prevStartSize + dx;
+            const newNextSize = nextStartSize - dx;
+
+            if (newPrevSize > 50 && newNextSize > 50) {
+              prevPanel.style.flex = 'none';
+              nextPanel.style.flex = 'none';
+
+              if(this.SplitterType==RSplitterType.Vertical) {
+                prevPanel.style.width = newPrevSize + 'px';
+                nextPanel.style.width = newNextSize + 'px';
+              } else {
+                prevPanel.style.height = newPrevSize + 'px';
+                nextPanel.style.height = newNextSize + 'px';
+              }
+
+              let position = index + 1;
+
+              let dragInfo = new RSplitterResult(divider.id, 
+                                                  this.SplitterType, 
+                                                  newPrevSize + 'px', 
+                                                  newNextSize + 'px', 
+                                                  position, 
+                                                  prevPanel.id, 
+                                                  nextPanel.id);   
+              this.valueChanged.emit(dragInfo);
+              this.OnSizeChanged.emit(dragInfo);
+            }
+          };
+
+          const _mouseUp = () => {
+            if (isDragging) {
+              isDragging = false;
+              document.body.style.userSelect = this.prevUserSelect;
+            }
+          };
+
+          divider.addEventListener('mousedown', _mouseDown);
+
+          document.addEventListener('mousemove', _moveMove);
+
+          document.addEventListener('mouseup', _mouseUp);
+
+          this.destroy.onDestroy(()=>{
+
+              if (isDragging) {
+                document.body.style.userSelect = this.prevUserSelect;
+              }
+
+              divider.removeEventListener('mousedown', _mouseDown);
+
+              document.removeEventListener('mousemove', _moveMove);
+
+              document.removeEventListener('mouseup', _mouseUp);
+          });
+
+        });
+      }
+
+      this.cdr.detectChanges();
   }
 
 }

@@ -43,7 +43,6 @@ export class RCell {
                     const _p = props[index];
                     _fobj = _fobj[_p];
                     if (_fobj == undefined) {
-                        _obj = undefined;
                         break;
                     }
 
@@ -85,7 +84,6 @@ export class RCell {
                     const _p = props[index];
                     _fobj = _fobj[_p];
                     if (_fobj == undefined) {
-                        _obj = undefined;
                         break;
                     }
 

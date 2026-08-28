@@ -203,33 +203,34 @@ export class RRangeSliderComponent extends RBaseComponent<RRangeSliderData> impl
   }
 
   writeValue(obj: RRangeSliderData): void {
-    if (obj == null || obj == undefined || obj.FromValue == undefined || obj.ToValue == undefined)
+     if (obj == null || obj == undefined || obj.FromValue == undefined || obj.ToValue == undefined)
       return;
+
+    if (obj.ToValue != undefined && (obj.ToValue < this.MinValue || obj.ToValue > this.MaxValue)) {
+      this.MaxSliderValue = 0;
+      this.Slider2Value = 0;
+      console.log("Invalid Value between slider range");
+      return;
+    }
+
+    if (obj.FromValue !=undefined && (obj.FromValue < this.MinValue || obj.FromValue > this.MaxValue)) {
+      this.MinSliderValue = 0;
+      this.Slider1Value = 0;
+      console.log("Invalid Value between slider range");
+      return;
+    }
 
     let number2 = Number.parseFloat(obj.ToValue.toString());
+
     let number1 = Number.parseFloat(obj.FromValue.toString());
-
-    if (isNaN(number1) || isNaN(number2)) {
-      return;
-    }
-
-    number1 = Math.max(this.MinValue, Math.min(this.MaxValue, number1));
-    number2 = Math.max(this.MinValue, Math.min(this.MaxValue, number2));
-
-    if (number1 > number2) {
-      const temp = number1;
-      number1 = number2;
-      number2 = temp;
-    }
 
     this.MinSliderValue = number1;
     this.MaxSliderValue = number2;
 
-    let marker = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement?.parentElement, RelativeUnitType.Width);
+    let marker = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
 
     let total2 = this._sliderBarWidthValue - marker + 3;
-    let range = this.MaxValue - this.MinValue;
-    let percentage2 = range > 0 ? (this.MaxSliderValue - this.MinValue) / range : 0;
+    let percentage2 = (this.MaxSliderValue - this.MinValue) / (this.MaxValue - this.MinValue);
     let width2 = total2 * percentage2;
 
     let _dmin = Math.min(width2, total2);
@@ -237,8 +238,8 @@ export class RRangeSliderComponent extends RBaseComponent<RRangeSliderData> impl
    
     this.currentDistance2 = Number.parseFloat(_limitMax.toString());
     
-    let total1 = this._sliderBarWidthValue - marker + 3;
-    let percentage1 = range > 0 ? (this.MinSliderValue - this.MinValue) / range : 0;
+    let total1 = this._sliderBarWidthValue -  marker + 3;
+    let percentage1 = (this.MinSliderValue - this.MinValue) / (this.MaxValue - this.MinValue);
     let width1 = total1 * percentage1;
     
     let _min = Math.max(0, width1);

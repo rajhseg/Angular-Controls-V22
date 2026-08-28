@@ -174,21 +174,25 @@ export class RSliderComponent extends RBaseComponent<number> implements ControlV
   }
 
   writeValue(obj: any): void {
-    if (obj == null || obj === '')
+   if (obj == null)
       return;
 
-    let number = Number.parseFloat(obj);
-    if (isNaN(number)) {
+    if (obj < this.MinValue || obj > this.MaxValue) {
+      this.SliderValue = 0;
+      this.RangeValue = 0;
+      console.log("Invalid Value between slider range");
       return;
     }
 
-    number = Math.max(this.MinValue, Math.min(this.MaxValue, number));
-    this.SliderValue = number;
+    let number = Number.parseFloat(obj);
 
-    let marker = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement?.parentElement, RelativeUnitType.Width);
+    this.SliderValue = number;
+    let marker = this.cssunit.ToPxValue(this.SliderMarkerSize, this.ele.nativeElement.parentElement, RelativeUnitType.Width);
+
     let total = this._sliderBarWidthValue - marker + 3;
-    let range = this.MaxValue - this.MinValue;
-    let percentage = range > 0 ? (this.SliderValue - this.MinValue) / range : 0;
+
+    let percentage = (this.SliderValue - this.MinValue) / (this.MaxValue - this.MinValue);
+
     let width = total * percentage;
 
     this.currentDistance = Number.parseInt(width.toString());

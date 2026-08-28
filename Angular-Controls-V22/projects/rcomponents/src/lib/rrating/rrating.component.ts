@@ -126,7 +126,7 @@ export class RStarRatingComponent extends RBaseComponent<number> implements OnIn
 
   @ViewChild('star',{static: true}) star!: ElementRef;
 
-  @ViewChild('staroutline') staroutline!: ElementRef;
+  @ViewChild('staroutline', { static: true }) staroutline!: ElementRef;
 
   @ViewChild('staroutlinecontainer') starOutlineContainer!: ElementRef;
 
@@ -198,14 +198,16 @@ export class RStarRatingComponent extends RBaseComponent<number> implements OnIn
   }
 
   private getSingleStarWidth(): number {
-    if (this.winObj.isExecuteInBrowser() && this.staroutline?.nativeElement) {
-      const offsetW = this.staroutline.nativeElement.offsetWidth;
-      if (offsetW > 0) {
-        return offsetW;
+    if(this.winObj.isExecuteInBrowser()) {
+      
+      let starOuts : any = document.getElementById(this.Id)?.getElementsByClassName('staroutline');
+
+      if(starOuts && starOuts.length > 0){
+        return starOuts[0].offsetWidth;
       }
     }
 
-    return this.starWidth * (83.25 / 100);
+    return this.starWidth*(83.25/100);
   }
   
   writeValue(obj: any): void {
