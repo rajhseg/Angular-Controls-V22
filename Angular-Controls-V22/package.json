@@ -43,9 +43,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^22.0.0",
-    "pdfkit": "^0.20.1",
     "prettier": "^3.8.1",
-    "puppeteer-core": "^25.9.0",
     "typescript": "~6.0.2",
     "vitest": "^4.0.8"
   }
