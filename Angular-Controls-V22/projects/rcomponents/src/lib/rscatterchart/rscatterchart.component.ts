@@ -1,12 +1,8 @@
-
-
-
 import { NgClass, NgStyle } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { RBarChartItem, RDrawTextItem, RPopupChartItem, RScatterChartItem } from '../rmodels/RBarChartItem';
 import { RWindowHelper } from '../rwindowObject';
 import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseComponent';
-
 
 @Component({
     selector: 'rscatterchart',
@@ -184,11 +180,15 @@ export class RScatterChartComponent extends RChartPopupBaseComponent implements 
     }
   }
 
-  
+  protected override destroy(): void {
+    if (this.bar?.nativeElement) {
+      this.bar.nativeElement.onmousemove = null;
+    }
+    this.context = null;
+  }
+
   private MouseMove(event: MouseEvent) {
     if(this.context && this.bar){   
-      
-       
       this.ResetCanvasContext(this.context);
       
       this.context?.beginPath();      

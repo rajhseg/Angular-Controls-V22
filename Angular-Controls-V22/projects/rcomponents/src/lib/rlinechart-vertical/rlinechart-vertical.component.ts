@@ -12,9 +12,8 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
     changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rlinechart-vertical.component.css'
 })
-export class RLineChartVerticalComponent  extends RChartPopupBaseComponent  implements AfterViewInit, OnChanges {
+export class RLineChartVerticalComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
 
-  
   private _width: number = 300;
   private _height: number = 300;
 
@@ -165,7 +164,6 @@ export class RLineChartVerticalComponent  extends RChartPopupBaseComponent  impl
     this.HostElementId = this.winObj.GenerateUniqueId();
   }
 
-  
   trackById(index: number, item: RLineChartItem){
     return item.Id;
   }
@@ -185,6 +183,13 @@ export class RLineChartVerticalComponent  extends RChartPopupBaseComponent  impl
         this.RenderLineChart();
       }
     }
+  }
+
+  protected override destroy(): void {
+    if (this.bar?.nativeElement) {
+      this.bar.nativeElement.onmousemove = null;
+    }
+    this.context = null;
   }
 
   private MouseMove(event: MouseEvent) {

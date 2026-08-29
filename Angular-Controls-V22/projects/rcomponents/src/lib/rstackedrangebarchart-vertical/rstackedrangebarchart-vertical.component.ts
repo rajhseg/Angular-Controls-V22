@@ -5,15 +5,14 @@ import { RWindowHelper } from '../rwindowObject';
 import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseComponent';
 
 @Component({
-    selector: 'rstackedrangebarchart-vertical',
-    standalone: true,
-    imports: [NgStyle],
-    templateUrl: './rstackedrangebarchart-vertical.component.html',
-    changeDetection: ChangeDetectionStrategy.Default,
-    styleUrl: './rstackedrangebarchart-vertical.component.css'
+  selector: 'rstackedrangebarchart-vertical',
+  standalone: true,
+  imports: [NgStyle],
+  templateUrl: './rstackedrangebarchart-vertical.component.html',
+  changeDetection: ChangeDetectionStrategy.Default,
+  styleUrl: './rstackedrangebarchart-vertical.component.css'
 })
 export class RStackedRangeBarChartVerticalComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
-
 
   private _width: number = 300;
   private _height: number = 300;
@@ -177,16 +176,16 @@ export class RStackedRangeBarChartVerticalComponent extends RChartPopupBaseCompo
     this.HostElementId = this.winObj.GenerateUniqueId();
   }
 
-  trackById(index: number, item: RBarChartItem){
+  trackById(index: number, item: RBarChartItem) {
     return item.Id;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(Object.keys(changes).length > 0 && this.IsInitialized) {
+    if (Object.keys(changes).length > 0 && this.IsInitialized) {
       this.Render();
     }
   }
-  
+
   ngAfterViewInit(): void {
     if (this.winObj.isExecuteInBrowser()) {
       if (this.bar != undefined) {
@@ -198,6 +197,12 @@ export class RStackedRangeBarChartVerticalComponent extends RChartPopupBaseCompo
     }
   }
 
+  protected override destroy(): void {
+    if (this.bar?.nativeElement) {
+      this.bar.nativeElement.onmousemove = null;
+    }
+    this.context = null;
+  }
 
   private MouseMove(event: MouseEvent) {
 
@@ -205,9 +210,9 @@ export class RStackedRangeBarChartVerticalComponent extends RChartPopupBaseCompo
     let totalHeight = this.Height + this.MarginTop + this.MarginBottom;
 
     if (this.context && this.bar) {
-       
+
       this.ResetCanvasContext(this.context);
-      
+
       this.context?.beginPath();
       this.context.clearRect(0, 0, totalWidth, totalHeight);
       this.context.closePath();
@@ -246,8 +251,8 @@ export class RStackedRangeBarChartVerticalComponent extends RChartPopupBaseCompo
         this.context.save();
         this.context.globalAlpha = this.PopupBackgroundOpacity;
         this.context.fillStyle = this.PopupBackColor;
-             
-        if(this.EnableBorderForPopup) {
+
+        if (this.EnableBorderForPopup) {
           this.context.strokeStyle = this.PopupBorderColor;
         }
 
@@ -354,7 +359,7 @@ export class RStackedRangeBarChartVerticalComponent extends RChartPopupBaseCompo
       let max: number | undefined = undefined;
 
       this.PopupItems = [];
- 
+
       this.ResetCanvasContext(this.context);
 
       this.context.clearRect(0, 0, totalWidth, totalHeight);
@@ -439,7 +444,7 @@ export class RStackedRangeBarChartVerticalComponent extends RChartPopupBaseCompo
       this.context.beginPath();
 
       let met = this.context.measureText(this.XAxisTitle);
-      let xTextPoint = (this.Width - this.MarginX) / 2 + (this.MarginX/1.5) + this.MarginLeft;
+      let xTextPoint = (this.Width - this.MarginX) / 2 + (this.MarginX / 1.5) + this.MarginLeft;
       xTextPoint = xTextPoint - (met.width / 2);
       let yTextPoint = this.Height + this.MarginTop - 5;
 

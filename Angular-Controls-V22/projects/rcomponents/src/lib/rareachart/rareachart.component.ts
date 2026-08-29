@@ -1,5 +1,3 @@
-
-
 import { NgClass, NgStyle } from '@angular/common';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostBinding, Input, OnChanges, SimpleChanges, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { RAreaChartItem, RPopupChartItem } from '../rmodels/RBarChartItem';
@@ -16,7 +14,6 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
 })
 export class RAreaChartComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
 
-  
   private _width: number = 300;
   private _height: number = 300;
 
@@ -175,7 +172,6 @@ export class RAreaChartComponent extends RChartPopupBaseComponent implements Aft
     this.HostElementId = this.winObj.GenerateUniqueId();
   }
 
-  
   ngOnChanges(changes: SimpleChanges): void {
     if(Object.keys(changes).length > 0 && this.IsInitialized) {
       this.Render();
@@ -191,6 +187,13 @@ export class RAreaChartComponent extends RChartPopupBaseComponent implements Aft
         this.RenderAreaChart();
       }
     }
+  }
+
+  protected override destroy(): void {
+    if (this.bar?.nativeElement) {
+      this.bar.nativeElement.onmousemove = null;
+    }
+    this.context = null;
   }
 
   trackById(index: number, item: RAreaChartItem){

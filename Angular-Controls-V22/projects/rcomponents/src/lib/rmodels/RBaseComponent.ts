@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Directive, ElementRef, EventEmitter, HostBinding, inject, Injector, Input, NgZone, Optional, Output, Self, TemplateRef, ViewContainerRef } from "@angular/core";
+import { ChangeDetectorRef, Directive, ElementRef, EventEmitter, HostBinding, inject, Injector, Input, NgZone, OnDestroy, Optional, Output, Self, TemplateRef, ViewContainerRef } from "@angular/core";
 import { RWindowHelper } from "../rwindowObject";
 import { RSplitterType } from "../rsplitter/rpagecontent.directive";
 import { filter, firstValueFrom, fromEvent, map, Observable, of, switchMap, take } from "rxjs";
@@ -219,7 +219,7 @@ export abstract class RBaseComponent<T> implements AsyncValidator {
 }
 
 @Directive({standalone: true})
-export abstract class RChartBaseComponent {
+export abstract class RChartBaseComponent implements OnDestroy {
 
     Id: string = '';
 
@@ -270,6 +270,14 @@ export abstract class RChartBaseComponent {
     }
 
     public abstract Render(): void;
+
+    public ngOnDestroy(): void {
+        this.destroy();
+    }
+
+    protected destroy(): void {
+        // Derived chart classes can override to clean up listeners and context
+    }
 
     protected ResetCanvasContext(context: CanvasRenderingContext2D): void {
         if (!context) {

@@ -5,18 +5,18 @@ import { RWindowHelper } from '../rwindowObject';
 import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseComponent';
 
 @Component({
-    selector: 'rstackedbarchart-vertical',
-    standalone: true,    
-    imports: [NgStyle],
-    templateUrl: './rstackedbarchart-vertical.component.html',
-    changeDetection: ChangeDetectionStrategy.Default,
-    styleUrl: './rstackedbarchart-vertical.component.css'
+  selector: 'rstackedbarchart-vertical',
+  standalone: true,
+  imports: [NgStyle],
+  templateUrl: './rstackedbarchart-vertical.component.html',
+  changeDetection: ChangeDetectionStrategy.Default,
+  styleUrl: './rstackedbarchart-vertical.component.css'
 })
 export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
 
   private _width: number = 300;
   private _height: number = 300;
-  
+
   private _xAxisTitle: string = "";
   private _yAxisTitle: string = "";
 
@@ -27,21 +27,21 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
 
   @Input()
   BorderColor: string = 'lightgray';
- 
+
   @Input()
   MarginLeft: number = 20;
- 
+
   @Input()
   MarginRight: number = 20;
- 
+
   @Input()
   MarginTop: number = 20;
- 
+
   @Input()
   MarginBottom: number = 10;
- 
+
   @Input()
-  public set TextColor(val: string){
+  public set TextColor(val: string) {
     this._textColor = val;
   }
   public get TextColor(): string {
@@ -49,7 +49,7 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
   }
 
   @Input()
-  public set XAxisTitle(val: string){
+  public set XAxisTitle(val: string) {
     this._xAxisTitle = val;
   }
   public get XAxisTitle(): string {
@@ -176,25 +176,32 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
     this.HostElementId = this.winObj.GenerateUniqueId();
   }
 
-  trackById(index: number, item: RBarChartItem){
+  trackById(index: number, item: RBarChartItem) {
     return item.Id;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if(Object.keys(changes).length > 0 && this.IsInitialized) {
+    if (Object.keys(changes).length > 0 && this.IsInitialized) {
       this.Render();
     }
   }
-  
+
   ngAfterViewInit(): void {
     if (this.winObj.isExecuteInBrowser()) {
       if (this.bar != undefined) {
         this.IsInitialized = true;
         this.context = this.bar.nativeElement.getContext('2d');
-        this.bar.nativeElement.onmousemove = this.MouseMove.bind(this); 
+        this.bar.nativeElement.onmousemove = this.MouseMove.bind(this);
         this.RenderBarChart();
       }
     }
+  }
+
+  protected override destroy(): void {
+    if (this.bar?.nativeElement) {
+      this.bar.nativeElement.onmousemove = null;
+    }
+    this.context = null;
   }
 
   getWidthFromString(value: string): number {
@@ -206,10 +213,10 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
     return 50;
   }
 
-  getTextHeight(met: TextMetrics){
+  getTextHeight(met: TextMetrics) {
     return met.actualBoundingBoxAscent + met.actualBoundingBoxDescent;
   }
-  
+
   getNameIndicator(itm: RBarChartItem) {
     return typeof itm.barItemsBackColor === 'string' ? itm.barItemsBackColor : itm.barItemsBackColor.length > 0 ?
       itm.barItemsBackColor[0] : "orangered";
@@ -225,11 +232,11 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
     let totalHeight = this.Height + this.MarginTop + this.MarginBottom;
 
 
-    if(this.context && this.bar){      
-       
+    if (this.context && this.bar) {
+
       this.ResetCanvasContext(this.context);
-            
-      this.context?.beginPath();      
+
+      this.context?.beginPath();
       this.context.clearRect(0, 0, totalWidth, totalHeight);
       this.context.closePath();
 
@@ -237,7 +244,7 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
 
       let item = this.MouseOnTopOfItem(event.offsetX, event.offsetY);
 
-      if(item) {      
+      if (item) {
         let lineItem = item.Item as RBarChartItem;
         let x = event.offsetX + 10;
         let y = event.offsetY;
@@ -252,14 +259,14 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
 
         let width = Math.max(w1, w2);
 
-        let textWidth =  25 + width;
+        let textWidth = 25 + width;
 
-        if(x + textWidth > this.Width) {          
+        if (x + textWidth > this.Width) {
           x = x - textWidth - 20;
         }
-         
+
         let height = 40;
-        if(y + height > this.Height) {
+        if (y + height > this.Height) {
           y = y - height;
         }
 
@@ -267,28 +274,28 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
         this.context.save();
         this.context.globalAlpha = this.PopupBackgroundOpacity;
         this.context.fillStyle = this.PopupBackColor;
-             
-        if(this.EnableBorderForPopup) {
+
+        if (this.EnableBorderForPopup) {
           this.context.strokeStyle = this.PopupBorderColor;
         }
 
-        this.context.roundRect(x, y, textWidth, 40, 4); 
+        this.context.roundRect(x, y, textWidth, 40, 4);
         this.context.fill();
         this.context.stroke();
         this.context.restore();
         this.context.closePath();
-        
-        this.context.beginPath();      
+
+        this.context.beginPath();
         this.context.save();
-        
+
         this.context.strokeStyle = this.PopupForeColor ?? item.ItemColor;
         this.context.fillStyle = this.PopupForeColor ?? item.ItemColor;
-        this.context.fillText(" "+this.XAxisTitle+" : "+ this.xAxisItemNames[item.ValueIndex], x + 5, y + 15);
-        this.context.fillText(" "+this.YAxisTitle+" : "+ lineItem.Values[item.ValueIndex], x + 5, y + 35);
+        this.context.fillText(" " + this.XAxisTitle + " : " + this.xAxisItemNames[item.ValueIndex], x + 5, y + 15);
+        this.context.fillText(" " + this.YAxisTitle + " : " + lineItem.Values[item.ValueIndex], x + 5, y + 35);
 
         this.context.stroke();
         this.context.restore();
-        this.context?.closePath();  
+        this.context?.closePath();
       }
     }
   }
@@ -299,8 +306,8 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
 
     for (let index = 0; index < this.PopupItems.length; index++) {
       const element = this.PopupItems[index];
-      if(x>= element.x1 - boundaryRange && x<= element.x2 + boundaryRange 
-        && y>= element.y1 - boundaryRange && y <= element.y2 + boundaryRange){
+      if (x >= element.x1 - boundaryRange && x <= element.x2 + boundaryRange
+        && y >= element.y1 - boundaryRange && y <= element.y2 + boundaryRange) {
         return element;
       }
     }
@@ -351,11 +358,11 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
       let max: number | undefined = undefined;
 
       this.PopupItems = [];
- 
+
       this.ResetCanvasContext(this.context);
 
       this.context.clearRect(0, 0, totalWidth, totalHeight);
-      
+
       this.EnableGlassyEffectOnTopOfChart();
 
       let spaceFromTopYAxis = 25;
@@ -369,9 +376,8 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
         for (let col = 0; col < this.Columns.length; col++) {
           const clmn = this.Columns[col];
 
-          if (clmn.Values[index] != undefined)
-          {
-            if(clmn.Values[index] < 0)
+          if (clmn.Values[index] != undefined) {
+            if (clmn.Values[index] < 0)
               itm = itm - clmn.Values[index];
             else
               itm += clmn.Values[index];
@@ -415,10 +421,10 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
 
       /* Draw Title on x-axis */
       this.context.beginPath();
-      
+
       let met = this.context.measureText(this.XAxisTitle);
-      let xTextPoint = (this.Width - this.MarginX)/2 + (this.MarginX/1.5) + this.MarginLeft;
-      xTextPoint = xTextPoint - (met.width/2);
+      let xTextPoint = (this.Width - this.MarginX) / 2 + (this.MarginX / 1.5) + this.MarginLeft;
+      xTextPoint = xTextPoint - (met.width / 2);
       let yTextPoint = this.Height + this.MarginTop - 5;
 
       this.context.save();
@@ -428,22 +434,22 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
 
       this.context.closePath();
 
-      /* Draw Title On Y axis */      
+      /* Draw Title On Y axis */
       this.context.beginPath();
       this.context.save();
 
       met = this.context.measureText(this.XAxisTitle);
-      yTextPoint = (this.Height - this.MarginY)/2 - this.MarginBottom;
-      yTextPoint = yTextPoint + this.MarginTop + this.MarginBottom + (met.width/2);
-      xTextPoint = this.MarginLeft + 15;            
+      yTextPoint = (this.Height - this.MarginY) / 2 - this.MarginBottom;
+      yTextPoint = yTextPoint + this.MarginTop + this.MarginBottom + (met.width / 2);
+      xTextPoint = this.MarginLeft + 15;
       this.context.fillStyle = this.TextColor;
       this.context.translate(xTextPoint, yTextPoint);
-      this.context.rotate((Math.PI/180) * 270);
-      this.context.fillText(this.YAxisTitle, 0, 0);      
-      
+      this.context.rotate((Math.PI / 180) * 270);
+      this.context.fillText(this.YAxisTitle, 0, 0);
+
       this.context.restore();
       this.context.closePath();
-      
+
       /* Draw y axis line */
       let vDistance = (StartY - this.MarginTop - spaceFromTopYAxis) / this.NoOfSplitInValueAxis;
 
@@ -488,8 +494,8 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
           let value = element.Values[index];
 
           if (value != undefined) {
-            
-            if(value<0)
+
+            if (value < 0)
               value = -value;
 
             let y = this.GetYStartPoint(value, distance, itemCount, vDistance, spaceFromTopYAxis + this.MarginTop);
@@ -507,7 +513,7 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
 
             this.DrawBar(xPoint, yPoint, eachBarLength, diff, color);
 
-            this.PopupItems.push(new RPopupChartItem(xPoint, yPoint, xPoint + eachBarLength, 
+            this.PopupItems.push(new RPopupChartItem(xPoint, yPoint, xPoint + eachBarLength,
               yPoint + diff, element, index, x, color));
 
             /* Draw Text on top of Bar */
@@ -523,10 +529,10 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
             let met = this.context.measureText(value.toString());
             let textHeight = this.getTextHeight(met);
             let yTextOnBar = 0;
-            
-            yTextOnBar = yPoint + diff/2 + textHeight/2;
-            
-            drawTexts.push(new RDrawTextItem(value.toString(), xPoint+halfValueXPoint, yTextOnBar, foreColor));            
+
+            yTextOnBar = yPoint + diff / 2 + textHeight / 2;
+
+            drawTexts.push(new RDrawTextItem(value.toString(), xPoint + halfValueXPoint, yTextOnBar, foreColor));
             ComputedValue += value;
             previousY = yPoint;
           }
@@ -553,7 +559,7 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
         const ele = drawTexts[index];
         this.DrawText(ele.value.toString(), ele.x, ele.y, ele.color);
       }
-      
+
       this.IsRendered = true;
       this.cdr.detectChanges();
     }
@@ -652,7 +658,7 @@ export class RStackedBarChartVerticalComponent extends RChartPopupBaseComponent 
       this.context.beginPath();
       this.context.strokeStyle = forecolor;
       this.context.fillStyle = forecolor;
-      this.context.fillText(text, x, y);    
+      this.context.fillText(text, x, y);
       this.context.fill();
       this.context.stroke();
       this.context.closePath();

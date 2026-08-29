@@ -179,7 +179,7 @@ export class RBarChartVerticalComponent extends RChartPopupBaseComponent impleme
   trackById(index: number, item: RBarChartItem){
     return item.Id;
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
     if(Object.keys(changes).length > 0 && this.IsInitialized) {
       this.Render();
@@ -197,18 +197,25 @@ export class RBarChartVerticalComponent extends RChartPopupBaseComponent impleme
     }
   }
 
+  protected override destroy(): void {
+    if (this.bar?.nativeElement) {
+      this.bar.nativeElement.onmousemove = null;
+    }
+    this.context = null;
+  }
+
   private getWidthFromString(value: string): number {
     if (this.context) {
       let metrics = this.context.measureText(value);
       return metrics.width;
     }
-
     return 50;
   }
 
   private getTextHeight(met: TextMetrics){
     return met.actualBoundingBoxAscent + met.actualBoundingBoxDescent;
   }
+
   
   private getNameIndicator(itm: RBarChartItem) {
     return typeof itm.barItemsBackColor === 'string' ? itm.barItemsBackColor : itm.barItemsBackColor.length > 0 ?

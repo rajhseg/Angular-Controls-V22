@@ -79,31 +79,33 @@
             <div [ngStyle]="{ 'background-color' : ContainerBackgroundColor }"
               #vheader class="verticalheader">
               <div style="float: left;">
-                @for (channel of VerticalChannelsList[SelectedDate]; track channel) {
-                  <div class="ritemHeader"
-                                        [ngStyle]="{ 
-                                            'width' : VerticalHeaderWidth+'px', 
-                                            'height': VerticalHeaderHeight+'px',
-                                            'background-color': ContainerBackgroundColor,
-                                            'color': ContainerForeColor,
-                                            'border-bottom': '1px solid '+ContainerBorderColor,                                            
-                                            'border-right': '1px solid '+ContainerBorderColor,
-                                        }"
-                    >
-                    @if (channel.ChannelImageUrl==undefined || channel.ChannelImageUrl == '') {
-                      <span>
-                        {{channel.DisplayTitle}}
-                      </span>
-                    }
-                    @if (channel.ChannelImageUrl!=undefined && channel.ChannelImageUrl != '') {
-                      <img
-                                            [ngStyle]="{ 
-                                                'width':VerticalHeaderWidth+'px',
-                                                'height': VerticalHeaderHeight+'px'
-                                            }"
-                        [src]="channel.ChannelImageUrl" [alt]="channel.DisplayTitle" />
-                    }
-                  </div>
+                @if (VerticalChannelsList && VerticalChannelsList[SelectedDate]) {
+                  @for (channel of VerticalChannelsList[SelectedDate]; track channel) {
+                    <div class="ritemHeader"
+                                          [ngStyle]="{ 
+                                              'width' : VerticalHeaderWidth+'px', 
+                                              'height': VerticalHeaderHeight+'px',
+                                              'background-color': ContainerBackgroundColor,
+                                              'color': ContainerForeColor,
+                                              'border-bottom': '1px solid '+ContainerBorderColor,                                            
+                                              'border-right': '1px solid '+ContainerBorderColor,
+                                          }"
+                      >
+                      @if (channel.ChannelImageUrl==undefined || channel.ChannelImageUrl == '') {
+                        <span>
+                          {{channel.DisplayTitle}}
+                        </span>
+                      }
+                      @if (channel.ChannelImageUrl!=undefined && channel.ChannelImageUrl != '') {
+                        <img
+                                              [ngStyle]="{ 
+                                                  'width':VerticalHeaderWidth+'px',
+                                                  'height': VerticalHeaderHeight+'px'
+                                              }"
+                          [src]="channel.ChannelImageUrl" [alt]="channel.DisplayTitle" />
+                      }
+                    </div>
+                  }
                 }
               </div>
             </div>

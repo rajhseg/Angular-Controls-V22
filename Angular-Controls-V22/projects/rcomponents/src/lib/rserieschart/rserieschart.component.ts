@@ -12,8 +12,7 @@ import { RChartBaseComponent, RChartPopupBaseComponent } from '../rmodels/RBaseC
     changeDetection: ChangeDetectionStrategy.Default,
     styleUrl: './rserieschart.component.css'
 })
-export class RSeriesChartComponent  extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
-
+export class RSeriesChartComponent extends RChartPopupBaseComponent implements AfterViewInit, OnChanges {
 
   private _width: number = 300;
   private _height: number = 300;
@@ -186,7 +185,13 @@ export class RSeriesChartComponent  extends RChartPopupBaseComponent implements 
     }
   }
 
-  
+  protected override destroy(): void {
+    if (this.bar?.nativeElement) {
+      this.bar.nativeElement.onmousemove = null;
+    }
+    this.context = null;
+  }
+
   private MouseMove(event: MouseEvent) {
     if (this.context && this.bar) {
 
