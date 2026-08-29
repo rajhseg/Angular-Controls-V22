@@ -10,7 +10,7 @@
           <div class="rcontainer"
             [ngClass]="{ 'brdr': !EnableShadowEffect }"
                         [ngStyle]="{'border-bottom-color': IconForeColor, 
-                                    'box-shadow': EnableShadowEffect ? 'rgba(0, 0, 0, 0.24) 0px 3px 8pxs' : ''}">
+                                    'box-shadow': EnableShadowEffect ? 'rgba(0, 0, 0, 0.24) 0px 3px 8px' : ''}">
             <div class="displayText" [ngStyle]="{ 'color': TextForeColor }">{{DisplayText}}</div>
             @if (Files.length > 0 || ErrorMessages.length > 0) {
               <div>
@@ -41,7 +41,7 @@
 
         </div>
         @if (showFiles) {
-          <div class="tableContainer rfileuploaddropdownclose" id="dropdownId"
+          <div class="tableContainer rfileuploaddropdownclose" [id]="dropdownId"
             [ngClass]="{'dropdown-content': ShowFilesAsDropdownContainer }"
             [ngStyle]="{ 'visibility':showFiles ? 'visible': 'collapse', 'height':'fit-content',
                 '--tdsize': FontSize,
@@ -67,7 +67,7 @@
               <table class="tab">
                 <thead>
                   <th style="width: 20px;overflow-wrap:anywhere;">No</th>
-                  <th  style="width: 166px;overflow-wrap:anywhere;">Error Exceed Max Size {{AllowedMaxFileSizeInMB}} MB</th>
+                  <th style="width: 166px;overflow-wrap:anywhere;">Validation Error</th>
                 </thead>
                 <tbody>
                   @for (ErrorMessage of ErrorMessages; track ErrorMessage; let i = $index) {
