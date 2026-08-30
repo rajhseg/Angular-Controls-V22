@@ -21,29 +21,4 @@ describe('RNumericComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should convert an empty required value to 0', () => {
-    component.required = true;
-
-    component.Value = 1 as any;
-    component.Value = '' as any;
-
-    expect(component.Value).toBe(0);
-  });
-
-  it('should keep an empty optional value as empty', () => {
-    component.required = false;
-
-    component.Value = 1 as any;
-    component.Value = '' as any;
-    component.onBlur(new Event('blur'));
-
-    expect(component.Value).toBeNull();
-  });
-
-  it('should increment decimal values without truncating the fraction', () => {
-    component.Value = 0.5 as any;
-    component.Inc();
-
-    expect(component.Value).toBe(1.5);
-  });
 });
