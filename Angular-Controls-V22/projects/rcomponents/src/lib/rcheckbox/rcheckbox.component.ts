@@ -143,9 +143,9 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
   }
 
   writeValue(obj: any): void {
-    if (obj == null)
-      return;
 
+    obj = obj ?? false;
+    
     let checkValue: boolean = false;
 
     if (obj instanceof CheckboxEventArgs) {

@@ -139,6 +139,12 @@ export class RfileuploadComponent extends RBaseComponent<FileList> implements IR
   }
 
   writeValue(obj: any): void {
+    
+    if(obj == null){
+      this.reset();
+      return;
+    }
+
     if(obj instanceof FileList){
       this._files = obj;
 
@@ -228,6 +234,17 @@ export class RfileuploadComponent extends RBaseComponent<FileList> implements IR
 
   setDisabledState?(isDisabled: boolean): void {
     this._formDisabled = isDisabled ? true : null;
+  }
+
+  private reset() {
+    this._files = undefined;
+    this._rFilesList = [];
+    this.showFiles = false;
+    if (this.rFile?.nativeElement) {
+      this.rFile.nativeElement.value = "";
+    }
+    this.DisplayText = "";
+    this.ErrorMessages = [];
   }
 
   clear($event: Event) {

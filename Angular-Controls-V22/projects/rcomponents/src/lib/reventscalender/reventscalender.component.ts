@@ -648,12 +648,12 @@ export class REventsCalenderComponent  extends RBaseComponent<any> implements IR
     }
   }
 
-  writeValue(obj: EventsCalenderModel): void {
+  writeValue(obj: EventsCalenderModel | null): void {
     let rd = this.IsReadOnly;
 
     try {
       this.IsReadOnly = false;
-      this.Items = obj;
+      this.Items = obj ?? new EventsCalenderModel();;
     }
     catch {
 
@@ -688,8 +688,9 @@ export class REventsCalenderComponent  extends RBaseComponent<any> implements IR
 
   ngOnInit(): void {
 
-    if (this.selectedDate != null)
+    if (this.selectedDate != null) {
       this.LoadMonth(this.selectedDate, true);
+    }
 
     if (this.windowHelper.isExecuteInBrowser()) {
 

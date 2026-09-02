@@ -4,9 +4,13 @@
      ===================================================================== -->
 
 <div style="display: flex; flex-direction: row-reverse; position: sticky; z-index: 101;">
-
-
+    
+  
 </div>
+
+<form #dform="ngForm">
+  
+<rbutton (ButtonClick)="ResetForm(dform)" type="submit">Reset Form</rbutton>
 
 <div cdkDropListGroup class="showcase-root">
 
@@ -15,46 +19,59 @@
     <h1 class="showcase-title">rcomponents</h1>
     <p class="showcase-subtitle">Angular component library showcase</p>
     <nav class="nav-tabs">
-
-      @for (s of sections; track $index) {
+      
+	@for (s of sections; track $index) {
       <button class="nav-tab" [class.active]="activeSection === s" (click)="setSection(s)">
         {{ s | titlecase }}
       </button>
       }
-
+      
       <div style="display: flex; justify-content: flex-end; width: 100%; align-items: center;">
+        
+        <rswitch name="glassyEffect" [LabelForeColor]="'black'" [DisplayLabel]="'Enable Glassy Effect'" [(ngModel)]="enableGlassyEffect"></rswitch>  
 
-        <rswitch [LabelForeColor]="'black'" [DisplayLabel]="'Enable Glassy Effect'" [(ngModel)]="enableGlassyEffect">
-        </rswitch>
-
-        <rcolorpicker [LabelTextForeColor]="'black'" style="margin-left:20px" [IsDisplayLabelText]="true"
-          [IsDisplayColorCode]="false" [LabelText]="'GlassyEffectColor'" [(ngModel)]="glassyColor"></rcolorpicker>
+        <rcolorpicker name="glassyColor" [LabelTextForeColor]="'black'" style="margin-left:20px" [IsDisplayLabelText]="true" 
+                [IsDisplayColorCode]="false" [LabelText]="'GlassyEffectColor'" [(ngModel)]="glassyColor"></rcolorpicker>
       </div>
-
+      
       <div style="display: flex; justify-content: flex-end; width: 100%; align-items: center;">
         <label style="font-size: 14px; margin-right: 15px;">Bar Gap :</label>
-
-        <rselectdropdown [EnableFilterOption]="false" [IsReadOnly]="false" [Items]="Spaces" name="themedropdown"
-          [DropDownContentHeight]="'170px'" (valueChanged)="spaceBarChanged($event)" [DropDownContentWidth]="'105px'"
-          [Width]="'80px'" [(ngModel)]="selectedSpace">
-        </rselectdropdown>
+        
+          <rselectdropdown  
+              [EnableFilterOption]="false"
+              [IsReadOnly]="false"
+              [Items]="Spaces"
+              name="themedropdown"
+              [DropDownContentHeight]="'170px'"
+              (valueChanged)="spaceBarChanged($event)"
+              [DropDownContentWidth]="'105px'"
+              [Width]="'80px'"
+              [(ngModel)]="selectedSpace">
+          </rselectdropdown>
       </div>
 
       <div style="display: flex; justify-content: flex-end; width: 100%; align-items: center;">
         <label style="font-size: 14px; margin-right: 15px;">Theme:</label>
+        
+        <!-- <form #userForm="ngForm"> -->
 
-        <form #userForm="ngForm">
-
-          <rselectdropdown [EnableFilterOption]="true" [IsReadOnly]="false" [Items]="colorItems" name="themedropdown"
-            [DropDownContentWidth]="'310px'" [Width]="'280px'" #theme="ngModel" [(ngModel)]="selectedTheme">
+          <rselectdropdown 
+              [EnableFilterOption]="true"
+              [IsReadOnly]="false"
+              [Items]="colorItems"
+              name="themedropdown"
+              [DropDownContentWidth]="'310px'"
+              [Width]="'280px'"
+               #theme="ngModel"
+              [(ngModel)]="selectedTheme">
           </rselectdropdown>
 
-        </form>
+        <!-- </form> -->
 
       </div>
-
+        
     </nav>
-
+      
   </header>
 
   <main class="showcase-body">
@@ -72,10 +89,21 @@
           <code class="card-selector">&lt;rallocated-barchart&gt;</code>
         </div>
         <div class="card-body center">
-          <rallocated-barchart [Columns]="allocatedColumns" [xAxisItemNames]="allocatedMonths" [Width]="360"
-            [Height]="240" [MarginX]="60" [GapBetweenBars]="allocatedGap" [NoOfSplitInValueAxis]="5"
-            [XAxisTitle]="'Month'" [YAxisTitle]="'Budget'" [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect"
-            [GlassyEffectColor]="glassyColor" [EnableBorderForPopup]="true" [PopupBackgroundOpacity]="1">
+          <rallocated-barchart name="allocatedBarChart"
+            [Columns]="allocatedColumns"
+            [xAxisItemNames]="allocatedMonths"
+            [Width]="360"
+            [Height]="240"
+            [MarginX]="60"
+            [GapBetweenBars]="allocatedGap"
+            [NoOfSplitInValueAxis]="5"
+            [XAxisTitle]="'Month'"
+            [YAxisTitle]="'Budget'"
+            [EnableBorder]="false"
+            [GlassyEffect]="enableGlassyEffect"  
+            [GlassyEffectColor]="glassyColor"
+            [EnableBorderForPopup] = "true"
+            [PopupBackgroundOpacity]="1">
           </rallocated-barchart>
         </div>
         <div class="card-hint">
@@ -91,9 +119,16 @@
           <code class="card-selector">&lt;rbarchart-vertical&gt;</code>
         </div>
         <div class="card-body center">
-          <rbarchart-vertical [Columns]="barVerticalColumns" [xAxisItemNames]="barVerticalMonths"
-            [GapBetweenBars]="allocatedGap" [Width]="360" [Height]="240" [MarginX]="60" XAxisTitle="Quarter"
-            YAxisTitle="Amount" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"
+          <rbarchart-vertical name="barVerticalChart" 
+            [Columns]="barVerticalColumns"
+            [xAxisItemNames]="barVerticalMonths"
+            [GapBetweenBars]="allocatedGap"
+            [Width]="360"
+            [Height]="240"
+            [MarginX]="60"
+            XAxisTitle="Quarter"
+            YAxisTitle="Amount"
+            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
             [EnableBorder]="false">
           </rbarchart-vertical>
         </div>
@@ -108,9 +143,17 @@
           <code class="card-selector">&lt;rbarchart-horizontal&gt;</code>
         </div>
         <div class="card-body center">
-          <rbarchart-horizontal [Columns]="barHorizontalColumns" [yAxisItemNames]="barHorizontalItems"
-            [GapBetweenBars]="allocatedGap" [Width]="340" [Height]="240" [MarginX]="50" [MarginY]="50"
-            XAxisTitle="Hours" YAxisTitle="Team" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"
+          <rbarchart-horizontal name="barHorizontalChart"
+            [Columns]="barHorizontalColumns"
+            [yAxisItemNames]="barHorizontalItems"
+            [GapBetweenBars]="allocatedGap"
+            [Width]="340"
+            [Height]="240"
+            [MarginX]="50"
+            [MarginY]="50"
+            XAxisTitle="Hours"
+            YAxisTitle="Team"
+            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
             [EnableBorder]="false">
           </rbarchart-horizontal>
         </div>
@@ -125,8 +168,13 @@
           <code class="card-selector">&lt;rpiechart&gt;</code>
         </div>
         <div class="card-body center">
-          <rpiechart [Items]="pieItems" [ShadowBlur]="10" [ChartWidth]="280" [DataListHeight]="100"
-            [ChartFontSize]="'11px'" [EnableBorder]="false">
+          <rpiechart name="pieChart"
+            [Items]="pieItems"
+            [ShadowBlur]="10"
+            [ChartWidth]="280"
+            [DataListHeight]="100"
+            [ChartFontSize]="'11px'"
+            [EnableBorder]="false">
           </rpiechart>
         </div>
         <div class="card-hint">Browser market share breakdown.</div>
@@ -140,7 +188,11 @@
           <code class="card-selector">&lt;rdonutchart&gt;</code>
         </div>
         <div class="card-body center">
-          <rdonutchart [Items]="donutItems" [ShadowBlur]="10" [ChartWidth]="280" [DataListHeight]="100"
+          <rdonutchart name="donutChart"
+            [Items]="donutItems"
+            [ShadowBlur]="10"
+            [ChartWidth]="280"
+            [DataListHeight]="100"
             [EnableBorder]="false">
           </rdonutchart>
         </div>
@@ -155,9 +207,18 @@
           <code class="card-selector">&lt;rlinechart-vertical&gt;</code>
         </div>
         <div class="card-body center">
-          <rlinechart-vertical [Items]="lineItems" [PlotItemSize]="2" [xAxisItemNames]="lineMonths" [MarginRight]="20"
-            [Width]="380" [Height]="240" [MarginX]="55" XAxisTitle="Month" YAxisTitle="Count" [EnableBorder]="false"
-            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor">
+          <rlinechart-vertical name="lineChartVertical"
+            [Items]="lineItems"
+            [PlotItemSize]="2"
+            [xAxisItemNames]="lineMonths"
+            [MarginRight]="20"
+            [Width]="380"
+            [Height]="240"
+            [MarginX]="55"
+            XAxisTitle="Month"
+            YAxisTitle="Count"
+            [EnableBorder]="false"
+            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  >
           </rlinechart-vertical>
         </div>
         <div class="card-hint">Users and sessions over 6 months.</div>
@@ -171,15 +232,21 @@
           <code class="card-selector">&lt;rscatterchart&gt;</code>
         </div>
         <div class="card-body center">
-          <rscatterchart [Items]="scatterItems" [Width]="380" [Height]="240" XAxisTitle="Price" YAxisTitle="Sales"
-            [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor">
+          <rscatterchart name="scatterChart"  
+            [Items]="scatterItems"
+            [Width]="380"
+            [Height]="240"
+            XAxisTitle="Price"
+            YAxisTitle="Sales"
+            [EnableBorder]="false"
+            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  >
           </rscatterchart>
         </div>
         <div class="card-hint">Price vs sales correlation per product.</div>
       </div>
 
-
-
+      
+      
       <!-- Area Chart -->
       <div class="card">
         <div class="card-header">
@@ -188,16 +255,18 @@
           <code class="card-selector">&lt;rareachart&gt;</code>
         </div>
         <div class="card-body center">
-
-          <rareachart [xAxisItemNames]="arealineMonths" [XAxisTitle]="'Month'" [YAxisTitle]="'Count'"
-            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor" [EnableBorder]="false"
-            [EnablePlotOnPoints]="true" [Items]="arealineItems" [Width]="370" [Height]="260">
-          </rareachart>
+                   
+        <rareachart [xAxisItemNames]="arealineMonths" name="areachart"
+          [XAxisTitle]="'Month'" [YAxisTitle]="'Count'"
+          [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
+          [EnableBorder]="false" [EnablePlotOnPoints]="true"
+          [Items]="arealineItems" [Width]="370" [Height]="260">
+        </rareachart>
 
         </div>
         <div class="card-hint">User and Sessions over 6 months.</div>
       </div>
-
+      
       <!-- Progress Bar -->
       <div class="card">
         <div class="card-header">
@@ -209,22 +278,25 @@
           <div style="margin-bottom: 16px;">
             <label class="form-label">Value: {{ progressValue }}%</label>
 
-            <rslider [(ngModel)]="progressValue" [MinValue]="0" [MaxValue]="100" [SliderBarWidth]="'330px'"
-              [IsDisplayValue]="false">
+            <rslider [(ngModel)]="progressValue" [MinValue]="0"  name="progressSlider"
+                     [MaxValue]="100" 
+                     [SliderBarWidth]="'330px'"
+                     [IsDisplayValue]="false">
             </rslider>
           </div>
-
-          <rprogressbar style="margin-left: 100px;margin-top: 20px;" [FloatInCenter]="false" [EnableBackDrop]="false"
-            [DisplayType]="progressDisplayType" [StraightLineTrackHeightInPx]="'16px'" [ProgressBarWidthInPx]="'150px'"
-            [Percentage]="progressValue" [CircularLineWidthInPx]="'15px'"
-            [FiniteCircularDisplayText]="'Progress '+progressValue+'%'" [Type]="progressBarType">
-          </rprogressbar>
+          
+        <rprogressbar style="margin-left: 100px;margin-top: 20px;" [FloatInCenter]="false" 
+           [EnableBackDrop]="false" name="prgressbar"
+           [DisplayType]="progressDisplayType" [StraightLineTrackHeightInPx]="'16px'"
+          [ProgressBarWidthInPx]="'150px'" [Percentage]="progressValue" [CircularLineWidthInPx]="'15px'"
+          [FiniteCircularDisplayText]="'Progress '+progressValue+'%'" [Type]="progressBarType">
+        </rprogressbar>
 
         </div>
         <div class="card-hint">Drag the slider to update the progress bar value.</div>
       </div>
 
-
+      
       <!-- Series Chart -->
       <div class="card">
         <div class="card-header">
@@ -233,11 +305,14 @@
           <code class="card-selector">&lt;rserieschart&gt;</code>
         </div>
         <div class="card-body center">
-
-          <rserieschart [XAxisTitle]="'Disk'" [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect"
-            [GlassyEffectColor]="glassyColor" [YAxisTitle]="'Speed'" [FillAreaColor]="false" [Width]="340"
-            [PlotItemSize]="30" [Height]="240" [Items]="seriesModel2">
-          </rserieschart>
+                  
+            <rserieschart [XAxisTitle]="'Disk'" name="seriesChart"
+              [EnableBorder]="false" 
+              [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"   
+              [YAxisTitle]="'Speed'" [FillAreaColor]="false" [Width]="340"
+              [PlotItemSize]="30"
+              [Height]="240" [Items]="seriesModel2">
+            </rserieschart>
 
         </div>
         <div class="card-hint">Disk vs Speed per users and sessions.</div>
@@ -250,11 +325,13 @@
           <code class="card-selector">&lt;rserieschart&gt;</code>
         </div>
         <div class="card-body center">
-
-          <rserieschart [XAxisTitle]="'Elements'" [YAxisTitle]="'Values'" [EnableBorder]="false"
-            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor" [Width]="340" [Height]="240"
-            [Items]="seriesModel">
-          </rserieschart>
+                          
+            <rserieschart name="seriesChart1"
+              [XAxisTitle]="'Elements'" [YAxisTitle]="'Values'" 
+              [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
+              [Width]="340" [Height]="240"
+              [Items]="seriesModel">
+            </rserieschart>
 
         </div>
 
@@ -268,77 +345,82 @@
           <code class="card-selector">&lt;rserieschart&gt;</code>
         </div>
         <div class="card-body center">
-
-          <rserieschart [XAxisTitle]="'Elements'" [YAxisTitle]="'Values'" [EnableBorder]="false"
-            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor" [Width]="340" [Height]="240"
-            [Items]="seriesModel1">
-          </rserieschart>
+                  
+            <rserieschart name="seriesChart2"
+              [XAxisTitle]="'Elements'" [YAxisTitle]="'Values'" 
+              [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
+              [Width]="340" [Height]="240"
+              [Items]="seriesModel1">
+            </rserieschart>
 
         </div>
         <div class="card-hint">Graph series chart.</div>
       </div>
 
 
-
+      
       <div class="card">
         <div class="card-header">
           <span class="card-tag tag-chart">Chart</span>
           <h2 class="card-title">Stacked Bar Chart Vertical</h2>
           <code class="card-selector">&lt;rstackedbarchart-vertical&gt;</code>
         </div>
-        <div class="card-body center">
-
-          <rstackedbarchart-vertical [MarginX]="55" [Width]="340" [Height]="240" [EnableBorder]="false"
-            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor" [XAxisTitle]="'Monthly Expenses'"
-            [YAxisTitle]="'Amount Spent'" [GapBetweenBars]="allocatedGap"
-            [xAxisItemNames]="stackedbarChartXAxisItemNames1" [Columns]="stackedbarChartItems1">
+        <div class="card-body center">      
+              
+          <rstackedbarchart-vertical name="stackedBarChartVertical" [MarginX]="55" [Width]="340" [Height]="240" 
+            [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"   
+            [XAxisTitle]="'Monthly Expenses'"
+            [YAxisTitle]="'Amount Spent'"  [GapBetweenBars]="allocatedGap"
+            [xAxisItemNames]="stackedbarChartXAxisItemNames1"
+            [Columns]="stackedbarChartItems1">
           </rstackedbarchart-vertical>
 
         </div>
         <div class="card-hint">Monthly Expenses vs Amount spent.</div>
       </div>
 
-      <div class="card">
+        <div class="card">
         <div class="card-header">
           <span class="card-tag tag-chart">Chart</span>
           <h2 class="card-title">Stacked Bar Chart Horizontal</h2>
           <code class="card-selector">&lt;rstackedbarchart-horizontal&gt;</code>
         </div>
-        <div class="card-body center">
-
-
-          <rstackedbarchart-horizontal [YAxisTitle]="'Monthly Expenses'" [XAxisTitle]="'Amount Spent'"
-            [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor" [Width]="340"
-            [Height]="240" [MarginX]="55" [GapBetweenBars]="allocatedGap" [MarginY]="50"
-            [yAxisItemNames]="stackedbarChartXAxisItemNames1" [Columns]="stackedbarChartItems1">
-          </rstackedbarchart-horizontal>
+        <div class="card-body center">      
+              
+          
+        <rstackedbarchart-horizontal name="stackedBarChartHorizontal" [YAxisTitle]="'Monthly Expenses'" [XAxisTitle]="'Amount Spent'" 
+          [EnableBorder]="false" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
+          [Width]="340" [Height]="240" [MarginX]="55" [GapBetweenBars]="allocatedGap"
+          [MarginY]="50" [yAxisItemNames]="stackedbarChartXAxisItemNames1" [Columns]="stackedbarChartItems1">
+        </rstackedbarchart-horizontal>
 
         </div>
         <div class="card-hint">Monthly Expenses vs Amount spent.</div>
       </div>
 
 
-      <div class="card">
+        <div class="card">
         <div class="card-header">
           <span class="card-tag tag-chart">Chart</span>
           <h2 class="card-title">Stacked Range Bar Chart Vertical</h2>
           <code class="card-selector">&lt;rstackedrangebarchart-verticall&gt;</code>
         </div>
-        <div class="card-body center">
+        <div class="card-body center">      
+              
+          
+        <rstackedrangebarchart-vertical name="stackedRangeBarChartVertical" [xAxisItemNames]="stackedrangebarChartXAxisItemNames1" 
+          [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"     [EnableBorder]="false"
+          [MarginX]="55" [GapBetweenBars]="allocatedGap"
+          [Columns]="stackedrangebarChartItems1" [Width]="340" [Height]="240"
+          [XAxisTitle]="'Monthly Expenses'" [YAxisTitle]="'Amount spent'">
 
-
-          <rstackedrangebarchart-vertical [xAxisItemNames]="stackedrangebarChartXAxisItemNames1"
-            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor" [EnableBorder]="false" [MarginX]="55"
-            [GapBetweenBars]="allocatedGap" [Columns]="stackedrangebarChartItems1" [Width]="340" [Height]="240"
-            [XAxisTitle]="'Monthly Expenses'" [YAxisTitle]="'Amount spent'">
-
-          </rstackedrangebarchart-vertical>
+        </rstackedrangebarchart-vertical>
 
         </div>
         <div class="card-hint">Monthly Expenses vs Amount spent.</div>
       </div>
 
-
+        
 
     </section>
 
@@ -355,18 +437,23 @@
           <code class="card-selector">&lt;rbutton&gt;</code>
         </div>
         <div class="card-body" style="gap: 12px; display: flex; flex-wrap: wrap;">
-          <rbutton [ButtonWidth]="'110px'" (ButtonClick)="onButtonClick()">
+          <rbutton
+            [ButtonWidth]="'110px'"
+            (ButtonClick)="onButtonClick()">
             Primary
           </rbutton>
-          <rbutton [ButtonWidth]="'110px'" (ButtonClick)="onButtonClick()">
+          <rbutton
+            [ButtonWidth]="'110px'"
+            (ButtonClick)="onButtonClick()">
             Secondary
           </rbutton>
-          <rbutton [ButtonWidth]="'110px'" (ButtonClick)="onButtonClick()">
+          <rbutton
+            [ButtonWidth]="'110px'"
+            (ButtonClick)="onButtonClick()">
             Danger
           </rbutton>
         </div>
-        <div class="card-hint">Clicked {{ buttonClickCount }} time(s). Supports <code>ButtonClick</code> output event.
-        </div>
+        <div class="card-hint">Clicked {{ buttonClickCount }} time(s). Supports <code>ButtonClick</code> output event.</div>
       </div>
 
 
@@ -378,18 +465,21 @@
           <code class="card-selector">&lt;rtextbox&gt;</code>
         </div>
         <div class="card-body">
-
-          <form [formGroup]="usernameForm">
-
-            <rtextbox [email]="false" [PlaceholderText]="'Please enter full name'" [LabelText]="'Full Name'"
-              formControlName="username">
+          
+          <!-- <form [formGroup]="usernameForm"> -->
+            
+            <rtextbox [email]="false" name="username"
+              [(ngModel)]="username1"
+              [PlaceholderText]="'Please enter full name'"
+              [LabelText]="'Full Name'"
+              >
             </rtextbox>
-
-          </form>
+          
+          <!-- </form> -->
 
         </div>
-        <div class="card-hint">Value: "{{ usernameForm.get('username')?.value }}"</div>
-
+        <!-- <div class="card-hint">Value: "{{ usernameForm.get('username')?.value }}"</div> -->
+     
       </div>
 
       <!-- Password -->
@@ -400,14 +490,16 @@
           <code class="card-selector">&lt;rtextbox&gt;</code>
         </div>
         <div class="card-body">
-          <rtextbox [IsPasswordBox]="true" [PlaceholderText]="'Please enter password'" [LabelText]="'Password'"
-            [(ngModel)]="password">
+          <rtextbox [IsPasswordBox]="true"
+            [PlaceholderText]="'Please enter password'"
+            [LabelText]="'Password'"
+            [(ngModel)]="password" name="password">
           </rtextbox>
         </div>
         <div class="card-hint">Value: "{{ password }}"</div>
       </div>
 
-      <!-- Checkbox -->
+            <!-- Checkbox -->
       <div class="card">
         <div class="card-header">
           <span class="card-tag tag-form">Form</span>
@@ -415,26 +507,32 @@
           <code class="card-selector">&lt;rcheckbox&gt;</code>
         </div>
         <div class="card-body" style="gap: 12px; display: flex; flex-direction: column;">
-          <rcheckbox DisplayText="Enable notifications" [(ngModel)]="checkboxValue">
+          <rcheckbox
+            DisplayText="Enable notifications"
+            [(ngModel)]="checkboxValue" name="checkbox1">
           </rcheckbox>
-          <rcheckbox DisplayText="Accept terms and conditions" [IsChecked]="true">
+          <rcheckbox
+            DisplayText="Accept terms and conditions"
+            [IsChecked]="true" name="checkbox2">
           </rcheckbox>
         </div>
-        <div class="card-hint">Value: <strong>{{ checkboxValue }}</strong>. Supports <code>ControlValueAccessor</code>.
-        </div>
+        <div class="card-hint">Value: <strong>{{ checkboxValue }}</strong>. Supports <code>ControlValueAccessor</code>.</div>
       </div>
 
 
       <div class="card">
         <div class="card-header">
-
+          
           <span class="card-tag tag-data">Data</span>
           <h2 class="card-title">Calendar</h2>
           <code class="card-selector">&lt;rcalendar&gt;</code>
         </div>
         <div class="card-body center" style="margin-left:-100px">
-          <rcalendar [IsReadOnly]="false" [IsDisabled]="false" [(ngModel)]="calendarSelectedDate"
-            (valueChanged)="onCalendarChange($event)">
+          <rcalendar
+            [IsReadOnly]="false"
+            [IsDisabled]="false"
+            [(ngModel)]="calendarSelectedDate"
+            (valueChanged)="onCalendarChange($event)" name="calendar">
           </rcalendar>
         </div>
         <div class="card-hint">
@@ -450,7 +548,11 @@
           <code class="card-selector">&lt;rnumeric&gt;</code>
         </div>
         <div class="card-body">
-          <rnumeric LabelText="Quantity" [(ngModel)]="numericValue" [MinValue]="11" [MaxValue]="3000">
+          <rnumeric
+            LabelText="Quantity"
+            [(ngModel)]="numericValue"
+            [MinValue]="11"
+            [MaxValue]="3000" name="numericInput">
           </rnumeric>
         </div>
         <div class="card-hint">Value: <strong>{{ numericValue }}</strong>. Spin buttons with min/max validation.</div>
@@ -464,9 +566,11 @@
           <code class="card-selector">&lt;rslider&gt;</code>
         </div>
         <div class="card-body">
-
-          <rslider [IsReadOnly]="false" [MinValue]="0" [MaxValue]="100" [(ngModel)]="sliderValue"
-            [IsDisplayValue]="true" [IsDisplayLabel]="true" [SliderBarWidth]="'300px'">
+          
+          <rslider
+            [IsReadOnly]="false" [MinValue]="0" [MaxValue]="100"
+            [(ngModel)]="sliderValue" [IsDisplayValue]="true" [IsDisplayLabel]="true"
+            [SliderBarWidth]="'300px'" name="slider">
           </rslider>
 
         </div>
@@ -483,17 +587,19 @@
         </div>
         <div class="card-body">
 
-          <rrangeslider [(ngModel)]="rrangeSliderData" [IsReadOnly]="false" [IsDisplayValue]="true"
-            [IsDisplayLabel]="true" [SliderBarWidth]="'300px'" [MinValue]="25" [MaxValue]="75">
+          <rrangeslider [(ngModel)]="rrangeSliderData" 
+              [IsReadOnly]="false"  [IsDisplayValue]="true" 
+              [IsDisplayLabel]="true" [SliderBarWidth]="'300px'"
+              [MinValue]="25" [MaxValue]="75" name="rangeSlider">
           </rrangeslider>
 
         </div>
         <div class="card-hint">
-          From Value: <strong>{{ rrangeSliderData.FromValue }}</strong>.
-          To Value: <strong>{{ rrangeSliderData.ToValue }}</strong>.
+          From Value: <strong>{{ rrangeSliderData?.FromValue }}</strong>.
+          To Value: <strong>{{ rrangeSliderData?.ToValue }}</strong>.
           Drag-based range slider using Angular CDK.</div>
       </div>
-
+      
       <!-- Switch -->
       <div class="card">
         <div class="card-header">
@@ -502,9 +608,13 @@
           <code class="card-selector">&lt;rswitch&gt;</code>
         </div>
         <div class="card-body" style="display: flex; gap: 20px; align-items: center; flex-wrap: wrap;">
-          <rswitch [IsDisabled]="false" DisplayLabel="Dark mode" [(ngModel)]="switchValue">
+          <rswitch [IsDisabled]="false" name="darkmode"
+            DisplayLabel="Dark mode"
+            [(ngModel)]="switchValue">
           </rswitch>
-          <rswitch DisplayLabel="Notifications" [ngModel]="true">
+          <rswitch
+            DisplayLabel="Notifications"
+            [ngModel]="true" name="notifications">
           </rswitch>
         </div>
         <div class="card-hint">Dark mode: <strong>{{ switchValue }}</strong>.</div>
@@ -518,7 +628,10 @@
           <code class="card-selector">&lt;rstarrating&gt;</code>
         </div>
         <div class="card-body">
-          <rstarrating [IsReadOnly]="false" [noOfStars]="10" [(ngModel)]="ratingValue" [starWidth]="35">
+          <rstarrating [IsReadOnly]="false"
+            [noOfStars]="10" name="starrating"
+            [(ngModel)]="ratingValue"
+            [starWidth]="28">
           </rstarrating>
         </div>
         <div class="card-hint">Rating: <strong>{{ ratingValue }} / 10</strong>. Click to set value.</div>
@@ -532,17 +645,25 @@
           <code class="card-selector">&lt;rradiobutton&gt;</code>
         </div>
         <div class="card-body" style="display: flex; flex-direction: column; gap: 10px;">
-          <rradiobutton DisplayText="Option A" [GroupName]="'demo-group'" [(ngModel)]="optionA">
+          <rradiobutton name="demogroup1"
+            DisplayText="Option A"
+            [GroupName]="'demo-group'"
+            [(ngModel)]="optionA">
           </rradiobutton>
 
-          <rradiobutton [IsReadOnly]="true" DisplayText="Option B" [GroupName]="'demo-group'" [(ngModel)]="optionB">
+          <rradiobutton [IsReadOnly]="true"
+            DisplayText="Option B" name="demogroup2"
+            [GroupName]="'demo-group'"
+            [(ngModel)]="optionB">
           </rradiobutton>
 
-          <rradiobutton DisplayText="Option C" [GroupName]="'demo-group'" [(ngModel)]="optionC">
+          <rradiobutton
+            DisplayText="Option C" name="demogroup3"
+            [GroupName]="'demo-group'"
+            [(ngModel)]="optionC">
           </rradiobutton>
         </div>
-        <div class="card-hint">Selected: <strong>{{ optionA ? 'Option A' : optionB ? 'Option B' : optionC ? 'Option C' :
-            'none' }}</strong>.</div>
+        <div class="card-hint">Selected: <strong>{{ optionA ? 'Option A' : optionB ? 'Option B' : optionC ? 'Option C' : 'none' }}</strong>.</div>
       </div>
 
       <!-- Dropdown -->
@@ -554,13 +675,21 @@
         </div>
         <div class="card-body">
 
-          <form #lform="ngForm">
+          <!-- <form #lform="ngForm"> -->
 
-            <rdropdown name="ldropdown" [minlength]="2" [maxlength]="3" [IsReadOnly]="false" [Items]="dropdownItems"
-              [DropDownContentWidth]="'310px'" [Width]="'280px'" #ldrop="ngModel" [(ngModel)]="dropdownSelected">
+            <rdropdown 
+              name="ldropdown"
+              [minlength]="2"
+              [maxlength]="3"
+              [IsReadOnly]="false"
+              [Items]="dropdownItems"
+              [DropDownContentWidth]="'310px'"
+              [Width]="'280px'"
+              #ldrop="ngModel"
+              [(ngModel)]="dropdownSelected">
             </rdropdown>
 
-          </form>
+          <!-- </form> -->
 
         </div>
         <div class="card-hint">Selected: <strong>{{ dropdownSelected?.DisplayValue || 'none' }}</strong>.</div>
@@ -574,7 +703,12 @@
           <code class="card-selector">&lt;rselectdropdown&gt;</code>
         </div>
         <div class="card-body">
-          <rselectdropdown [IsReadOnly]="false" [Items]="selectItems" [DropDownContentWidth]="'310px'" [Width]="'280px'"
+          <rselectdropdown name="selectdropdown"
+            [IsReadOnly]="false"
+            [Items]="selectItems"
+            [(ngModel)]="selectedItemr"
+            [DropDownContentWidth]="'310px'"
+            [Width]="'280px'"
             [IsMulti]="true">
           </rselectdropdown>
         </div>
@@ -590,12 +724,16 @@
         </div>
         <div class="card-body" style="align-items: center; display: flex; gap: 16px;">
 
-          <rcolorpicker [IsDisplayLabelText]="true" [DisplayColorInHex]="true" [LabelText]="'Fore Color :'"
-            [IsReadOnly]="false" [(ngModel)]="pickedColor">
+          <rcolorpicker name="colorpicker"
+            [IsDisplayLabelText]="true"
+            [DisplayColorInHex]="true"
+            [LabelText]="'Fore Color :'"
+            [IsReadOnly]="false"
+            [(ngModel)]="pickedColor">
           </rcolorpicker>
-
+          
           <div style="width: 40px; height: 40px; border-radius: 8px; border: 1px solid #ccc;"
-            [style.background]="pickedColor">
+               [style.background]="pickedColor">
           </div>
 
         </div>
@@ -610,9 +748,14 @@
           <code class="card-selector">&lt;rfileupload&gt;</code>
         </div>
         <div class="card-body">
-          <rfileupload [EnableShadowEffect]="false" [ShowFilesAsDropdownContainer]="true"
-            [EnableMaximumHeightForShowFiles]="true" [ShowFilesListMaximumHeightInPx]="'150px'"
-            [AllowedMaxFileSizeInMB]="10" [IsReadOnly]="false" [SelectMultipleFiles]="true">
+          <rfileupload name="fileupload" [(ngModel)]="fileupload1"
+            [EnableShadowEffect]="false" 
+            [ShowFilesAsDropdownContainer]="true"
+            [EnableMaximumHeightForShowFiles]="true"
+            [ShowFilesListMaximumHeightInPx]="'150px'"
+            [AllowedMaxFileSizeInMB]="10"
+            [IsReadOnly]= "false"
+            [SelectMultipleFiles]="true">
           </rfileupload>
         </div>
         <div class="card-hint">Supports multi-file selection with file list preview.</div>
@@ -626,7 +769,10 @@
           <code class="card-selector">&lt;rtimeselector&gt;</code>
         </div>
         <div class="card-body">
-          <rtimeselector [(ngModel)]="selectedTime" [IsReadOnly]="false">
+          <rtimeselector [SetCurrentTimeAsDefaultOnLoad]="false"
+            [(ngModel)]="selectedTime"
+            [IsReadOnly]="false"
+            name="timeselector">
           </rtimeselector>
         </div>
         <div class="card-hint">Selected: <strong>{{ selectedTime }}</strong>. Hour/minute/AM-PM dropdowns.</div>
@@ -647,21 +793,25 @@
           <code class="card-selector">&lt;rgroup-panel&gt;</code>
         </div>
         <div class="card-body">
-          <rgroup-panel groupname="Personal Info" [IsReadOnly]="false" [EnableShadowEffect]="false">
+          <rgroup-panel
+            groupname="Personal Info"
+            [IsReadOnly]="false"
+            [EnableShadowEffect]="false">
             <div style="display: flex; gap: 16px; flex-wrap: wrap; padding: 8px 0;">
-              <rtextbox [IsDisabled]="true" [ngModel]="'First'" PlaceholderText="First name" LabelText="First name">
-              </rtextbox>
-              <rtextbox [IsReadOnly]="true" [ngModel]="'Last'" PlaceholderText="Last name" LabelText="Last name">
-              </rtextbox>
-              <rtextbox PlaceholderText="Email" LabelText="Email"></rtextbox>
+              <rtextbox name="firstname" [IsDisabled]="true" [ngModel]="'First'" PlaceholderText="First name" LabelText="First name"></rtextbox>
+              <rtextbox name="lastname" [IsReadOnly]="true" [ngModel]="'Last'"  PlaceholderText="Last name" LabelText="Last name"></rtextbox>
+              <rtextbox name="email" PlaceholderText="Email" LabelText="Email"></rtextbox>
             </div>
           </rgroup-panel>
 
-          <rgroup-panel groupname="Preferences" [IsReadOnly]="false" [IsItemsArrangeHorizontal]="true"
+          <rgroup-panel
+            groupname="Preferences"
+            [IsReadOnly]="false"
+            [IsItemsArrangeHorizontal]="true"
             style="margin-top: 16px; display: block;">
-            <rswitch DisplayLabel="Newsletter"></rswitch> &nbsp;&nbsp;
-            <rswitch DisplayLabel="SMS alerts"></rswitch> &nbsp;&nbsp;
-            <rswitch DisplayLabel="Push notifications"></rswitch>
+            <rswitch name="newsletter" DisplayLabel="Newsletter"></rswitch> &nbsp;&nbsp;
+            <rswitch name="smsalerts" DisplayLabel="SMS alerts"></rswitch> &nbsp;&nbsp;
+            <rswitch name="pushnotifications" DisplayLabel="Push notifications"></rswitch>
           </rgroup-panel>
         </div>
         <div class="card-hint">Groups content with a titled border. Supports horizontal and vertical layouts.</div>
@@ -676,56 +826,85 @@
         </div>
         <div class="card-body" style="min-height: 200px;">
 
-          <rsplitter [IsReadOnly]="false" #splitcomp TotalWidth="1060px" TotalHeight="380px"
-            (OnSizeChanged)="panelSizeChange($event)">
+          <rsplitter [IsReadOnly]="false" #splitcomp TotalWidth="1060px" TotalHeight="380px" (OnSizeChanged)="panelSizeChange($event)">
 
             <rsplitpage *rpagecontent [InitialWidth]="'30%'">
-
+              
               <div style="padding: 12px; background: #f5f3ff; height: 93%; color: #534AB7; font-size: 14px;">
                 <strong>Left pane</strong>
                 <p style="margin-top: 8px; color: #888; font-size: 13px;">Drag the divider to resize.</p>
 
-                <rallocated-barchart #leftChart [Columns]="allocatedColumns" [xAxisItemNames]="allocatedMonths"
-                  [Width]="leftPanelWidth" [Height]="200" [GapBetweenBars]="allocatedGap" [NoOfSplitInValueAxis]="5"
-                  [XAxisTitle]="'Month'" [YAxisTitle]="'Budget'" [TextColor]="'#666'" [EnableBorder]="false"
-                  [BorderColor]="'#e0e0e0'" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"
-                  [AllocatedValueIndicatorColor]="'#333'" [PopupBackgroundOpacity]="0.95">
-                </rallocated-barchart>
-
+                         <rallocated-barchart #leftChart
+                            [Columns]="allocatedColumns"
+                            [xAxisItemNames]="allocatedMonths"
+                            [Width]="leftPanelWidth"
+                            [Height]="200"
+                            [GapBetweenBars]="allocatedGap"
+                            [NoOfSplitInValueAxis]="5"
+                            [XAxisTitle]="'Month'"
+                            [YAxisTitle]="'Budget'"
+                            [TextColor]="'#666'"
+                            [EnableBorder]="false"
+                            [BorderColor]="'#e0e0e0'"
+                            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
+                            [AllocatedValueIndicatorColor]="'#333'"
+                            [PopupBackgroundOpacity]="0.95">
+                          </rallocated-barchart>
+                          
               </div>
-
+              
             </rsplitpage>
 
             <rsplitpage *rpagecontent [InitialWidth]="'35%'">
-
+              
               <div style="padding: 12px; background: #f0fdf8; height: 93%; color: #0F6E56; font-size: 14px;">
                 <strong>middle pane</strong>
                 <p style="margin-top: 8px; color: #888; font-size: 13px;">Can contain any content or component.</p>
 
-                <rallocated-barchart #middleChart [Columns]="allocatedColumns" [xAxisItemNames]="allocatedMonths"
-                  [Width]="middlePanelWidth" [Height]="200" [GapBetweenBars]="allocatedGap" [NoOfSplitInValueAxis]="5"
-                  [XAxisTitle]="'Month'" [YAxisTitle]="'Budget'" [TextColor]="'#666'" [EnableBorder]="false"
-                  [BorderColor]="'#e0e0e0'" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"
-                  [AllocatedValueIndicatorColor]="'#333'" [PopupBackgroundOpacity]="0.95">
-                </rallocated-barchart>
+                         <rallocated-barchart #middleChart
+                            [Columns]="allocatedColumns"
+                            [xAxisItemNames]="allocatedMonths"
+                            [Width]="middlePanelWidth"
+                            [Height]="200"
+                            [GapBetweenBars]="allocatedGap"
+                            [NoOfSplitInValueAxis]="5"
+                            [XAxisTitle]="'Month'"
+                            [YAxisTitle]="'Budget'"
+                            [TextColor]="'#666'"
+                            [EnableBorder]="false"
+                            [BorderColor]="'#e0e0e0'"
+                            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
+                            [AllocatedValueIndicatorColor]="'#333'"
+                            [PopupBackgroundOpacity]="0.95">
+                          </rallocated-barchart>
 
               </div>
 
             </rsplitpage>
 
-            <rsplitpage *rpagecontent [InitialWidth]="'35%'">
+             <rsplitpage *rpagecontent [InitialWidth]="'35%'">
 
               <div style="padding: 12px; background: #f5f3ff; height: 93%; color: #534AB7; font-size: 14px;">
                 <strong>right pane</strong>
                 <p style="margin-top: 8px; color: #888; font-size: 13px;">Drag the divider to resize.</p>
 
-                <rallocated-barchart #rightChart [Columns]="allocatedColumns" [xAxisItemNames]="allocatedMonths"
-                  [Width]="rightPanelWidth" [Height]="200" [GapBetweenBars]="allocatedGap" [NoOfSplitInValueAxis]="5"
-                  [XAxisTitle]="'Month'" [YAxisTitle]="'Budget'" [TextColor]="'#666'" [EnableBorder]="false"
-                  [BorderColor]="'#e0e0e0'" [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"
-                  [AllocatedValueIndicatorColor]="'#333'" [PopupBackgroundOpacity]="0.95">
-                </rallocated-barchart>
-
+                         <rallocated-barchart #rightChart
+                            [Columns]="allocatedColumns"
+                            [xAxisItemNames]="allocatedMonths"
+                            [Width]="rightPanelWidth"
+                            [Height]="200"
+                            [GapBetweenBars]="allocatedGap"
+                            [NoOfSplitInValueAxis]="5"
+                            [XAxisTitle]="'Month'"
+                            [YAxisTitle]="'Budget'"
+                            [TextColor]="'#666'"
+                            [EnableBorder]="false"
+                            [BorderColor]="'#e0e0e0'"
+                            [GlassyEffect]="enableGlassyEffect" [GlassyEffectColor]="glassyColor"  
+                            [AllocatedValueIndicatorColor]="'#333'"
+                            [PopupBackgroundOpacity]="0.95">
+                          </rallocated-barchart>
+                          
               </div>
 
             </rsplitpage>
@@ -740,36 +919,36 @@
     <!-- ================================================================
          NAVIGATION
          ================================================================ -->
-    <section *ngIf="activeSection === 'navigation'" class="section">
+    <section  *ngIf="activeSection === 'navigation'" class="section">
 
-      <!-- rcarousel -->
-      <div class="card card-wide">
-        <div class="card-header">
-          <span class="card-tag tag-nav">Nav</span>
-          <h2 class="card-title">Carousel</h2>
-          <code class="card-selector">&lt;rcarousel&gt;</code>
+        <!-- rcarousel -->
+        <div class="card card-wide">
+          <div class="card-header">
+            <span class="card-tag tag-nav">Nav</span>
+            <h2 class="card-title">Carousel</h2>
+            <code class="card-selector">&lt;rcarousel&gt;</code>
+          </div>
+          <div class="card-body">
+
+            <rcarousel [EnableAutoPlay]="true" [AutoPlayDurationBetweenSlides]="3000" [Width]="'700px'" 
+                      [Height]="'350px'" (OnContentClick)="OnContentClick($event)">
+
+				 @for (im of imagesNames; track $index) {
+				            <img rimage src="./images/{{im}}.png" />
+				            }
+
+            </rcarousel>
+
+            &nbsp;&nbsp;&nbsp;&nbsp;
+
+            <rbutton [ButtonWidth]="'120px'" (ButtonClick)="AddImages()">
+              Add Slides
+            </rbutton>
+
+          </div>
+          <div class="card-hint">RCarousel<code>&lt;rcarousel&gt;</code>.</div>
         </div>
-        <div class="card-body">
-
-          <rcarousel [EnableAutoPlay]="true" [AutoPlayDurationBetweenSlides]="3000" [Width]="'700px'" [Height]="'350px'"
-            (OnContentClick)="OnContentClick($event)">
-
-            @for (im of imagesNames; track $index) {
-            <img rimage src="./images/{{im}}.png" />
-            }
-
-          </rcarousel>
-
-          &nbsp;&nbsp;&nbsp;&nbsp;
-
-          <rbutton [ButtonWidth]="'120px'" (ButtonClick)="AddImages()">
-            Add Slides
-          </rbutton>
-
-        </div>
-        <div class="card-hint">RCarousel<code>&lt;rcarousel&gt;</code>.</div>
-      </div>
-
+        
       <!-- Flat Tabs -->
       <div class="card card-wide">
         <div class="card-header">
@@ -787,7 +966,7 @@
             <rtab *tabidfor="{ 'TabId':'tab2', 'HeaderText':'Details', 'Context':this }">
               <div style="padding: 16px; font-size: 14px; color: #555;">
                 Details content — expand with tables or charts.
-              </div>
+              </div>  
             </rtab>
             <rtab *tabidfor="{ 'TabId':'tab3', 'HeaderText':'Settings', 'Context':this }">
               <div style="padding: 16px; font-size: 14px; color: #555;">
@@ -799,8 +978,8 @@
         <div class="card-hint">Tabs support drag-to-reorder and content projection via <code>&lt;rtab&gt;</code>.</div>
       </div>
 
-
-
+      
+      
       <!-- Simple Tabs -->
       <div class="card card-wide">
         <div class="card-header">
@@ -810,8 +989,8 @@
         </div>
         <div class="card-body">
 
-          <rsimpletabs [SelectedTabId]="'tab2'" [EnableBoxShadow]="true" [Name]="'container1'" [IsDisabled]="false"
-            [TabWidth]="'500px'" [TabHeight]="'140px'">
+          <rsimpletabs [SelectedTabId]="'tab2'" [EnableBoxShadow]="true" [Name]="'container1'" [IsDisabled]="false" 
+              [TabWidth]="'500px'" [TabHeight]="'140px'">
             <rtab *tabidfor="{ 'TabId':'tab1', 'HeaderText':'Overview', 'Context':this }">
               <div style="padding: 16px; font-size: 14px; color: #555;">
                 Overview content — summarise your feature here.
@@ -820,7 +999,7 @@
             <rtab *tabidfor="{ 'TabId':'tab2', 'HeaderText':'Details', 'Context':this }">
               <div style="padding: 16px; font-size: 14px; color: #555;">
                 Details content — expand with tables or charts.
-              </div>
+              </div>  
             </rtab>
             <rtab *tabidfor="{ 'TabId':'tab3', 'HeaderText':'Settings', 'Context':this }">
               <div style="padding: 16px; font-size: 14px; color: #555;">
@@ -834,7 +1013,7 @@
       </div>
 
 
-      <!--  Tabs -->
+       <!--  Tabs -->
       <div class="card card-wide">
         <div class="card-header">
           <span class="card-tag tag-nav">Nav</span>
@@ -843,25 +1022,25 @@
         </div>
         <div class="card-body">
 
-          <ng-template #tabContent4 let-tabIdParam="tabIdParam">
+            <ng-template #tabContent4 let-tabIdParam="tabIdParam">
             <div style="padding: 16px; font-size: 14px; color: #555;">
               Content for {{ tabIdParam }} tab.
             </div>
           </ng-template>
-
+          
           <rbutton [ButtonWidth]="'120px'" (ButtonClick)="addNewTab()">
             Add New Tab
           </rbutton>
-
+          
           &nbsp;&nbsp;&nbsp;&nbsp;
-
+          
           <rbutton [ButtonWidth]="'120px'" (ButtonClick)="deleteNewTab()">
             Delete New Tab
           </rbutton>
 
-          <br /><br />
+          <br/><br/>
 
-
+          
           <rtabs #rtabContainer [Name]="'container3'" [IsDisabled]="false" [TabWidth]="'500px'" [TabHeight]="'140px'">
             <rtab *tabidfor="{ 'TabId':'tab1', 'HeaderText':'Overview', 'Context':this }">
               <div style="padding: 16px; font-size: 14px; color: #555;">
@@ -871,7 +1050,7 @@
             <rtab *tabidfor="{ 'TabId':'tab2', 'HeaderText':'Details', 'Context':this }">
               <div style="padding: 16px; font-size: 14px; color: #555;">
                 Details content — expand with tables or charts.
-              </div>
+              </div>  
             </rtab>
             <rtab *tabidfor="{ 'TabId':'tab3', 'HeaderText':'Settings', 'Context':this }">
               <div style="padding: 16px; font-size: 14px; color: #555;">
@@ -885,17 +1064,19 @@
 
       <!-- Tree -->
 
-      <div class="card card-wide">
+       <div class="card card-wide">
         <div class="card-header">
           <span class="card-tag tag-nav">Nav</span>
           <h2 class="card-title">Tree</h2>
           <code class="card-selector">&lt;rtree&gt;</code>
         </div>
         <div class="card-body">
-          <rtree [IsDisabled]="false" [Items]="treeItems" (onExpandClicked)="onTreeExpand($event)"
+        <rtree [IsDisabled]="false" name="tree"
+            [Items]="treeItems"
+            (onExpandClicked)="onTreeExpand($event)"
             (onItemSelected)="onTreeExpand($event)">
           </rtree>
-
+          
         </div>
         <div class="card-hint">Hierarchical file-tree. Click items to expand/collapse nodes.</div>
       </div>
@@ -908,21 +1089,22 @@
           <code class="card-selector">&lt;rstepper-vertical&gt;</code>
         </div>
         <div class="card-body">
-          <rstepper-vertical [IsDisabled]="false" [ShowStateVertical]="false">
+          <rstepper-vertical [IsDisabled]="false"
+            [ShowStateVertical]="false">
             <rstep [Title]="'Account'" [IsStepValid]="true">
               <ng-template rstepview>
-                <div style="padding: 8px 0; font-size: 13px; color: #888;">Enter email and password.</div>
+               <div style="padding: 8px 0; font-size: 13px; color: #888;">Enter email and password.</div>
               </ng-template>
             </rstep>
             <rstep [Title]="'Profile'" [IsStepValid]="true">
               <ng-template rstepview>
-                <div style="padding: 8px 0; font-size: 13px; color: #888;">Add your name and avatar.</div>
+               <div style="padding: 8px 0; font-size: 13px; color: #888;">Add your name and avatar.</div>
               </ng-template>
             </rstep>
             <rstep [Title]="'Preferences'" [IsStepValid]="true">
               <ng-template rstepview>
                 <div style="padding: 8px 0; font-size: 13px; color: #888;">Choose notification settings.</div>
-              </ng-template>
+              </ng-template>  
             </rstep>
             <rstep [Title]="'Confirm'" [IsStepValid]="true">
               <ng-template rstepview>
@@ -930,23 +1112,25 @@
               </ng-template>
             </rstep>
           </rstepper-vertical>
-
+        
           <div style="display: flex; gap: 8px; margin-top: 12px;">
-            <button (click)="stepperActiveIndex = stepperActiveIndex > 0 ? stepperActiveIndex - 1 : 0"
+            <button
+              (click)="stepperActiveIndex = stepperActiveIndex > 0 ? stepperActiveIndex - 1 : 0"
               style="padding: 6px 16px; border: 1px solid #ccc; border-radius: 6px; cursor: pointer; background: white;">
               Back
             </button>
-            <button (click)="stepperActiveIndex = stepperActiveIndex < 3 ? stepperActiveIndex + 1 : 3"
+            <button
+              (click)="stepperActiveIndex = stepperActiveIndex < 3 ? stepperActiveIndex + 1 : 3"
               style="padding: 6px 16px; border: none; border-radius: 6px; cursor: pointer; background: #7F77DD; color: white;">
               Next
             </button>
           </div>
         </div>
         <div class="card-hint">Step {{ stepperActiveIndex + 1 }} of 4 active. Each step projects custom content.</div>
-
+      
       </div>
 
-      <!-- stepper -->
+       <!-- stepper -->
       <div class="card card-wide">
         <div class="card-header">
           <span class="card-tag tag-nav">Nav</span>
@@ -978,12 +1162,12 @@
           </rstepper-horizontal>
         </div>
         <div class="card-hint">Step {{ stepperActiveIndex + 1 }} of 4 active. Each step projects custom content.</div>
-
+      
       </div>
 
-      <!-- sequence Tracker -->
+        <!-- sequence Tracker -->
       <div class="card card-wide">
-        <div class="card-header">
+        <div class="card-header"> 
           <span class="card-tag tag-nav">Nav</span>
           <h2 class="card-title">RSequence (Tracker)</h2>
           <code class="card-selector">&lt;rsequences-tracker&gt;</code>
@@ -1000,7 +1184,7 @@
                 <div style="padding: 8px 0; font-size: 13px; color: gray;">Add your Name and Avatar.</div>
               </div>
             </rsequencetracker>
-
+            
             <rsequencetracker *rtrackercontent="{ 'StepNo': 3, 'Height': '200px'}">
               <div style="">
                 <div style="padding: 8px 0; font-size: 13px; color: gray;">Messages info.</div>
@@ -1009,10 +1193,10 @@
           </rsequences-tracker>
         </div>
         <div class="card-hint">Sequence Tracker.</div>
-
+      
       </div>
 
-      <!-- sequence Tracker -->
+        <!-- sequence Tracker -->
       <div class="card card-wide">
         <div class="card-header">
           <span class="card-tag tag-nav">Nav</span>
@@ -1020,8 +1204,7 @@
           <code class="card-selector">&lt;raccordion&gt;</code>
         </div>
         <div class="card-body">
-
-          <raccordion [IsDisabled]="false" [GapBetweenContent]="'5px'" [ContentWidth]="'45%'">
+          <raccordion [IsDisabled]="false" [GapBetweenContent]="'5px'" [ContentWidth]="'65%'">
             <ng-container *rcontent="{ 'ContentId': 1, 'Title': 'Title 1', 'Height': '200px', 'IsOpened': false }">
               <div style="height: 90%;border-radius: 5px; padding:5px">
                 <div style="padding: 8px 0; font-size: 13px; color: gray;">Enter email and password.</div>
@@ -1040,7 +1223,7 @@
           </raccordion>
         </div>
         <div class="card-hint">RAccordion.</div>
-
+      
       </div>
 
 
@@ -1059,7 +1242,9 @@
           <code class="card-selector">&lt;rcalendar&gt;</code>
         </div>
         <div class="card-body center" style="margin-left:-100px">
-          <rcalendar [(ngModel)]="calendarSelectedDate" (valueChanged)="onCalendarChange($event)">
+          <rcalendar name="rcal1"
+            [(ngModel)]="calendarSelectedDate"
+            (valueChanged)="onCalendarChange($event)">
           </rcalendar>
         </div>
         <div class="card-hint">
@@ -1075,15 +1260,22 @@
           <code class="card-selector">&lt;rtimer&gt;</code>
         </div>
         <div class="card-body center" style="flex-direction: column; gap: 16px;">
-          <rtimer [IsDisabled]="false" [DisplayType]="0" [CircularWidth]="100" #timerRef
+          <rtimer [IsDisabled]="false" name="rtimer1"
+            [DisplayType]="0"
+            [CircularWidth]="100"
+            #timerRef
             [CallbackAfterCertainSeconds]="callbackAfterCertainSeconds"
             (CallbackTriggeredAfterCertainSeconds)="CallbackMethodAfterCertainSeconds($event)">
           </rtimer>
           <div style="display: flex; gap: 10px;">
-            <rbutton (ButtonClick)="Start($event)" [BackgroundColor]="'#1D9E75'">
+            <rbutton
+              (ButtonClick)="Start($event)"
+              [BackgroundColor]="'#1D9E75'">
               Start
             </rbutton>
-            <rbutton (ButtonClick)="Stop($event)" [BackgroundColor]="'#E24B4A'">
+            <rbutton
+              (ButtonClick)="Stop($event)"
+              [BackgroundColor]="'#E24B4A'">
               Stop
             </rbutton>
           </div>
@@ -1102,13 +1294,14 @@
         </div>
         <div class="card-body">
 
-          <rstate-vertical [IsDisabled]="false" [Items]="sequenceItems">
+          <rstate-vertical [IsDisabled]="false" name="rstate1" [(ngModel)]="stateVertical"
+            [Items]="sequenceItems">
           </rstate-vertical>
 
         </div>
         <div class="card-hint">Order tracking pipeline. States: completed, active, pending.</div>
       </div>
-
+      
       <!-- Sequences (Horizontal) -->
       <div class="card">
         <div class="card-header">
@@ -1117,7 +1310,8 @@
           <code class="card-selector">&lt;rstate-horizontal&gt;</code>
         </div>
         <div class="card-body">
-          <rstate-horizontal [IsDisabled]="false" [Items]="hsequenceItems">
+          <rstate-horizontal [IsDisabled]="false" name="rstateh" [(ngModel)]="stateHorizontal"
+            [Items]="hsequenceItems">
           </rstate-horizontal>
         </div>
         <div class="card-hint">Order tracking pipeline. States: completed, active, pending.</div>
@@ -1128,168 +1322,198 @@
     <section *ngIf="activeSection === 'events'" class="section">
 
       <!-- Events Schedule -->
-      <div class="card card-wide" style="height: 600px;">
+       <div class="card card-wide"  style="height: 600px;">
         <div class="card-header">
           <span class="card-tag tag-nav">Events</span>
           <h2 class="card-title">Programs List</h2>
           <code class="card-selector">&lt;revents-schedule&gt;</code>
         </div>
         <div class="card-body">
-
-          <revents-schedule [IsDisabled]="false" [FontSize]="'12px'" [ShowMarker]="true" [ShowScrollBar]="false"
-            [MinutesForEachCell]="30" [SelectedDate]="selectedDate" [EnableMovePageToCurrentTime]="true"
+        
+          <revents-schedule [IsDisabled]="false" [FontSize]="'12px'" name="revents-schedule"
+            [ShowMarker]="true" [ShowScrollBar]="false"
+            [MinutesForEachCell]="30" [SelectedDate]="selectedDate" 
+            [EnableMovePageToCurrentTime]="true"
             [ScheduleItems]="scheduleItems">
           </revents-schedule>
 
         </div>
 
-        <div class="card-hint">Events Schedule which will use to show the scedhule for entire day, you can configure for
-          all days.</div>
-
+        <div class="card-hint">Events Schedule which will use to show the scedhule for entire day, you can configure for all days.</div>
+      
       </div>
 
       <!-- Events Calendar -->
-      <div class="card card-wide" style="height: 900px;">
+       <div class="card card-wide"  style="height: 900px;">
         <div class="card-header">
           <span class="card-tag tag-nav">Events</span>
           <h2 class="card-title">Events Calendar</h2>
           <code class="card-selector">&lt;revents-calender&gt;</code>
         </div>
         <div class="card-body">
-
-          <revents-calender [FontSize]="'12px'" [IsPopupModalReadOnly]="false"
-            (ChangeMonthEvent)="changeCalenderMonth($event)" [EachDayHeightInPx]="'50px'" [EachDayWidthInPx]="'120px'"
-            [(ngModel)]="calenderEvents"></revents-calender>
-
+        
+            <revents-calender name="revents-calender" [FontSize]="'12px'" [IsPopupModalReadOnly]="false"
+              (ChangeMonthEvent)="changeCalenderMonth($event)" [EachDayHeightInPx]="'50px'"
+              [EachDayWidthInPx]="'120px'" [(ngModel)]="calenderEvents"></revents-calender>
+                
         </div>
-        <div class="card-hint">Events Calender which will use to add events to particular date. you can use the defer
-          loading of events for a month.</div>
-
-      </div>
-
+        <div class="card-hint">Events Calender which will use to add events to particular date. you can use the defer loading of events for a month.</div>
+      
+      </div>  
+      
 
     </section>
 
     <section *ngIf="activeSection === 'grid'" class="section">
 
       <!-- RGrid -->
-      <div class="card card-wide" style="height: 760px;">
+       <div class="card card-wide"  style="height: 760px;">
         <div class="card-header">
           <span class="card-tag tag-nav">Grid</span>
           <h2 class="card-title">RGrid</h2>
           <code class="card-selector">&lt;rgrid&gt;</code>
         </div>
         <div class="card-body">
-          <span>Header Theme:</span> &nbsp; &nbsp;
+            <span>Header Theme:</span> &nbsp; &nbsp;
 
-          <rdropdown [Items]="colors" PlaceholderText="Choose a Color" [DropDownContentWidth]="'310px'" Width="280px"
-            [(ngModel)]="selectedColor">
-          </rdropdown>
+            <rdropdown name="dropdown1"
+                [Items]="colors"
+                PlaceholderText="Choose a Color"
+                [DropDownContentWidth]="'310px'"
+                Width="280px"
+                [(ngModel)]="selectedColor">
+            </rdropdown>
 
-          <br />
-          <br />
+            <br />
+            <br />
+            
+            <rgrid  [PageItems]="ditems" [Items]="gridItems1" name="rgrid1"
+                    [IsDisabled]="true"
+                    [RowHoverBackgroundOpacity] = "0.8"
+                    [EnableAlternateRowColor]="true"
+                    [EnableShadow]="false" [ShowGroupHeader]="true"
+                    [RowHeightInPx]="'auto'" [GroupHeaderRowHeightInPx]="'30px'"
+                    [GroupByIconColor]="'#8f19ff'" [ShowEditUpdate]="true"
+                    [EnableSelectColummn]="true" [ItemsPerPage]="ItemsPerPage"
 
-          <rgrid [PageItems]="ditems" [Items]="gridItems1" [IsDisabled]="true" [RowHoverBackgroundOpacity]="0.8"
-            [EnableAlternateRowColor]="true" [EnableShadow]="false" [ShowGroupHeader]="true" [RowHeightInPx]="'auto'"
-            [GroupHeaderRowHeightInPx]="'30px'" [GroupByIconColor]="'#8f19ff'" [ShowEditUpdate]="true"
-            [EnableSelectColummn]="true" [ItemsPerPage]="ItemsPerPage" [EnableAlternateRowColor]="true"
-            [RowHoverBackgroundOpacity]="1" [TableHeight]="'400px'" [TableWidth]="'950px'">
+                    [EnableAlternateRowColor]="true"
+                    [RowHoverBackgroundOpacity]="1"
 
-          </rgrid>
+                    [TableHeight]="'400px'" [TableWidth]="'950px'">
 
+            </rgrid>
+                
         </div>
         <div class="card-hint">RGrid with default UI for given data.</div>
       </div>
 
       <!-- RGrid Columns Defined-->
-      <div class="card card-wide" style="height: 760px;">
+       <div class="card card-wide"  style="height: 760px;">
         <div class="card-header">
           <span class="card-tag tag-nav">Grid</span>
           <h2 class="card-title">RGrid</h2>
           <code class="card-selector">&lt;rgrid&gt;</code>
         </div>
         <div class="card-body">
-          <span>Header Theme:</span> &nbsp; &nbsp;
-          <rdropdown [Items]="colors" PlaceholderText="Choose a Color" [DropDownContentWidth]="'310px'" Width="280px"
-            [(ngModel)]="selectedColor">
-          </rdropdown>
-          <br />
-          <br />
+            <span>Header Theme:</span> &nbsp; &nbsp;
+            <rdropdown name="dropdown2"
+                [Items]="colors"
+                PlaceholderText="Choose a Color"
+                [DropDownContentWidth]="'310px'"
+                Width="280px"
+                [(ngModel)]="selectedColor">
+            </rdropdown>
+            <br />
+            <br />
 
-          <rgrid [PageItems]="ditems" [Items]="gridItems1" [EnableShadow]="false" [ShowGroupHeader]="true"
-            [RowHeightInPx]="'auto'" [GroupHeaderRowHeightInPx]="'50px'" [ShowEditUpdate]="true"
-            [EnableSelectColummn]="true" [ItemsPerPage]="ItemsPerPage" [EnableAlternateRowColor]="true"
-            [RowHoverBackgroundOpacity]="1" [TableHeight]="'400px'" [TableWidth]="'950px'">
+            <rgrid [PageItems]="ditems" [Items]="gridItems1"
+                  name="grid2"
+                  [EnableShadow]="false" 
+                  [ShowGroupHeader]="true"
+                  [RowHeightInPx]="'auto'" 
+                  [GroupHeaderRowHeightInPx]="'50px'"
+                  [ShowEditUpdate]="true"
+                  [EnableSelectColummn]="true" 
+                  [ItemsPerPage]="ItemsPerPage"
 
-            <rcolumn [Name]="'column1'" [PropToBindToCellInfo]="'Id'" [HeaderText]="'S.No'" [Width]="'100px'"
-              [Height]="'20px'">
-              <ng-template readviewtemplate let-Item let-cell="CellInfo">
-                <span>{{cell.Value}}</span>
-              </ng-template>
-              <ng-template editviewtemplate let-Item let-rcell="CellInfo">
-                <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false" [PaddingLeft]="'0px'"
-                  [TextBoxWidth]="'50px'" [(ngModel)]="rcell.Value" />
-              </ng-template>
-            </rcolumn>
+                  [EnableAlternateRowColor]="true"
+                  [RowHoverBackgroundOpacity]="1"
 
-            <rcolumn [Name]="'column2'" [PropToBindToCellInfo]="'Name'" [HeaderText]="'First Name'" [Width]="'240px'">
-              <ng-template headertemplate let-Item>
-                {{Item.HeaderText}}
-              </ng-template>
-              <ng-template readviewtemplate let-Item let-cell="CellInfo">
-                <span>{{Item.Name}} -- {{cell.Value}}</span>
-              </ng-template>
-              <ng-template editviewtemplate let-cell="CellInfo">
-                <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false" [PaddingLeft]="'0px'"
-                  [TextBoxWidth]="'140px'" [(ngModel)]="cell.Value" />
-              </ng-template>
-            </rcolumn>
+                  [TableHeight]="'400px'" [TableWidth]="'950px'">
 
-            <rcolumn [Name]="'column3'" [PropToBindToCellInfo]="'Age'" [HeaderText]="'Age'" [Width]="'170px'">
-              <ng-template readviewtemplate let-Item let-cell="CellInfo">
-                <span>{{Item.Age}}</span>
-              </ng-template>
-              <ng-template editviewtemplate let-cell="CellInfo">
+                  <rcolumn [Name]="'column1'" [PropToBindToCellInfo]="'Id'" [HeaderText]="'S.No'" [Width]="'100px'"
+                    [Height]="'20px'">
+                    <ng-template readviewtemplate let-Item let-cell="CellInfo">
+                      <span>{{cell.Value}}</span>
+                    </ng-template>
+                    <ng-template editviewtemplate let-Item let-rcell="CellInfo">
+                      <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
+                        [PaddingLeft]="'0px'"
+                        [TextBoxWidth]="'50px'" [(ngModel)]="rcell.Value" />
+                    </ng-template>
+                  </rcolumn>
 
-                <rnumeric [PaddingLeft]="'0px'" [(ngModel)]="cell.Value" [LabelText]="''" [TextBoxWidth]="'120px'"
-                  [TextBoxHeight]="'15px'"></rnumeric>
+                  <rcolumn [Name]="'column2'" [PropToBindToCellInfo]="'Name'" [HeaderText]="'First Name'" [Width]="'240px'">
+                    <ng-template headertemplate let-Item>
+                      {{Item.HeaderText}}
+                    </ng-template>
+                    <ng-template readviewtemplate let-Item let-cell="CellInfo">
+                      <span>{{Item.Name}} -- {{cell.Value}}</span>
+                    </ng-template>
+                    <ng-template editviewtemplate let-cell="CellInfo">
+                      <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
+                        [PaddingLeft]="'0px'"
+                        [TextBoxWidth]="'140px'" [(ngModel)]="cell.Value" />
+                    </ng-template>
+                  </rcolumn>
 
-              </ng-template>
-            </rcolumn>
+                  <rcolumn [Name]="'column3'" [PropToBindToCellInfo]="'Age'" [HeaderText]="'Age'" [Width]="'170px'">
+                    <ng-template readviewtemplate let-Item let-cell="CellInfo">
+                      <span>{{Item.Age}}</span>
+                    </ng-template>
+                    <ng-template editviewtemplate let-cell="CellInfo">
+                      
+                      <rnumeric
+                        [PaddingLeft]="'0px'" 
+                        [(ngModel)]="cell.Value" [LabelText]="''" [TextBoxWidth]="'120px'" [TextBoxHeight]="'15px'"></rnumeric>
+                        
+                    </ng-template>
+                  </rcolumn>
 
-            <rcolumn [Name]="'column4'" [PropToBindToCellInfo]="'Education'" [HeaderText]="'Degree'" [Width]="'160px'">
-              <ng-template readviewtemplate let-Item let-cell="CellInfo">
-                <span>{{Item.Education.Value}}</span> -
-                <span>{{Item.Education.DisplayValue}}</span>
-              </ng-template>
-              <ng-template editviewtemplate let-cell="CellInfo">
+                  <rcolumn [Name]="'column4'" [PropToBindToCellInfo]="'Education'" [HeaderText]="'Degree'"
+                    [Width]="'160px'">
+                    <ng-template readviewtemplate let-Item let-cell="CellInfo">
+                      <span>{{Item.Education.Value}}</span> -
+                      <span>{{Item.Education.DisplayValue}}</span>
+                    </ng-template>
+                    <ng-template editviewtemplate let-cell="CellInfo">
+                      <rdropdown [Items]="degrees" [DropDownContentWidth]="'126px'" [Width]="'100px'" [(ngModel)]="cell.Value">
+                      </rdropdown>
+                    </ng-template>
+                  </rcolumn>
 
-                <rdropdown [Items]="degrees" [DropDownContentWidth]="'126px'" [Width]="'100px'"
-                  [(ngModel)]="cell.Value">
-                </rdropdown>
+                  <rcolumn [Name]="'column5'" [IsComputationalColumn]="true" [HeaderText]="'Pass Age'" [Width]="'100px'">
+                    <ng-template readviewtemplate let-Item>
+                      <span>{{Item.Age + 4}}</span>
+                    </ng-template>
+                    <ng-template editviewtemplate let-cell="CellInfo">
+                      <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false"
+                        [PaddingLeft]="'0px'"
+                        [TextBoxWidth]="'40px'" [(ngModel)]="cell.Value" />s
+                    </ng-template>
+                  </rcolumn>
 
-              </ng-template>
-            </rcolumn>
-
-            <rcolumn [Name]="'column5'" [IsComputationalColumn]="true" [HeaderText]="'Pass Age'" [Width]="'100px'">
-              <ng-template readviewtemplate let-Item>
-                <span>{{Item.Age + 4}}</span>
-              </ng-template>
-              <ng-template editviewtemplate let-cell="CellInfo">
-                <rtextbox [TextBoxHeight]="'12px'" [EnableMarginTextBottom]="false" [PaddingLeft]="'0px'"
-                  [TextBoxWidth]="'40px'" [(ngModel)]="cell.Value" />
-              </ng-template>
-            </rcolumn>
-
-          </rgrid>
-
+            </rgrid>
+                
         </div>
         <div class="card-hint">RGrid with columns template defined.</div>
-
-      </div>
+            
+       </div>
 
     </section>
 
   </main>
 
 </div>
+
+</form>
