@@ -357,8 +357,8 @@ export class RAllocatedBarChartComponent extends RChartPopupBaseComponent implem
       this.context.beginPath();
       this.context.save();
       this.context.globalAlpha = 0.2;
-      this.context.filter = "blur(10px)";
-      this.context.fillStyle = this.GlassyEffectColor;
+      this.context.filter = "blur(10px)";      
+      this.context.fillStyle = this.GlassyEffectColor ?? 'transparent';
       this.context.roundRect(x, y, gwidth, gheight, 7);
       this.context.fill();
       this.context.restore();
