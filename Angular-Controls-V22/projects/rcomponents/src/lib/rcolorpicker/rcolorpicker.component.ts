@@ -75,7 +75,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   public SelectedColorRgb: string | undefined = undefined;
 
   public set SelectedColorHex(value: string) {
-    this._selectedColorHex = value;
+    this._selectedColorHex = this.NormalizeHexColor(value);
   }
   public get SelectedColorHex(): string | undefined {
     return this._selectedColorHex?.toUpperCase();
@@ -265,7 +265,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   }
 
   private AssignColorsForInputColor(value: string) {
-    value = value.toString().toLowerCase();
+    value = this.NormalizeHexColor(value.toString());
     this.SelectedColorHex = value;
     this.SelectedColorRgb = this.HexToRgb(value);
 
@@ -674,7 +674,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
         }
       }
 
-      if (_varX) {
+      if (_varX != undefined) {
         res({ x: _varX, y: _varY });
       } else {
         res(undefined);
@@ -886,19 +886,26 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
     var max = Math.max(r, g, b);
     var lum = (min + max) / 2;
 
-    if (lum > 0.5) {
-      var sat = (max - min) / (max + min);
-    } else {
-      var sat = (max - min) / (2 - max - min);
-    }
-    if (r >= b && r >= g) {
-      var hue = (g - b) / (max - min);
-    } else
-      if (b >= b && b >= g) {
-        var hue = 4.0 + (r - g) / (max - min);
+    let sat = 0;
+    let hue = 0;
+    const delta = max - min;
+
+    if(delta != 0) {
+      if (lum > 0.5) {
+        sat = (max - min) / (max + min);
       } else {
-        var hue = 2.0 + (b - r) / (max - min);
+        sat = (max - min) / (2 - max - min);
       }
+      if (r >= b && r >= g) {
+        hue = (g - b) / (max - min);
+      } else
+        if (b >= b && b >= g) {
+          hue = 4.0 + (r - g) / (max - min);
+        } else {
+          hue = 2.0 + (b - r) / (max - min);
+        }
+    }
+
     hue *= 60;
     if (hue < 0) hue += 360;
     hue = (hue / 360);
@@ -931,7 +938,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   }
 
   HexToRgb(hex: string) {
-    hex = hex.substring(1);
+    hex = this.NormalizeHexColor(hex).substring(1);
 
     var bigint = parseInt(hex, 16);
     var r = (bigint >> 16) & 255;
@@ -943,7 +950,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
 
 
   private HexToRgbInNumbers(hex: any) {
-    hex = hex.substring(1);
+    hex = this.NormalizeHexColor(hex).substring(1);
     let num = [];
     var bigint = parseInt(hex, 16);
     var r = (bigint >> 16) & 255;
@@ -964,6 +971,15 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
 
   private RGBToHex(r: number, g: number, b: number) {
     return "#" + this.colorCodeToHex(r) + this.colorCodeToHex(g) + this.colorCodeToHex(b);
+  }
+
+  private NormalizeHexColor(value: string): string {
+    const color = value.toString();
+    if (/^#[\da-f]{3}$/i.test(color)) {
+      return '#' + color.slice(1).split('').map(channel => channel + channel).join('').toLowerCase();
+    }
+
+    return color.toLowerCase();
   }
 
   private LoadDefault() {
@@ -988,7 +1004,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
       // Horizontal Rendering of Selected Color
       if (this.varContext) {
         let grad = this.varContext.createLinearGradient(0, 0, 250, 0);
-        grad.addColorStop(0, "white");
+        grad.addColorStop(0.1, "white");
 
         if (this.mainColorRgb)
           grad.addColorStop(1, this.mainColorRgb);
@@ -1054,6 +1070,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   }
 
   private SetDisplayColorsUsingHex(colorInHex: string) {
+    colorInHex = this.NormalizeHexColor(colorInHex);
     this.DisplayColorHex = colorInHex;
     this.DisplayColorRGB = this.HexToRgb(colorInHex);
 
