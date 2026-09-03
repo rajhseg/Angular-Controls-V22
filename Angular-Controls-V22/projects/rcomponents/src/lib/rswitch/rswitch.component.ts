@@ -103,7 +103,7 @@ export class RSwitchComponent extends RBaseComponent<boolean> implements Control
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this._formDisabled = isDisabled ? true : null;
+    this._formDisabled = isDisabled ?? false;
   }
   
   toggle() {

@@ -174,6 +174,8 @@ export class DefaultComponent {
   optionB: boolean = false;
   optionC: boolean = false;
 
+  formEnable:boolean = true;
+  
   imagesNames: number[] = [1,2,3];
 
   enableGlassyEffect: boolean = false;
@@ -713,6 +715,14 @@ export class DefaultComponent {
     _list.push({'Id':5, 'Name': 'AAA', 'Age': 26, 'Education': new DropdownModel(3, "BE"),  'IsGrad': false });
   
     this.gridItems1 = [..._list];
+  }
+
+  enableDisable(form:NgForm){
+    this.formEnable = !this.formEnable;
+
+    Object.values(form.controls).forEach(control => {
+      this.formEnable ? control.enable() : control.disable();
+    });
   }
 
   addCalenderEvents(){
