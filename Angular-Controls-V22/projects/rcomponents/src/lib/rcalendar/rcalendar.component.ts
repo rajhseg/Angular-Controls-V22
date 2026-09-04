@@ -552,6 +552,7 @@ export class RCalendarComponent extends RBaseComponent<Date> implements IRDropDo
 
   setDisabledState?(isDisabled: boolean): void {
     this._formDisabled = isDisabled ?? false;
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy(): void {

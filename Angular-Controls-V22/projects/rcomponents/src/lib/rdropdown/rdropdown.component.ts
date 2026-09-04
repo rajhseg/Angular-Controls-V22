@@ -422,6 +422,7 @@ export class RDropdownComponent extends RBaseComponent<DropdownModel | string | 
 
   setDisabledState?(isDisabled: boolean): void {
     this._formDisabled = isDisabled ?? false;
+    this.cdr.detectChanges();
   }
 
   ngOnInit(): void {

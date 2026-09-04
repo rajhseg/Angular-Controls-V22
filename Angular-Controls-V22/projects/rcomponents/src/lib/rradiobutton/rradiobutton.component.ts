@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, DestroyRef, ElementRef, EventEmitter, forwardRef, HostBinding, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, ElementRef, EventEmitter, forwardRef, HostBinding, Input, Output, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { RadioButtonService, RadioEventArgs } from './rradiobutton.service';
 import { RWindowHelper } from '../rwindowObject';
@@ -84,6 +84,7 @@ export class RRadiobuttonComponent extends RBaseComponent<RadioEventArgs> implem
   LabelColor: string = "black";
 
   constructor(private service: RadioButtonService, private windowHelper: RWindowHelper,
+    private cdr: ChangeDetectorRef,
     private cssUnitSer: RCssUnitsService, private ele: ElementRef, private destroyRef: DestroyRef
   ) {
     super(windowHelper);
@@ -193,6 +194,7 @@ export class RRadiobuttonComponent extends RBaseComponent<RadioEventArgs> implem
 
   setDisabledState?(isDisabled: boolean): void {
     this._formDisabled = isDisabled ?? false;
+    this.cdr.detectChanges();
   }
   
 }

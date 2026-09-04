@@ -180,6 +180,7 @@ export class RTimeSelectorComponent extends RBaseComponent<string> implements IR
       if (this.SetCurrentTimeAsDefaultOnLoad) {
         this.setCurrentTime();
         this.SetDisplayText();
+        this.NotifyToModel();
       } else {
         this.reset();
       }
@@ -247,6 +248,7 @@ export class RTimeSelectorComponent extends RBaseComponent<string> implements IR
 
   setDisabledState?(isDisabled: boolean): void {
     this._formDisabled = isDisabled ?? false;
+    this.cdr.detectChanges();
   }
 
   NotifyToModel() {

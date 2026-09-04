@@ -1,5 +1,5 @@
 import { NgClass, NgStyle } from '@angular/common';
-import { Component, DestroyRef, EventEmitter, forwardRef, HostBinding, Input, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, forwardRef, HostBinding, Input, Output, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_ASYNC_VALIDATORS, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CheckboxEventArgs, CheckboxService } from './rcheckbox.service';
 import { RWindowHelper } from '../rwindowObject';
@@ -81,7 +81,9 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
   @Input()
   CheckSize: string = "12px";
 
-  constructor(private windowHelper: RWindowHelper, private service: CheckboxService, private destroyRef: DestroyRef) {
+  constructor(private windowHelper: RWindowHelper, private service: CheckboxService, 
+    private cdr: ChangeDetectorRef,
+    private destroyRef: DestroyRef) {
     super(windowHelper);
     this.HostElementId = this.windowHelper.GenerateUniqueId();
     this.Id = this.windowHelper.GenerateUniqueId();
@@ -187,6 +189,7 @@ export class RCheckboxComponent extends RBaseComponent<CheckboxEventArgs> implem
 
   setDisabledState?(isDisabled: boolean): void {
     this._formDisabled = isDisabled ?? false;
+    this.cdr.detectChanges();
   }
 
 }

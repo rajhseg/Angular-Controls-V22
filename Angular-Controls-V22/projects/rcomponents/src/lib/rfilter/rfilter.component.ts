@@ -336,6 +336,7 @@ export class RFilterComponent extends RBaseComponent<RFilterApplyModel> implemen
 
   setDisabledState?(isDisabled: boolean): void {
     this._formDisabled = isDisabled ?? false;
+    this.cdr.detectChanges();
   }
 
   FilterToggle(evt: Event){  
