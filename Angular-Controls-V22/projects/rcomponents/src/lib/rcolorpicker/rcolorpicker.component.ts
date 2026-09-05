@@ -216,8 +216,6 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   }
 
   writeValue(obj: any): void {
-    
-    obj = obj ?? '#fff';
 
     if (obj) {
 
@@ -245,12 +243,32 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
       } else {
 
       }
+      
+      this.LoadColorOnFirst = false;      
+      this.RenderOnToggle = false;   
+      this.RenderUI();
 
-      this.LoadColorOnFirst = false;
-      this.RenderOnToggle = false;
-      this.RenderCanvas();  
-      this.cdr.detectChanges();
+      this.RenderCanvas().then(x=> {
+        this.cdr.detectChanges();
+      });        
+      
+    } else {
+      this.reset();
     }
+  }
+
+  reset() {
+    this.SelectedColorHex = '';
+    this.SelectedColorR = -1;
+    this.SelectedColorG = -1;
+    this.SelectedColorB = -1;
+    this.SelectedColorRgb = undefined;
+    this._selectedColorHex = undefined;
+    this.DisplayColorHex = '';
+    this.DisplayColorRGB = '';
+    this.DisplayColorR = -1;
+    this.DisplayColorG = -1;
+    this.DisplayColorB = -1
   }
 
   registerOnChange(fn: any): void {
@@ -562,9 +580,11 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
     if (this.IsColorPickerOpen) {
       this.cls.CloseAllPopups(this);
       this.RenderOnToggle = true;
+
+      this.RenderUI();
+      this.LoadColorOnFirst = false;
       await this.RenderCanvas();
       this.AttachDropdown();
-      this.LoadColorOnFirst = true;
       this.RenderOnToggle = false;
       this.cdr.detectChanges();
     }
@@ -649,7 +669,7 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
 
   private GetXYFromColorCode(from: number, to: number): Promise<{ x: number | undefined, y: number | undefined } | undefined> {
 
-    var tol = 2;
+    var tol = 0;
     return new Promise((res, rej) => {
 
       let _varX, _varY;
@@ -824,12 +844,14 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
   private async RenderCanvas() {
 
     if (!this.LoadColorOnFirst || !this.isColorPickerSelected) {
-      if (this.SelectedColorHex == undefined)
-        this.LoadDefault();
-      else {
-        if (!this.LoadColorOnFirst)
-          await this.setColorPickerOnLoad();
+      if (this.SelectedColorHex == undefined || this.SelectedColorHex.trim() == "") {
         return;
+      }
+      else                       
+      {        
+        if(!this.LoadColorOnFirst)
+        await this.setColorPickerOnLoad();    
+        return;                          
       }
     }
 
@@ -881,13 +903,13 @@ export class RColorPickerComponent extends RBaseComponent<RColorPickerEventArgs>
 
   // based on https://stackoverflow.com/questions/39171824/calculate-x-y-pixel-position-on-gradient-based-on-hex-color-using-javascript
   private RGBToHSL(r: number, g: number, b: number) {
-    var r = r / 255;
-    var g = g / 255;
-    var b = b / 255;
-    var min = Math.min(r, g, b);
-    var max = Math.max(r, g, b);
-    var lum = (min + max) / 2;
-
+    r /= 255;
+    g /= 255;
+    b /= 255;
+    const min = Math.min(r, g, b);
+    const max = Math.max(r, g, b);
+    let lum = (min + max) / 2;
+    
     let sat = 0;
     let hue = 0;
     const delta = max - min;
