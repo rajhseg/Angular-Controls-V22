@@ -20,7 +20,7 @@
         <div [id]="item.Id" class="panel" [ngStyle]="getPanelStyle(item.Id)">
           <ng-content>
           </ng-content>
-          <ng-container *ngTemplateOutlet="item.TemplateRef">
+          <ng-container *ngTemplateOutlet="item.TemplateRef; context:item.InstanceContext">
           </ng-container>
         </div>
       }

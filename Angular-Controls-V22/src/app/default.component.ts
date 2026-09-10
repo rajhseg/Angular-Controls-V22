@@ -168,7 +168,9 @@ export class DefaultComponent {
     new DropDownItemModel(4, 'BA')
   ];
 
-  dType: RFilterDataType = RFilterDataType.DateType;
+  TemplateBinding: object = { Te: 'Te_a' };
+
+  dType:RFilterDataType = RFilterDataType.DateType;
 
   optionA!: boolean;
   optionB!: boolean;

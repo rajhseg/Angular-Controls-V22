@@ -161,6 +161,8 @@ import { RCarouselComponent, RImageDirective } from 'rcomponents';
 })
 export class AppRootComponent {
 
+  TemplateBinding: object = { Te: 'Te_a'};
+  
   optionA: boolean = true;
   optionB: boolean = false;
   optionC: boolean = false;

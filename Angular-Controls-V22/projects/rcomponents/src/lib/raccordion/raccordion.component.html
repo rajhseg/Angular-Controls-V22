@@ -27,9 +27,11 @@
                             'display':'block',
                             'overflow':'hidden',
                             'pointer-events': IsReadOnly ? 'none': ''}">
-        <ng-container *ngTemplateOutlet="item.templateRef">
-        </ng-container>
-      </div>
+            <ng-container *ngTemplateOutlet="item.templateRef; context:item.InstanceContext">
+
+            </ng-container>
+        </div>
+
     </div>
     
   }

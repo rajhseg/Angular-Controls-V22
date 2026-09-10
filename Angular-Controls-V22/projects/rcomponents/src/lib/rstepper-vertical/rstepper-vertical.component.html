@@ -78,7 +78,7 @@
         </div>
         <div style="padding:10px; overflow: auto;"
           [ngStyle]="{ 'pointer-events': IsReadOnly ? 'none': '', 'height': (ContentHeight - 148)+'px' }">
-          <ng-container #view *ngTemplateOutlet="CurrentViewStep.Content">
+          <ng-container #view *ngTemplateOutlet="CurrentViewStep.Content; context:CurrentViewStep.InstanceContext">
           </ng-container>
         </div>
         <div class="stepFooter">
