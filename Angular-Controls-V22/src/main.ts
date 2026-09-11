@@ -7,6 +7,8 @@ import { AppComponent } from './app/app.component';
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 import { RootComponent } from './app/root-component/root-component';
+import { StaticShowcaseComponent } from "./app/static-showcase/static-showcase.component";
+import { LoadComponent } from './app/load/load.component';
 
-bootstrapApplication(RootComponent, {...appConfig, providers: [provideZoneChangeDetection(), ...appConfig.providers]})
+bootstrapApplication(LoadComponent, {...appConfig, providers: [provideZoneChangeDetection(), ...appConfig.providers]})
   .catch((err) => console.error(err));

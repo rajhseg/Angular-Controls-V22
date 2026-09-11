@@ -4,7 +4,10 @@ import { AppComponent } from './app/app.component';
 import { config } from './app/app.config.server';
 import { AppRootComponent } from './app/appb.component';
 import { RootComponent } from "./app/root-component/root-component";
+import { StaticShowcaseComponent } from "./app/static-showcase/static-showcase.component";
+import { LoadComponent } from './app/load/load.component';
 
-const bootstrap = (context: BootstrapContext) => bootstrapApplication(RootComponent, {...config, providers: [provideZoneChangeDetection(), ...config.providers]}, context);
+
+const bootstrap = (context: BootstrapContext) => bootstrapApplication(LoadComponent, {...config, providers: [provideZoneChangeDetection(), ...config.providers]}, context);
 
 export default bootstrap;
